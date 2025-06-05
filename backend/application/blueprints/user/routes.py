@@ -35,7 +35,7 @@ def login():
 
 
 @users_bp.route('/', methods=['POST'])
-@limiter.limit("5 per hour")  # Limit to 5 requests per minute to avoid brute force attacks
+@limiter.limit("5 per hour")  # Limit to 5 requests per hour to avoid brute force attacks
 def add_user():
    try:
       user_data = user_schema.load(request.json)

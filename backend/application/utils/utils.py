@@ -1,8 +1,11 @@
-import jwt
+from jose import jwt
+from flask_cors import CORS
 from datetime import datetime, timezone, timedelta
 from functools import wraps
 from flask import request, jsonify
 import os
+import json
+from urllib.request import urlopen
 
 
 SECRET_KEY = os.environ.get('SECRET_KEY') or "super secret secrets"
