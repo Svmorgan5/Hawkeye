@@ -1,0 +1,65 @@
+.menu{
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 4px 0px;
+gap: 4px;
+position: absolute;
+width: 256px;
+height: 100%;
+left: 0px;
+top: 0px;
+background: #032B3A;
+box-shadow: inset -1px 0px 0px #F0F0F0;
+}
+.menu-item{
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 9px 24px;
+gap: 10px;
+width: 256px;
+height: 40px;
+opacity: 0.65;
+/* Inside auto layout */
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+/* Regular/14px | 22px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 22px;
+/* identical to box height, or 157% */
+text-decoration: none;
+/* Gray / gray-1 */
+color: #FFFFFF;
+
+}
+.menu-item:hover{
+   background: #06384b;
+   color: #ffffff;
+   opacity:1;
+   box-shadow: .05px .05px 1px;
+   cursor:pointer;   
+}
+.menu-item.active{
+   background: #3c7f98;  
+   color: #ffffff;
+   opacity:1;
+   box-shadow: .1px .1px 1px;
+   font-weight: 600;
+   cursor:pointer;   
+}
+.logo{
+    width: 225px;
+    height: 127px;
+
+
+}
+.icon{
+    width:22px;
+    height:22px;
+}
