@@ -11,7 +11,7 @@
  height:100%;
 }
 .div-left{
-  min-width:300px;
+  min-width:200px;
 }
 @media (max-width: 940px) {
   
@@ -45,7 +45,7 @@
  height:100%;
 }
 .div-left-main{
-  min-width:300px;
+  width:200px;
 }
 @media (max-width: 940px) {
   
@@ -56,7 +56,7 @@
   
   }
   .div-left-main {
-     width:100%;
+     width:300px;
      min-height:250px;
      max-height:25%;
      padding: 0px 0px 0px 0px;

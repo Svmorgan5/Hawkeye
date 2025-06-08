@@ -5,13 +5,17 @@ align-items: flex-start;
 padding: 4px 0px;
 gap: 4px;
 position: absolute;
-width: 256px;
+padding-left:2px;
+width: 261px;
 height: 100%;
+
 left: 0px;
 top: 0px;
+
 background: #032B3A;
-box-shadow: inset -1px 0px 0px #F0F0F0;
+box-shadow: inset 0px 0px 0px #F0F0F0;
 }
+
 .menu-item{
 display: flex;
 flex-direction: row;

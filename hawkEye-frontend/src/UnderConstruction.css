@@ -1,5 +1,5 @@
 .under-construction {
-  margin-left:50%px;
+  margin-left:10px;
   text-align: center;
   padding: 60px 20px;
   font-family: Arial, sans-serif;
@@ -9,19 +9,20 @@
 .under-construction h1 {
   font-size: 2em;
   margin-bottom: 20px;
-  margin-left:450px;
+  margin-left:10px;
   margin-right:25%;
 }
 
 .under-construction p {
   font-size: 1.2em;
   margin-bottom: 30px;
-  margin-left:450px;
+  margin-left:10px;
   margin-right:25%;
 }
 
 .under-construction-img {
   max-width: 200px;
   opacity: 0.8;
- margin-left:450px;
+ margin-left:10px;
   margin-right:25%;
+}

@@ -9,17 +9,18 @@ import './index.css'
 import Cameras from './components/Cameras/Cameras';
 import Alerts from './components/Alerts/Alerts';
 import Reports from './components/Reports/Reports';
-import Members from './components/Members/Memers';
+import Members from './components/Members/Members';
 import Help from './components/Help/Help';
+import Header from './Header/Header';
 
 function App() {
   return (
-    <div className='container-main'>
+    <div>
       <div className="div-left-main" ><NavBar /></div>
         
-        <div>Hello</div>
+        <div><Header /></div>
         <div className="div-right-main" >
-        <Routes>
+            <Routes>
               
               <Route path="/signin" element={<SignIn />} />
               <Route path="/register" element={<Register />} />
