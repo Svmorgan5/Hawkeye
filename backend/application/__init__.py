@@ -35,6 +35,14 @@ def create_app(config_name):
 #Adding room for URL prefixes in the future
     app.register_blueprint(users_bp, url_prefix='/users')
 
+    ## Uncomment the following lines to register other blueprints when they are created for API access
+
+    ## Will also have to import bps to this file
+
+
+    #app.register_blueprint(camera_bp, url_prefix='/cameras')
+    #app.register_blueprint(alerts_bp, url_prefix='/alerts')
+
 
 
 
