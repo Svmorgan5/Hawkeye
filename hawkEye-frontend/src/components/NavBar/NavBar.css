@@ -3,12 +3,11 @@ display: flex;
 flex-direction: column;
 align-items: flex-start;
 padding: 4px 0px;
-gap: 4px;
+
 position: absolute;
 padding-left:2px;
 width: 261px;
 height: 100%;
-
 left: 0px;
 top: 0px;
 
@@ -21,9 +20,10 @@ display: flex;
 flex-direction: row;
 align-items: center;
 padding: 9px 24px;
+
 gap: 10px;
 width: 256px;
-height: 40px;
+height: 45px;
 opacity: 0.65;
 /* Inside auto layout */
 flex: none;
@@ -67,3 +67,16 @@ color: #FFFFFF;
     width:22px;
     height:22px;
 }
+
+.submenu {
+    background: #021D27;
+  
+}
+
+.down-drop{
+    text-align: right;
+}
+
+
+
+
