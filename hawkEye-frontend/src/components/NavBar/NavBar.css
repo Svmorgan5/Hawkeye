@@ -21,9 +21,10 @@ flex-direction: row;
 align-items: center;
 padding: 9px 24px;
 
-gap: 10px;
+gap: 10px ;
+
 width: 256px;
-height: 45px;
+height: 41px;
 opacity: 0.65;
 /* Inside auto layout */
 flex: none;
@@ -75,6 +76,14 @@ color: #FFFFFF;
 
 .down-drop{
     text-align: right;
+}
+.right-item{
+    margin-left:55%;
+    left:80px;
+    background-color: transparent ;
+    
+    border:none;
+  
 }
 
 
