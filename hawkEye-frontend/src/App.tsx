@@ -15,25 +15,27 @@ import Header from './Header/Header';
 
 function App() {
   return (
-    <div>
-      <div className="div-left-main" ><NavBar /></div>
+    <div className='container-main'>
+          <div ><NavBar /></div>
         
-        <div><Header /></div>
-        <div className="div-right-main" >
-            <Routes>
-              
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/cameras" element={<Cameras />} />
-              <Route path="/alerts" element={<Alerts />} />
-              <Route path="/reports" element={<Reports />} />
-              <Route path="/members" element={<Members />} />
-              <Route path="/help" element={<Help />} />
+        
+          <div className="container div-right" >
+              <div> <Header /></div>
+             <div>
+              <Routes>
+                
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/cameras" element={<Cameras />} />
+                <Route path="/alerts" element={<Alerts />} />
+                <Route path="/reports" element={<Reports />} />
+                <Route path="/members" element={<Members />} />
+                <Route path="/help" element={<Help />} />
 
-              
-            </Routes>
-        <NavBar />
+                
+              </Routes>
+              </div>
         </div>
     </div>
     // <div className="container">

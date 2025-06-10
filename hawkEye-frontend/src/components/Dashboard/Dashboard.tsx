@@ -1,16 +1,28 @@
 import '../../UnderConstruction.css'
+import './Dashboard.css'
+import DashCard from './DashCard';
 const Dashboard = () => {
   return (
-    <div className="under-construction">
-      <h1>🚧 Dashboard Under Construction 🚧</h1>
-      <p>Please come back soon!</p>
+    <>
+    <div className="card-container">
+        <DashCard heading='Alerts' message='Hello' />
+        <DashCard heading='Reports' message='Hello' />
+        <DashCard heading='Lockdowns' message='Hello' />
      
-      <img
-        src="https://cdn-icons-png.flaticon.com/512/679/679720.png"
-        alt="Under Construction"
-        className="under-construction-img"
-      />
     </div>
+    <div className="card-container">
+        <DashCard heading='Members' message='Hello' />
+        <DashCard heading='Training' message='Hello' />
+        <DashCard heading='Settings' message='Hello' />
+     
+    </div>
+
+         
+  </>
+
+  
+
+
   );
 };
 
