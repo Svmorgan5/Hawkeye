@@ -16,11 +16,12 @@ import Header from './Header/Header';
 function App() {
   return (
     <div className='container-main'>
-          <div ><NavBar /></div>
+          <div className="div-left"><NavBar /></div>
         
         
           <div className="container div-right" >
               <div> <Header /></div>
+             
              <div>
               <Routes>
                 

@@ -12,6 +12,7 @@ background: #032B3A;
     /* Auto layout */
     display: flex;
     flex-direction: row;
+    justify-content: right;
     align-items: center;
     padding: 0px;
     gap: 24px;

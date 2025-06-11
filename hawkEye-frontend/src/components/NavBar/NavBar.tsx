@@ -83,17 +83,15 @@ const NavBar:React.FC = () =>{
         {settings&&
         <>
         <NavLink   className={({ isActive }) => "menu-item submenu" + (isActive ? " active" : "")} to='/sr'>
-            Video Tutorials
+            School Profile
         </NavLink>
         <NavLink  className={({ isActive }) => "menu-item submenu" + (isActive ? " active" : "")} to='/se'>
-            Your Content
+            Softward Integration
         </NavLink>
         <NavLink   className={({ isActive }) => "menu-item submenu" + (isActive ? " active" : "")} to='/so'>
-            Drill Practice
+            Billing
         </NavLink>
-        <NavLink  className={({ isActive }) => "menu-item submenu" + (isActive ? " active" : "")} to='/sd'>
-            Training History
-        </NavLink>
+        
         </>
         }
         <NavLink  className={({ isActive }) => "menu-item" + (isActive ? " active" : "")} to='/help'>
