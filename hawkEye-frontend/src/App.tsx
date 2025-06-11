@@ -12,6 +12,7 @@ import Reports from './components/Reports/Reports';
 import Members from './components/Members/Members';
 import Help from './components/Help/Help';
 import Header from './Header/Header';
+import Landing from './pages/LandingPage/Landing'
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
                 <Route path="/reports" element={<Reports />} />
                 <Route path="/members" element={<Members />} />
                 <Route path="/help" element={<Help />} />
+                <Route path='/landing' element={<Landing />}/>
 
                 
               </Routes>
