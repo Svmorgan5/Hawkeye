@@ -4,8 +4,9 @@ import {useState} from 'react'
 type DashCardProps ={
     heading:string,
     message:string,
+    picture?:string,
 }
-const DashCard = ({heading, message}:DashCardProps) => {
+const DashCard = ({heading, message, picture}:DashCardProps) => {
     
 
   
@@ -23,8 +24,11 @@ const DashCard = ({heading, message}:DashCardProps) => {
             </div>
           </div>
           
+          
+          
           <div className='card-body'>
-            {message}
+            <img className='card-image' src={picture}></img>
+            <p className='card-text'>{message}</p>
           </div>
         </div>  
  
