@@ -5,8 +5,9 @@ type DashCardProps ={
     heading:string,
     message:string,
     picture?:string,
+    link?:string,
 }
-const DashCard = ({heading, message, picture}:DashCardProps) => {
+const DashCard = ({heading, message, picture,link}:DashCardProps) => {
     
 
   
@@ -20,7 +21,7 @@ const DashCard = ({heading, message, picture}:DashCardProps) => {
           <div className='card-head'>
              {heading}
              <div className='card-button'>
-                View
+                <a href={link}>View</a>
             </div>
           </div>
           

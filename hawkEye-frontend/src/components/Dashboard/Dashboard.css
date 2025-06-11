@@ -33,7 +33,7 @@ margin-left:20px;
 .card-head{
     display: flex;
     flex-direction: row;
-   
+    gap:60%;
     padding: 16px 24px;
    
     width: 324px;
@@ -75,15 +75,18 @@ color: #08979C;
     display: flex;
     flex-direction: row;
     padding: 0px;
+    padding-top:30px;
+    padding-bottom: 30px;
     
 }
 
 
 .card-image{
-    width:100px;
-    height:100px;
+    width:120px;
+    height:auto;
     object-fit: cover;
-    padding:10px;
+    padding:6px;
+    padding-left:20px;
     
 }
 .card-text{
