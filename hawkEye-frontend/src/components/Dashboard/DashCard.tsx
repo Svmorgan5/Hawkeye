@@ -21,7 +21,7 @@ const DashCard = ({heading, message, picture,link}:DashCardProps) => {
           <div className='card-head'>
              {heading}
              <div className='card-button'>
-                <a href={link}>View</a>
+                <a className='a' href={link}>View</a>
             </div>
           </div>
           

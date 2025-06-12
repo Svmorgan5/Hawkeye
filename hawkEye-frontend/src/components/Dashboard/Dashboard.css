@@ -145,6 +145,9 @@ color: #8C8C8C;
 
 
 }
+.a{
+    text-decoration: none;
+}
 /* Inside auto layout */
 /* flex: none;
 order: 1;
