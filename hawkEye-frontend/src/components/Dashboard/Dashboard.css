@@ -55,7 +55,8 @@ color: #262626;
 }
 .card-button{
     /* Button */
-
+text-align: right;
+    justify-content: right;
 width: 31px;
 height: 22px;
 
@@ -97,8 +98,11 @@ color: #08979C;
     
 }
 .card-text{
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Roboto';
+    font-weight: 500;
     padding:10px;
+    font-size: 14px;
+    
 }
 
 
@@ -145,9 +149,69 @@ color: #8C8C8C;
 
 
 }
+.split-div{
+    width:50%;
+    
+}
 .a{
     text-decoration: none;
+    
+    
 }
+.cameras{
+    display:flex;
+    flex-direction: row;
+    margin-left:22px;
+}
+.camera-frame{
+    padding-left:25px;
+}
+.camera-button{
+/* Button */
+position: absolute;
+width: 132px;
+height: 32px;
+left: 1178px;
+top: 795px;
+
+/* Cyan / cyan-7 */
+border: 1px solid #08979C;
+border-radius: 2px;
+
+
+/* Content */
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: center;
+
+
+
+padding:10px;
+/* Regular/14px | 22px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 22px;
+/* identical to box height, or 157% */
+background-color: #FFFFFF;
+/* Cyan / cyan-7 */
+color: #08979C;
+
+
+}
+.camera-button:hover{
+    background-color: #08979C;
+    color: #FFFFFF;
+    cursor:pointer;
+}
+/* Card / Body / Default */
+
+/* Lorem ipsum odor amet, consectetuer adipiscing elit. */
+
+
+
 /* Inside auto layout */
 /* flex: none;
 order: 1;

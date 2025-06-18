@@ -1,8 +1,8 @@
 import '../../UnderConstruction.css'
-const Reports = () => {
+const Integration = () => {
   return (
     <div className="under-construction">
-      <h1>🚧 Help Under Construction 🚧</h1>
+      <h1>🚧 Software Integration Page Under Construction 🚧</h1>
       <p>Please come back soon!</p>
      
       <img
@@ -14,4 +14,4 @@ const Reports = () => {
   );
 };
 
-export default Reports;
+export default Integration;

@@ -22,46 +22,7 @@
   height:100%;
 } 
 
-.dashboard-head{
-padding-left: 42px;
-padding-bottom: 20px;
-/* Semibold/24px | 32px */
-font-family: 'Roboto';
-font-style: normal;
-font-weight: 600;
-font-size: 24px;
-line-height: 32px;
-/* or 133% */
-display: flex;
-align-items: center;
 
-/* Gray / gray-9 */
-color: #262626;
-
-
-}
-.breadcrumb{
-
-/* Breadcrumb Link */
-
-width: 68px;
-height: 22px;
-
-/* Regular/14px | 22px */
-font-family: 'Roboto';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 22px;
-/* identical to box height, or 157% */
-
-/* Gray / gray-7 */
-color: #8C8C8C;
-
-
-
-
-}
 /* 
 .div-left, .div-right{
   flex:1;

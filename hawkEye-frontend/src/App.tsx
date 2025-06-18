@@ -13,6 +13,14 @@ import Members from './components/Members/Members';
 import Help from './components/Help/Help';
 import Header from './Header/Header';
 import Landing from './pages/LandingPage/Landing'
+import Video from './components/Video-Tutorials/Video';
+import History from './components/History/History'
+import Content from './components/Content/Content'
+
+import Drills from './components/Drills/Drills'
+import Integration from './components/Intergration/Integration';
+import Billing from './components/Billing/Billing';
+import Profile from './components/SchoolProfile/SchoolProfile';
 
 function App() {
   return (
@@ -34,7 +42,17 @@ function App() {
                 <Route path="/reports" element={<Reports />} />
                 <Route path="/members" element={<Members />} />
                 <Route path="/help" element={<Help />} />
+                <Route path='/history' element={<History />}/>
+                <Route path='/video' element={<Video />}/>
                 <Route path='/landing' element={<Landing />}/>
+                <Route path='/content' element={<Content />}/>
+                <Route path='/drill' element={<Drills />}/>
+                <Route path='/billing' element={<Billing />}/>
+                <Route path='/integration' element={<Integration />}/>
+                <Route path='/profile' element={<Profile />}/>
+                
+
+
 
                 
               </Routes>

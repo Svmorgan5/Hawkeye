@@ -19,8 +19,8 @@ const DashCard = ({heading, message, picture,link}:DashCardProps) => {
         
         <div className="card">
           <div className='card-head'>
-             {heading}
-             <div className='card-button'>
+             <div  className='split-div'>{heading}</div>
+             <div className='card-button split-div'>
                 <a className='a' href={link}>View</a>
             </div>
           </div>
