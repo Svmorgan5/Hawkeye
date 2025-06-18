@@ -1,5 +1,5 @@
 from flask import Blueprint
 
-cameras_bp = Blueprint('cameras_bp', __name__)
+members_bp = Blueprint('members_bp', __name__)
 
 from . import routes 

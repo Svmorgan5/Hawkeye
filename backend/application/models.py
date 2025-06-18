@@ -16,7 +16,7 @@ class User(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(db.String(150), nullable=False)
-    phone: Mapped[str] = mapped_column(db.String(25), nullable=False, unique=True)
+    phone: Mapped[str] = mapped_column(db.String(25), nullable=True, unique=True)
     email: Mapped[str] = mapped_column(db.String(150), nullable=False, unique=True)
     password: Mapped[str] = mapped_column(db.String(150), nullable=False)
 
@@ -31,6 +31,14 @@ camera_alert = Table(
     db.Column("alert_id", db.ForeignKey("alerts.id"), primary_key=True),
 )
 ## 
+
+camera_member = Table(
+    "camera_member",
+    Base.metadata,
+    db.Column("camera_id", db.ForeignKey("cameras.id"), primary_key=True),
+    db.Column("member_id", db.ForeignKey("members.id"), primary_key=True),
+)
+
 class AlertType(PyEnum):
     SCHEDULED = "scheduled"
     TEST = "test"
@@ -59,6 +67,7 @@ class Camera(Base):
     name: Mapped[str] = mapped_column(db.String(100), nullable=False)
     location: Mapped[str] = mapped_column(db.String(150))
     user_id: Mapped[int] = mapped_column(db.ForeignKey('users.id'), nullable=False)
+    snapshot_url: Mapped[str] = mapped_column(db.String(255), nullable=True)  
     alerts: Mapped[List["Alert"]] = relationship(
         "Alert",
         secondary=camera_alert,
@@ -66,5 +75,25 @@ class Camera(Base):
     )
 
     user: Mapped["User"] = relationship("User", back_populates="cameras")
+
+    members: Mapped[List["Member"]] = relationship(
+        "Member",
+        secondary=camera_member,
+        back_populates="cameras"
+    )
+
+
+
+class Member(Base):
+    __tablename__ = 'members'
+    id: Mapped[int] = mapped_column(primary_key=True)
+    email: Mapped[str] = mapped_column(db.String(150), nullable=False, unique=True)
+    name: Mapped[str] = mapped_column(db.String(150), nullable=False)
+
+    cameras: Mapped[List["Camera"]] = relationship(
+        "Camera",
+        secondary=camera_member,
+        back_populates="members"
+    )
 
 
