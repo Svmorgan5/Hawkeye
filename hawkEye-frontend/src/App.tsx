@@ -16,7 +16,7 @@ import Landing from './pages/LandingPage/Landing'
 import Video from './components/Video-Tutorials/Video';
 import History from './components/History/History'
 import Content from './components/Content/Content'
-
+import AddMembers from './components/Members/AddMember';
 import Drills from './components/Drills/Drills'
 import Integration from './components/Intergration/Integration';
 import Billing from './components/Billing/Billing';
@@ -41,6 +41,7 @@ function App() {
                 <Route path="/alerts" element={<Alerts />} />
                 <Route path="/reports" element={<Reports />} />
                 <Route path="/members" element={<Members />} />
+                <Route path="/add_member" element={<AddMembers />} />
                 <Route path="/help" element={<Help />} />
                 <Route path='/history' element={<History />}/>
                 <Route path='/video' element={<Video />}/>
