@@ -9,6 +9,8 @@ from backend.application.blueprints.user import users_bp
 from backend.application.blueprints.camera import cameras_bp
 from backend.application.blueprints.member import members_bp
 
+# i added this import to make sure the models are registered
+from backend.application.blueprints.notification import notification_bp
 
 #Just getting swagger ready for testing purposes.
 #SWAGGER_URL = '/api/docs' 
@@ -45,6 +47,8 @@ def create_app(config_name):
     app.register_blueprint(cameras_bp, url_prefix='/cameras')
     
     #app.register_blueprint(alerts_bp, url_prefix='/alerts')
+
+    app.register_blueprint(notification_bp)
 
 
 

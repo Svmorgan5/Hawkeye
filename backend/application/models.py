@@ -1,6 +1,7 @@
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from flask_sqlalchemy import SQLAlchemy
-from datetime import date
+from datetime import datetime, date
+
 from typing import List
 from sqlalchemy import Table, Enum
 from enum import Enum as PyEnum
@@ -101,4 +102,18 @@ class Member(Base):
         back_populates="members"
     )
 
+
+
+# this is a notification model added it as a placeholder for future use
+# It can be used to notify users about alerts, camera status changes, etc.
+class Notification(Base):
+    __tablename__ = 'notifications'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(db.ForeignKey('users.id'), nullable=False)
+    message: Mapped[str] = mapped_column(db.String(255), nullable=False)
+    is_read: Mapped[bool] = mapped_column(default=False)
+    timestamp: Mapped[datetime] = mapped_column(db.DateTime, default=datetime.utcnow)
+
+    user: Mapped["User"] = relationship("User", backref="notifications")
 
