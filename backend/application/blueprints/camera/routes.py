@@ -47,7 +47,7 @@ def is_valid_url(url):
 
 @cameras_bp.route('/<int:camera_id>/snapshot', methods=['GET'])
 @token_required
-@cache.cached(timeout=60)  # Cache the snapshot for 60 seconds
+@cache.cached(timeout=150)  # Cache the cameras for 2.5 minutes
 def get_camera_snapshot(current_user_id, camera_id):
     camera = db.session.execute(
         select(Camera).where(Camera.id == camera_id, Camera.user_id == current_user_id)
@@ -58,12 +58,13 @@ def get_camera_snapshot(current_user_id, camera_id):
     if not is_valid_url(camera.snapshot_url):
         return jsonify({"error": "Invalid snapshot_url format"}), 400
 
-    # Fetch the still frame from the camera's snapshot URL
-    resp = requests.get(camera.snapshot_url)
-    if resp.status_code != 200:
-        return jsonify({"error": "Unable to fetch snapshot"}), 502
+    try:
+        resp = requests.get(camera.snapshot_url, timeout=5)
+        if resp.status_code != 200:
+            return jsonify({"error": "Unable to fetch snapshot"}), 502
+    except requests.RequestException as e:
+        return jsonify({"error": f"Snapshot fetch failed: {str(e)}"}), 502
 
-    # Return the image as a response
     return Response(resp.content, mimetype='image/jpeg')
 
 @cameras_bp.route('/<int:camera_id>', methods=['PUT'])
@@ -88,21 +89,20 @@ def update_camera(current_user_id, camera_id):
     return camera_schema.jsonify(camera), 200
 
 
-@cameras_bp.route("/", methods=['DELETE'])
+@cameras_bp.route("/<int:camera_id>", methods=['DELETE'])
 @token_required
-def delete_user(camera_id):
-   # Fetch the user using the user_id
-    query = select(Camera).where(Camera.id == camera_id)
+def delete_camera(current_user_id, camera_id):
+    # Fetch the camera belonging to the current user
+    query = select(Camera).where(Camera.id == camera_id, Camera.user_id == current_user_id)
     camera = db.session.execute(query).scalars().first()
 
     if not camera:
         return jsonify({"message": "Camera not found"}), 400
 
-   # Delete the User
     db.session.delete(camera)
     db.session.commit()
 
-    return jsonify({"message":"Camera deleted successfully."}), 200
+    return jsonify({"message": "Camera deleted successfully."}), 200
 
 
 #SEEMS LIKE THE MOST STRAIGHT FORWARD WAY TO ADD LIVE STREAMING

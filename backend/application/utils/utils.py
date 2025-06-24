@@ -1,4 +1,4 @@
-from jose import jwt
+from jose import jwt, JWTError
 from flask_cors import CORS
 from datetime import datetime, timezone, timedelta
 from functools import wraps
@@ -44,7 +44,7 @@ def token_required(f):
                 customer_id = data['sub']
             except jwt.ExpiredSignatureError as e:
                 return jsonify({'message': 'token expired'}), 400
-            except jwt.InvalidTokenError as e:
+            except JWTError as e:
                 print(f"Invalid token! Error: {e}")
                 return jsonify({'message':'invalid token'}), 400
             

@@ -111,7 +111,7 @@ def delete_user(user_id):
    if not user:
       return jsonify({"message": "User not found"}), 400
 
-   # Delete the User
+   
    db.session.delete(user)
    db.session.commit()
 

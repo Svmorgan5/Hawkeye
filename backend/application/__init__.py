@@ -43,6 +43,7 @@ def create_app(config_name):
 
     app.register_blueprint(members_bp, url_prefix='/members')
     app.register_blueprint(cameras_bp, url_prefix='/cameras')
+    
     #app.register_blueprint(alerts_bp, url_prefix='/alerts')
 
 

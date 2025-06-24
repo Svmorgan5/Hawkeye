@@ -68,6 +68,7 @@ class Camera(Base):
     location: Mapped[str] = mapped_column(db.String(150))
     user_id: Mapped[int] = mapped_column(db.ForeignKey('users.id'), nullable=False)
     snapshot_url: Mapped[str] = mapped_column(db.String(255), nullable=True)  
+    stream_url: Mapped[str] = mapped_column(db.String(255), nullable=True)
     alerts: Mapped[List["Alert"]] = relationship(
         "Alert",
         secondary=camera_alert,
@@ -89,6 +90,10 @@ class Member(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[str] = mapped_column(db.String(150), nullable=False, unique=True)
     name: Mapped[str] = mapped_column(db.String(150), nullable=False)
+    role: Mapped[str] = mapped_column(db.String(50), nullable=False)  # e.g., 'admin', 'viewer', etc.
+    groups: Mapped[str] = mapped_column(db.String(150), nullable=True)  # Comma-separated list of groups
+    image: Mapped[str] = mapped_column(db.String(255), nullable=True)  # URL or path to the member's image
+
 
     cameras: Mapped[List["Camera"]] = relationship(
         "Camera",
