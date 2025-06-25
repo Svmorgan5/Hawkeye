@@ -17,9 +17,9 @@ padding: 0px;
 
 position: absolute;
 width: 520px;
-height: 278px;
-left: calc(50% - 520px/2 + 117px);
-top: 356px;
+height: 325px;
+left: calc(45% - 520px/2 + 117px);
+top: 170px;
 
 /* Gray / gray-1 */
 background: #FFFFFF;
@@ -35,11 +35,12 @@ border-radius: 2px;
 display: flex;
 flex-direction: row;
 justify-content: right;
-padding: 16px 24px;
+padding: 10px 22px;
+padding-bottom: -15px;
 gap: 10px;
-padding-bottom:10px;
-width: 520px;
-height: 30px;
+
+width: 510px;
+height: 5px;
 
 /* Gray / gray-5
 
@@ -109,6 +110,7 @@ font-weight: 400;
 font-size: 14px;
 line-height: 22px;
 /* identical to box height, or 157% */
+padding:10px;
 
 /* Gray / gray-9 */
 color: #262626;
@@ -122,7 +124,11 @@ color: #262626;
     width:800px;
     display:flex;
     align-items: space-between;
-    gap:100px;
+    gap:60px;
+    padding-top:3px;
+}
+.bottom-label{
+    padding-bottom:10px;
 }
 .save-button{
     /* Button */
@@ -137,7 +143,7 @@ border:none;
 
 width: 67px;
 height: 40px;
-
+margin-top:7px;
 background: #13C2C2;
 border-radius: 2px;
 
@@ -147,7 +153,7 @@ border-radius: 2px;
 font-family: 'Roboto';
 font-style: normal;
 font-weight: 400;
-font-size: 18px;
+font-size: 14px;
 
 /* identical to box height, or 150% */
 
@@ -161,7 +167,7 @@ color: #FFFFFF;
     /* Button */
 
 box-sizing: border-box;
-
+margin-top:7px;
 /* Auto layout */
 display: flex;
 flex-direction: column;
@@ -184,11 +190,57 @@ border-radius: 2px;
 font-family: 'Roboto';
 font-style: normal;
 font-weight: 400;
-font-size: 18px;
+font-size: 14px;
 
 /* identical to box height, or 150% */
 
 /* Gray / gray-1 */
 
 
+}
+.cancel-button:hover{
+    background-color: rgb(86, 88, 88);
+    color: #FFFFFF;
+}
+.save-button:hover{
+    background-color:#094646;
+    color: #FFFFFF;
+}
+.body-text{
+    /* Option */
+
+box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: flex-end;
+align-items: center;
+padding: 12px 12px 12px 16px;
+gap: 10px;
+
+width: 285px;
+height: 31px;
+
+/* Neutrals/White */
+background: #FFFFFF;
+/* Neutrals/400 ⦿ */
+border: 2px solid #CBD2E0;
+border-radius: 6px;
+
+
+}
+
+
+
+
+/*temp styling */
+.email-box{
+ margin-left:-21px;
+}
+.role-box{
+margin-left:40px;
+}
+.group-box{
+margin-left:29px;
 }

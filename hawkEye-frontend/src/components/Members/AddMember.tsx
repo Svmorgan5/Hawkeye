@@ -21,21 +21,26 @@ const AddMembers = () => {
 
 const [email,setEmail] = useState<string>('')
 const [name,setName] = useState<string>('')
+const [last,setLast] = useState<string>('')
 const [role,setRole] = useState<string>('')
 const [groups,setGroup] = useState<string>('')
   
  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();  
-
+        setEmail(''),
+        setName(''),
+        setRole(''),
+        setLast(''),
+        setGroup('')
     try {
       await axios.post("http://127.0.0.1:5000/members/", {
 
         email: `${email}`,
-        name: `${name}`,
+        name: `${name} ${last}`,
         role: `${role}`,
         groups: `${groups}`,
         action: "none",
-        active:"true",
+        active:true,
         
       },{
         headers:{
@@ -43,9 +48,9 @@ const [groups,setGroup] = useState<string>('')
         }
        
       });
-  
+       alert('New Member Added')
     } catch (error:any){
-
+        alert(`Could not add new Member. ${error.response.data}`)
       console.error('Error message:', error.response);
     }
     // Log and extract JWT token from response
@@ -65,28 +70,34 @@ const [groups,setGroup] = useState<string>('')
             <label className='form-header' ><div className='header-text'>Add Member</div></label>
             <div className='div-body'>   
                 <div className='label-wrapper'>
-                Name: 
-                <input type='text' value={name} onChange={(e)=>setName(e.target.value)}></input>
+                First Name: 
+                <input type='text' className='body-text' value={name} onChange={(e)=>setName(e.target.value)}></input>
+                </div>
+                <div className='label-wrapper'>
+                Last Name: 
+                <input className='body-text' type='text' value={last} onChange={(e)=>setLast(e.target.value)}></input>
                 </div>
                 <div className='label-wrapper'>
                 Email Address:
-                <input type='email' value={email} onChange={(e)=>setEmail(e.target.value)}></input>
+                <input type='email'  className='body-text email-box'value={email} onChange={(e)=>setEmail(e.target.value)}></input>
                 </div>
                 <div className='label-wrapper'>
                 Role:
-                <input type='text' value={role} onChange={(e)=>setRole(e.target.value)}></input>
+                <input type='text' className='body-text role-box' value={role} onChange={(e)=>setRole(e.target.value)}></input>
 
                 </div>
-                <div className='label-wrapper'>
+                <div className='label-wrapper bottom-label'>
                 Group:
-                <input type='text' value={groups} onChange={(e)=>setGroup(e.target.value)}></input>
+                <input type='text' className='body-text group-box' value={groups} onChange={(e)=>setGroup(e.target.value)}></input>
             </div>
             <div className='form-footer'>
+                <a href='/members'>
                 <input
                     type="button"
                     className='cancel-button'
                     value="Cancel">
                     </input>
+                </a>
                 <input
                     type="submit"
                     className='save-button'
