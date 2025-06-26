@@ -59,14 +59,13 @@ def update_alert(alert_id):
     if not alert:
         return jsonify({"error": "Alert not found"}), 404
     try:
-        alert_data = alert_schema.load(request.json, partial=True)
+        # This returns an Alert instance with updated fields
+        updated_alert = alert_schema.load(request.json, session=db.session, instance=alert, partial=True)
     except ValidationError as e:
         return jsonify(e.messages), 400
 
-    for field, value in alert_data.items():
-        setattr(alert, field, value)
     db.session.commit()
-    return alert_schema.jsonify(alert), 200
+    return alert_schema.jsonify(updated_alert), 200
 
 # Delete alert
 @alerts_bp.route('/<int:alert_id>', methods=['DELETE'])
