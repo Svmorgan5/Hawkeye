@@ -36,12 +36,12 @@ const [groups,setGroup] = useState<string>('')
         name: `${name} ${last}`,
         role: `${role}`,
         groups: `${groups}`,
-        action: "none",
         active:true,
         
       },{
         headers:{
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAzODc3MzIsImlhdCI6MTc1MDM0NDUzMiwic3ViIjoiMSJ9.T8OYCfeOPJZjy_Rc15TM5z5a8Ial7z_8Nlg0Zqd8DbM`
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAzODc3MzIsImlhdCI6MTc1MDM0NDUzMiwic3ViIjoiMSJ9.T8OYCfeOPJZjy_Rc15TM5z5a8Ial7z_8Nlg0Zqd8DbM`,
+          'Content-Type': 'application/json'
         }
        
       });
@@ -53,7 +53,7 @@ const [groups,setGroup] = useState<string>('')
         setGroup('');
     } catch (error:any){
         alert(`Could not add new Member. ${error.response.data}`)
-      console.error('Error message:', error.response);
+      console.error('Error message:', error.message);
     }
     // Log and extract JWT token from response
     
@@ -97,8 +97,15 @@ const [groups,setGroup] = useState<string>('')
                 </div>
                 <div className='label-wrapper bottom-label'>
                 Group:
-                <input type='text' className='body-text group-box' value={groups} onChange={(e)=>setGroup(e.target.value)}></input>
-            </div>
+                <select className='body-select role-box' value={groups} onChange={(e)=>setGroup(e.target.value)}>
+                <option value='Employee' >Employee</option>
+                <option value='Former Staff'>Former Staff</option>
+                <option value='Admin'>Admin</option>
+                <option value='Student'>Student</option>
+                <option value='KParent'>Parent</option>
+                <option value='Other'>Other</option>
+                </select>
+                </div>
             <div className='form-footer'>
                 <a href='/members'>
                 <input

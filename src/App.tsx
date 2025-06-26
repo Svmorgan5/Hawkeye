@@ -24,6 +24,7 @@ import Profile from './components/SchoolProfile/SchoolProfile';
 import EditMembers from './components/Members/Edit Members/EditMembers';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import PreAddMember from './components/Members/PreAddMember';
 
 const EditMemberWrapper =() => {
     
@@ -74,6 +75,7 @@ function App() {
                 <Route path='/integration' element={<Integration />}/>
                 <Route path='/profile' element={<Profile />}/>
                 <Route path='editmember/:id' element={<EditMemberWrapper />} />
+                <Route path='/preaddmember' element={<PreAddMember />} />
                 
                 
                 

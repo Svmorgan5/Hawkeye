@@ -142,7 +142,7 @@ const Members = () => {
                 </tr>
               </table>
             </div>
-           <a href="/add_member"><input type='button' className='member-add member-header-right' value='+ Add Member' ></input></a>
+           <a href="/preaddmember"><input type='button' className='member-add member-header-right' value='+ Add Member' ></input></a>
           </div>
         </div>
       

@@ -71,12 +71,11 @@ const EditMembers: React.FC<Props> = ({id}) => {
        
     try {
       await axios.put(`http://127.0.0.1:5000/members/${id}`, {
-       
+        id:`${id}`,
         email: `${email}`,
          name: `${name}`,
         role: `${role}`,
         groups: `${groups}`,
-        action: "none",
         active:`${active}`,
         
       },{
@@ -89,12 +88,15 @@ const EditMembers: React.FC<Props> = ({id}) => {
         setEmail('');
         setName('');
         setRole('Teacher');
-        // setLast('');
+        setActive(true);
         setGroup('');
     } catch (error:any){
         alert(`Could not add Edit Member. ${error.message}`)
       console.error('Error message:', error.response.data);
+      console.error('Error message:', error.message);
+     
     }
+
  
     
   };
@@ -109,11 +111,11 @@ const EditMembers: React.FC<Props> = ({id}) => {
       
       
         <form className='new-member-form' onSubmit={handleSubmit}>
-            <label className='form-header' ><div className='header-text'>Add Member</div></label>
+            <label className='form-header' ><div className='header-text'>Edit Member</div></label>
             <div className='div-body'>   
                 <div className='label-wrapper'>
                 Name: 
-                <input type='text' className='body-text' value={name} onChange={(e)=>setName(e.target.value)}></input>
+                <input type='text' className='body-text name-box' value={name} onChange={(e)=>setName(e.target.value)}></input>
                 </div>
                 
                 <div className='label-wrapper'>
@@ -134,7 +136,14 @@ const EditMembers: React.FC<Props> = ({id}) => {
                 </div>
                 <div className='label-wrapper bottom-label'>
                 Group:
-                <input type='text' className='body-text group-box' value={groups} onChange={(e)=>setGroup(e.target.value)}></input>
+                <select className='body-select group-box' value={groups} onChange={(e)=>setGroup(e.target.value)}>
+                <option value='Employee' >Employee</option>
+                <option value='Former Staff'>Former Staff</option>
+                <option value='Admin'>Admin</option>
+                <option value='Student'>Student</option>
+                <option value='KParent'>Parent</option>
+                <option value='Other'>Other</option>
+                </select>
             </div>
             <div className='form-footer'>
                 <a href='/members'>
