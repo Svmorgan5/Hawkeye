@@ -1,0 +1,105 @@
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+from flask_sqlalchemy import SQLAlchemy
+from datetime import date
+from typing import List
+from sqlalchemy import Table, Enum
+from enum import Enum as PyEnum
+
+
+class Base(DeclarativeBase):
+    pass
+
+db = SQLAlchemy(model_class=Base)
+
+class User(Base):
+    __tablename__ = 'users'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(db.String(150), nullable=False)
+    phone: Mapped[str] = mapped_column(db.String(25), nullable=True, unique=True)
+    email: Mapped[str] = mapped_column(db.String(150), nullable=False, unique=True)
+    password: Mapped[str] = mapped_column(db.String(150), nullable=False)
+
+    cameras: Mapped[List["Camera"]] = relationship("Camera", back_populates="user", cascade="all, delete-orphan")
+
+
+# Association table for many-to-many relationship between Camera and Alert
+camera_alert = Table(
+    "camera_alert",
+    Base.metadata,
+    db.Column("camera_id", db.ForeignKey("cameras.id"), primary_key=True),
+    db.Column("alert_id", db.ForeignKey("alerts.id"), primary_key=True),
+)
+## 
+
+camera_member = Table(
+    "camera_member",
+    Base.metadata,
+    db.Column("camera_id", db.ForeignKey("cameras.id"), primary_key=True),
+    db.Column("member_id", db.ForeignKey("members.id"), primary_key=True),
+)
+
+class AlertType(PyEnum):
+    SCHEDULED = "scheduled"
+    TEST = "test"
+    REAL = "real"
+    ARCHIVED = "archived"
+
+class Alert(Base):
+    __tablename__ = 'alerts'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    message: Mapped[str] = mapped_column(db.String(255), nullable=False)
+    alert_type: Mapped[AlertType] = mapped_column(Enum(AlertType), nullable=False)
+    timestamp: Mapped[date] = mapped_column(db.DateTime, nullable=False)
+    # Add other fields as needed (e.g., status, scheduled_time, etc.)
+
+    cameras: Mapped[List["Camera"]] = relationship(
+        "Camera",
+        secondary=camera_alert,
+        back_populates="alerts"
+    )
+
+
+class Camera(Base):
+    __tablename__ = 'cameras'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(db.String(100), nullable=False)
+    location: Mapped[str] = mapped_column(db.String(150))
+    user_id: Mapped[int] = mapped_column(db.ForeignKey('users.id'), nullable=False)
+    snapshot_url: Mapped[str] = mapped_column(db.String(255), nullable=True)  
+    stream_url: Mapped[str] = mapped_column(db.String(255), nullable=True)
+    alerts: Mapped[List["Alert"]] = relationship(
+        "Alert",
+        secondary=camera_alert,
+        back_populates="cameras"
+    )
+
+    user: Mapped["User"] = relationship("User", back_populates="cameras")
+
+    members: Mapped[List["Member"]] = relationship(
+        "Member",
+        secondary=camera_member,
+        back_populates="cameras"
+    )
+
+
+
+class Member(Base):
+    __tablename__ = 'members'
+    id: Mapped[int] = mapped_column(primary_key=True)
+    email: Mapped[str] = mapped_column(db.String(150), nullable=False, unique=True)
+    name: Mapped[str] = mapped_column(db.String(150), nullable=False)
+    role: Mapped[str] = mapped_column(db.String(50), nullable=False)  # e.g., 'admin', 'viewer', etc.
+    groups: Mapped[str] = mapped_column(db.String(150), nullable=True)  # Comma-separated list of groups
+    image: Mapped[str] = mapped_column(db.String(255), nullable=True)  # URL or path to the member's image
+
+
+    cameras: Mapped[List["Camera"]] = relationship(
+        "Camera",
+        secondary=camera_member,
+        back_populates="members"
+    )
+
+
