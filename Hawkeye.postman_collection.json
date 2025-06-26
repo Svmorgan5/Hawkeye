@@ -597,7 +597,7 @@
 			"response": []
 		},
 		{
-			"name": "Create Live Alert",
+			"name": "Create Live Alert/Notifications",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -660,7 +660,7 @@
 			"response": []
 		},
 		{
-			"name": "Update Alerts",
+			"name": "Update Alerts/Notifications",
 			"request": {
 				"method": "PUT",
 				"header": [],
@@ -692,34 +692,7 @@
 			"response": []
 		},
 		{
-			"name": "Delete ",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"alert_type\": \"real\",\r\n    \"message\": \"Real alert\"\r\n}"
-				},
-				"url": {
-					"raw": "http://127.0.0.1:5000/alerts/1",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "5000",
-					"path": [
-						"alerts",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Alerts",
+			"name": "Delete Alerts/Notifications",
 			"request": {
 				"method": "DELETE",
 				"header": [],
