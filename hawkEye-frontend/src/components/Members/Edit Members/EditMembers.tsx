@@ -1,7 +1,6 @@
 
 import axios from 'axios'
-import '../../assets/member.png'
-import './AddMembers.css'
+
 
 import { useEffect, useState} from 'react'
 
@@ -16,28 +15,69 @@ type Member = {
 
 }
 
+type Props = {
+    id:number,
+}
+const EditMembers: React.FC<Props> = ({id}) => {
+    console.log(id)
+    
+    const [member, setMember] = useState<Member>()
+    const [email,setEmail] = useState<string>('')
+    const [name,setName] = useState<string>('')
+    const [role,setRole] = useState<string>('')
+    const [groups,setGroup] = useState<string>('')
+    const [active,setActive] = useState<boolean>(true)
 
-const AddMembers = () => {
+  useEffect(()=> {
+    const getMembers = async() =>{
+    try {
+      const response = await axios.get("http://127.0.0.1:5000/members/", {
+        headers:{
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAzODc3MzIsImlhdCI6MTc1MDM0NDUzMiwic3ViIjoiMSJ9.T8OYCfeOPJZjy_Rc15TM5z5a8Ial7z_8Nlg0Zqd8DbM`
+        }
+      });
+      const myMember = response.data.find((m:Member)=>m.id===id)
+      if(myMember)
+      {
+          setMember(myMember)
+          setMember(myMember);
+          setEmail(myMember.email);
+          setName(myMember.name);
+          setRole(myMember.role);
+          setGroup(myMember.groups);
+          setActive(myMember.active);
+        }
+    
+      
+    } catch (error:any){
+    
+      console.error('Error message:', error.message);
+    }
+    // Log and extract JWT token from response
+    
+  };
 
-const [email,setEmail] = useState<string>('')
-const [name,setName] = useState<string>('')
-const [last,setLast] = useState<string>('')
-const [role,setRole] = useState<string>('Teacher')
-const [groups,setGroup] = useState<string>('')
+  getMembers()
+  },[id]);
+
+
+
+    
+
 
   
  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();  
        
     try {
-      await axios.post("http://127.0.0.1:5000/members/", {
-
+      await axios.put(`http://127.0.0.1:5000/members/${id}`, {
+       
         email: `${email}`,
-        name: `${name} ${last}`,
+         name: `${name}`,
         role: `${role}`,
         groups: `${groups}`,
         action: "none",
-        active:true,
+        active:`${active}`,
         
       },{
         headers:{
@@ -45,17 +85,17 @@ const [groups,setGroup] = useState<string>('')
         }
        
       });
-       alert('New Member Added');
+       alert('Edit Successful');
         setEmail('');
         setName('');
         setRole('Teacher');
-        setLast('');
+        // setLast('');
         setGroup('');
     } catch (error:any){
-        alert(`Could not add new Member. ${error.response.data}`)
-      console.error('Error message:', error.response);
+        alert(`Could not add Edit Member. ${error.message}`)
+      console.error('Error message:', error.response.data);
     }
-    // Log and extract JWT token from response
+ 
     
   };
  
@@ -72,13 +112,10 @@ const [groups,setGroup] = useState<string>('')
             <label className='form-header' ><div className='header-text'>Add Member</div></label>
             <div className='div-body'>   
                 <div className='label-wrapper'>
-                First Name: 
+                Name: 
                 <input type='text' className='body-text' value={name} onChange={(e)=>setName(e.target.value)}></input>
                 </div>
-                <div className='label-wrapper'>
-                Last Name: 
-                <input className='body-text' type='text' value={last} onChange={(e)=>setLast(e.target.value)}></input>
-                </div>
+                
                 <div className='label-wrapper'>
                 Email Address:
                 <input type='email'  className='body-text email-box'value={email} onChange={(e)=>setEmail(e.target.value)}></input>
@@ -110,7 +147,9 @@ const [groups,setGroup] = useState<string>('')
                 <input
                     type="submit"
                     className='save-button'
+                    onClick={()=>handleSubmit}
                     value="Save">
+
                     </input>
 
             </div>
@@ -121,4 +160,4 @@ const [groups,setGroup] = useState<string>('')
   );
 };
 
-export default AddMembers
+export default EditMembers

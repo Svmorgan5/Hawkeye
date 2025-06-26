@@ -41,6 +41,7 @@ color: #FFFFFF;
    opacity:1;
    box-shadow: .05px .05px 1px;
    cursor:pointer;   
+   padding: 9px 24px;
 }
 .menu-item.active{
    background: #3c7f98;  
@@ -48,7 +49,8 @@ color: #FFFFFF;
    opacity:1;
    box-shadow: .1px .1px 1px;
    font-weight: 600;
-   cursor:pointer;   
+   cursor:pointer;  
+   padding: 9px 24px; 
 }
 .logo{
     width: 225px;

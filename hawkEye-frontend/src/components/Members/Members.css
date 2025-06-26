@@ -191,7 +191,7 @@ border:none;
     padding:6px;
     font-weight: 500;
     margin:2px;
-    font-size: 12px;
+   font-size: 14px;
     opacity:70%;
 
 }
@@ -203,8 +203,9 @@ border:none;
     padding:6px;
     font-weight: 500;
     margin:2px;
-    font-size: 12px;
+    font-size: 14px;
     opacity:70%;
+    
 }
 .active{
     
@@ -215,7 +216,7 @@ border:none;
     padding:6px;
     font-weight: 500;
     margin:2px;
-    font-size: 12px;
+    font-size: 14px;
     opacity:70%;
 }
 .active:hover,.delete:hover,.edit:hover{

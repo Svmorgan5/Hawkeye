@@ -21,8 +21,30 @@ import Drills from './components/Drills/Drills'
 import Integration from './components/Intergration/Integration';
 import Billing from './components/Billing/Billing';
 import Profile from './components/SchoolProfile/SchoolProfile';
+import EditMembers from './components/Members/Edit Members/EditMembers';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
+const EditMemberWrapper =() => {
+    
+    const {id} = useParams();
+    const [idInt, setId] = useState<number>(0);
+    
+    useEffect(() =>{
+
+    
+      if(id!=undefined)
+        setId(parseInt(id,10))
+        
+     
+    },[id])
+     return <EditMembers  id={idInt}/>
+
+  }
+
 
 function App() {
+  
   return (
     <div className='container-main'>
           <div className="div-left"><NavBar /></div>
@@ -51,8 +73,10 @@ function App() {
                 <Route path='/billing' element={<Billing />}/>
                 <Route path='/integration' element={<Integration />}/>
                 <Route path='/profile' element={<Profile />}/>
+                <Route path='editmember/:id' element={<EditMemberWrapper />} />
                 
-
+                
+                
 
 
                 

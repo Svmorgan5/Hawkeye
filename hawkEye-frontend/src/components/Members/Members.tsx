@@ -1,9 +1,11 @@
 import './Members.css'
 import axios from 'axios'
 import '../../assets/member.png'
+import { useNavigate } from 'react-router-dom'
 
 
 import { useEffect, useState} from 'react'
+// import EditMembers from './Edit Members/EditMembers'
 
 
 type Member = {
@@ -23,6 +25,7 @@ type Member = {
 const Members = () => {
   const [members, setMembers] = useState<Member[]>([])
   const [activeState,setActiveState] = useState<boolean>(true)
+  const navigate = useNavigate();
 
   const toggleActiveState = () =>{
     setActiveState(prev=>!prev);
@@ -87,6 +90,9 @@ const Members = () => {
     // Log and extract JWT token from response
     
   };
+  const editMember = (id:number) =>{
+    navigate(`/editmember/${id}`)
+  }
  
   
   
@@ -175,12 +181,12 @@ const Members = () => {
               <td>{member.role}</td>
               <td>{member.groups}</td>
               <td>
-                <button onClick={()=>deleteMember(member.id)} className='delete'>DELETE </button>
-               
-                <button className='edit'>EDIT </button>
+                <button onClick={()=>deleteMember(member.id)} className='delete'>Delete </button>
+                <button className='edit' onClick={()=>editMember(member.id)}>Edit</button> 
+                 
                 
                 <button onClick={()=>toggleIsActive(member.id)} className='active'>
-                  {member.active?('DEACTIVATE'):('REACTIVATE')}
+                  {member.active?('Deactivate'):('Reactivate')}
                   </button></td>
             </tr>
             )
