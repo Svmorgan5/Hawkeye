@@ -1,0 +1,323 @@
+.card-container{
+    display:flex;
+    flex-direction: row;
+    margin-bottom:30px;
+    margin-left:20px;
+}
+
+
+
+
+
+
+.card{
+box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+padding: 0px;
+width: 324px;
+height: 209px;
+/* Gray / gray-1 */
+background: #FFFFFF;
+/* Gray / gray-5
+Border
+*/
+border: 1px solid #D9D9D9;
+border-radius: 2px;
+margin-left:27px;
+
+}
+
+.card-head{
+    display: flex;
+    flex-direction: row;
+    gap:60%;
+    padding: 16px 24px;
+   
+    width: 324px;
+    height: 56px;
+    /* Inside auto layout */
+    border-bottom: 1px solid #D9D9D9;
+
+
+/* Semibold/16px | 24px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height, or 150% */
+/* Gray / gray-9 */
+color: #262626;
+
+}
+.card-button{
+    /* Button */
+text-align: right;
+    justify-content: right;
+width: 31px;
+height: 22px;
+
+/* Regular/14px | 22px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 22px;
+/* identical to box height, or 157% */
+
+/* Cyan / cyan-7 */
+color: #08979C;
+
+}
+.card-body{
+    display: flex;
+    flex-direction: row;
+    padding: 0px;
+    padding-top:30px;
+    padding-bottom: 30px;
+    color: #262626;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+}
+
+
+
+
+.card-image{
+    width:120px;
+    height:auto;
+    object-fit: cover;
+    padding:6px;
+    padding-left:20px;
+    
+}
+.card-text{
+    font-family: 'Roboto';
+    font-weight: 500;
+    padding:10px;
+    font-size: 14px;
+    
+}
+
+
+
+.dashboard-head{
+padding-left: 47px;
+padding-bottom: 35px;
+/* Semibold/24px | 32px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 24px;
+line-height: 32px;
+/* or 133% */
+display: flex;
+align-items: center;
+
+/* Gray / gray-9 */
+color: #262626;
+
+
+}
+.breadcrumb{
+
+/* Breadcrumb Link */
+padding-left: 47px;
+padding-bottom:30px;
+padding-top:20px;
+width: 68px;
+height: 22px;
+
+/* Regular/14px | 22px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 22px;
+/* identical to box height, or 157% */
+
+/* Gray / gray-7 */
+color: #8C8C8C;
+
+
+
+
+}
+.split-div{
+    width:50%;
+    
+}
+.a{
+    text-decoration: none;
+    
+    
+}
+.cameras{
+    display:flex;
+    flex-direction: row;
+    margin-left:22px;
+}
+.camera-frame{
+    padding-left:25px;
+}
+.camera-button{
+/* Button */
+position: absolute;
+width: 132px;
+height: 32px;
+left: 1178px;
+top: 795px;
+
+/* Cyan / cyan-7 */
+border: 1px solid #08979C;
+border-radius: 2px;
+
+
+/* Content */
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: center;
+
+
+
+padding:10px;
+/* Regular/14px | 22px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 22px;
+/* identical to box height, or 157% */
+background-color: #FFFFFF;
+/* Cyan / cyan-7 */
+color: #08979C;
+
+
+}
+.camera-button:hover{
+    background-color: #08979C;
+    color: #FFFFFF;
+    cursor:pointer;
+}
+/* Card / Body / Default */
+
+/* Lorem ipsum odor amet, consectetuer adipiscing elit. */
+
+
+
+/* Inside auto layout */
+/* flex: none;
+order: 1;
+flex-grow: 0; */
+
+
+/* Rectangle 1 */
+
+/* width: 324px;
+height: 1px; */
+
+/* Gray / gray-5
+
+Border
+*/
+/* background: #D9D9D9; */
+
+/* Inside auto layout */
+/* flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0; */
+
+
+/* Card / Body / Default */
+
+/* Auto layout */
+/* display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 16px 24px;
+gap: 8px;
+
+width: 324px;
+height: 128px; */
+
+
+/* Inside auto layout */
+/* flex: none;
+order: 2;
+align-self: stretch;
+flex-grow: 0; */
+
+
+/* Table / Item / Row Item */
+
+/* Auto layout */
+/* display: flex;
+flex-direction: row;
+align-items: center;
+padding: 8px;
+gap: 10px;
+
+width: 96px;
+height: 96px; */
+
+
+/* Inside auto layout */
+/* flex: none;
+order: 0;
+flex-grow: 0; */
+
+
+/* Avatar */
+
+/* width: 80px;
+height: 80px;
+
+border-radius: 2px; */
+
+/* Inside auto layout */
+/* flex: none;
+order: 0;
+flex-grow: 0; */
+
+
+/* Rectangle 2 */
+
+/* position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+
+background: url(Circular.png); */
+
+
+/* Lorem ipsum odor amet, consectetuer adipiscing elit. */
+
+/* width: 172px;
+height: 66px; */
+
+/* Regular/14px | 22px
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 22px; */
+/* or 157% */
+
+/* Gray / gray-9 */
+/* color: #262626; */
+
+
+/* Inside auto layout */
+/* flex: none;
+order: 1;
+flex-grow: 1; */
