@@ -60,6 +60,7 @@ class Alert(Base):
         back_populates="alerts"
     )
 
+
 class Camera(Base):
     __tablename__ = 'cameras'
 

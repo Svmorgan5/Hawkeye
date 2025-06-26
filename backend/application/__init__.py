@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
+from flask_socketio import SocketIO
 from backend.application.models import db
 from backend.application.extensions import ma, limiter, cache
 from flask_limiter import Limiter
@@ -8,6 +9,7 @@ from flask_swagger_ui import get_swaggerui_blueprint
 from backend.application.blueprints.user import users_bp
 from backend.application.blueprints.camera import cameras_bp
 from backend.application.blueprints.member import members_bp
+from backend.application.blueprints.alert import alerts_bp
 
 
 #Just getting swagger ready for testing purposes.
@@ -22,13 +24,14 @@ from backend.application.blueprints.member import members_bp
 #    }
 #)
 
-
+socketio = SocketIO()  # This should be at module level, not inside a function
 
 def create_app(config_name):
 
     app = Flask(__name__)
     app.config.from_object(f'config.{config_name}')
     CORS(app)
+    socketio.init_app(app, cors_allowed_origins="*")  # Initialize SocketIO with CORS support
     # add extensions
     db.init_app(app)
     ma.init_app(app)
@@ -44,7 +47,7 @@ def create_app(config_name):
     app.register_blueprint(members_bp, url_prefix='/members')
     app.register_blueprint(cameras_bp, url_prefix='/cameras')
     
-    #app.register_blueprint(alerts_bp, url_prefix='/alerts')
+    app.register_blueprint(alerts_bp, url_prefix='/alerts')
 
 
 
