@@ -1,6 +1,5 @@
 from flask import Blueprint
 
-notification_bp = Blueprint('notification', __name__, url_prefix='/api/notifications')
+notifications_bp = Blueprint('notifications_bp', __name__)
 
 from . import routes
-from . import notificationSchemas

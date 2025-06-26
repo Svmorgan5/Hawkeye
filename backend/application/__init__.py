@@ -48,7 +48,7 @@ def create_app(config_name):
     
     #app.register_blueprint(alerts_bp, url_prefix='/alerts')
 
-    app.register_blueprint(notification_bp)
+    app.register_blueprint(notification_bp, url_prefix='/notifications')
 
 
 

@@ -24,7 +24,7 @@ def get_notifications(current_user_id):
     results = db.session.execute(query).scalars().all()
     return notifications_schema.jsonify(results), 200
 
-@notification_bp.route('/<int:notification_id>/read', methods=['PATCH'])
+@notification_bp.route('/<int:notification_id>/read', methods=['PUT'])
 @token_required
 def mark_as_read(current_user_id, notification_id):
     notif = db.session.get(Notification, notification_id)
