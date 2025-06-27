@@ -2,12 +2,13 @@
 import './MemberList.css'
 
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
 
 const MemberList = () => {
 
-
+const navigate = useNavigate();
 const [file,setFile] = useState<File|null>(null)
   const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
     if(e.target.files){
@@ -16,6 +17,7 @@ const [file,setFile] = useState<File|null>(null)
   }
 
 const handleUpload = async () => {
+    
     if(file){
         console.log('Uploading file...');
 
@@ -30,15 +32,16 @@ const handleUpload = async () => {
                 
             
         });
-    console.log(response)
+   
     const data = await response.json();  // parse JSON body
-console.log('Upload response:', data);
-alert('New Members Succefully Added File!')
+    console.log('Upload response:', data);
+    alert('New Members Succefully Added File!')
+    navigate('/members');
         // const data = await result.json();
         // console.log(data);
     } catch(error){
         console.log(error);
-        alert('Unable To Upload Files.')
+        alert(`Unable To Upload Files. ${error}`)
     }
     }
 }
@@ -49,7 +52,7 @@ alert('New Members Succefully Added File!')
    
       
       
-        <form className='new-member-form' >
+        <div className='new-member-form' >
             
             <label className='form-header' ><div className='header-text'>Add Member</div></label>
             <div className='div-body'>   
@@ -72,8 +75,8 @@ alert('New Members Succefully Added File!')
                     onClick={handleUpload}>Upload File</button>
 
             </div>
-         
-        </form>
+
+        </div>
     
     
   )
