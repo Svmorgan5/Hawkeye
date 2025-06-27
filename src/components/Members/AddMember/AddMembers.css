@@ -163,6 +163,36 @@ color: #FFFFFF;
 
 
 }
+.upload-button{
+    /* Button */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+vertical-align: center;
+
+border:none;
+
+width: 67px;
+height: 40px;
+margin-top:7px;
+background: #13C2C2;
+border-radius: 2px;
+
+/* Button */
+
+/* Regular/16px | 24px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+
+color: #FFFFFF;
+
+
+
+}
 .cancel-button{
     /* Button */
 
