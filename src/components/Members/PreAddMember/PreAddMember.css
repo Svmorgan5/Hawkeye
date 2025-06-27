@@ -1,0 +1,29 @@
+
+
+.member-main{
+    margin-top:200px;
+    text-align: center;
+}
+.member-main-text{
+    /* Members */
+display: inline-block;
+width: 128px;
+height: 38px;
+
+/* Semibold / 30px | 38px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 30px;
+line-height: 38px;
+
+
+/* Gray / gray-9 */
+color: #262626;
+
+
+
+}
+.add-button{
+    display: inline-block;
+}

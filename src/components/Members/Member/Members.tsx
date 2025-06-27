@@ -1,6 +1,6 @@
 import './Members.css'
 import axios from 'axios'
-import '../../assets/member.png'
+import '../../../assets/member.png'
 import { useNavigate } from 'react-router-dom'
 
 

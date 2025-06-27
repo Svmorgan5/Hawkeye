@@ -3,7 +3,7 @@ import axios from 'axios'
 
 
 import { useEffect, useState} from 'react'
-
+import { useNavigate } from 'react-router-dom'
 
 type Member = {
     id:any,
@@ -27,7 +27,7 @@ const EditMembers: React.FC<Props> = ({id}) => {
     const [role,setRole] = useState<string>('')
     const [groups,setGroup] = useState<string>('')
     const [active,setActive] = useState<boolean>(true)
-
+    const navigate = useNavigate();
   useEffect(()=> {
     const getMembers = async() =>{
     try {
@@ -90,6 +90,7 @@ const EditMembers: React.FC<Props> = ({id}) => {
         setRole('Teacher');
         setActive(true);
         setGroup('');
+        navigate('/members');
     } catch (error:any){
         alert(`Could not add Edit Member. ${error.message}`)
       console.error('Error message:', error.response.data);
@@ -141,7 +142,7 @@ const EditMembers: React.FC<Props> = ({id}) => {
                 <option value='Former Staff'>Former Staff</option>
                 <option value='Admin'>Admin</option>
                 <option value='Student'>Student</option>
-                <option value='KParent'>Parent</option>
+                <option value='Parent'>Parent</option>
                 <option value='Other'>Other</option>
                 </select>
             </div>
