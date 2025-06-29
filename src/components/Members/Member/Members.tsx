@@ -94,26 +94,53 @@ const Members = () => {
   };
 
   const deleteMember = async(id:any) =>{
-    try {
-      await axios.delete(`http://127.0.0.1:5000/members/${id}`, {
-        headers:{
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAzODc3MzIsImlhdCI6MTc1MDM0NDUzMiwic3ViIjoiMSJ9.T8OYCfeOPJZjy_Rc15TM5z5a8Ial7z_8Nlg0Zqd8DbM`
-        }
-      });
-    
-      toggleIsVisible(id);
-    } catch (error:any){
-    
-      console.error('Error message:', error.message);
+    const confirmed = window.confirm('Are you sure you want to delete this member? This action cannot be undone!');
+    if(confirmed){
+      try {
+        await axios.delete(`http://127.0.0.1:5000/members/${id}`, {
+          headers:{
+            'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAzODc3MzIsImlhdCI6MTc1MDM0NDUzMiwic3ViIjoiMSJ9.T8OYCfeOPJZjy_Rc15TM5z5a8Ial7z_8Nlg0Zqd8DbM`
+          }
+        });
+      
+        toggleIsVisible(id);
+      } catch (error:any){
+      
+        console.error('Error message:', error.message);
+      }
     }
-    // Log and extract JWT token from response
-    
+      // Log and extract JWT token from response
+      
   };
   const editMember = (id:number) =>{
     navigate(`/editmember/${id}`)
   }
  
+  const makeInactive = async (member:Member) => {
+       try {
+      await axios.put(`http://127.0.0.1:5000/members/${member.id}`, {
+        id:`${member.id}`,
+        email: `${member.email}`,
+         name: `${member.name}`,
+        role: `${member.role}`,
+        groups: `${member.groups}`,
+        active:`${!member.active}`,
+        
+      },{
+        headers:{
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAzODc3MzIsImlhdCI6MTc1MDM0NDUzMiwic3ViIjoiMSJ9.T8OYCfeOPJZjy_Rc15TM5z5a8Ial7z_8Nlg0Zqd8DbM`
+        }
+       
+      });
   
+        toggleIsActive(member.id)
+    } catch (error:any){
+        alert(`Could not add Edit Member. ${error.message}`)
+      console.error('Error message:', error.response.data);
+      console.error('Error message:', error.message);
+     
+    }
+  }
   
   
   
@@ -207,7 +234,7 @@ const Members = () => {
                 <button className='edit' onClick={()=>editMember(member.id)}>Edit</button> 
                  
                 
-                <button onClick={()=>toggleIsActive(member.id)} className='active'>
+                <button onClick={()=>makeInactive(member)} className='active'>
                   {member.active?('Deactivate'):('Reactivate')}
                   </button></td>
             </tr>
