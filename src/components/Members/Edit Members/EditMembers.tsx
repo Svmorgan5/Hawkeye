@@ -1,6 +1,6 @@
 
 import axios from 'axios'
-
+import './EditMembers.css'
 
 import { useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -108,7 +108,7 @@ const EditMembers: React.FC<Props> = ({id}) => {
   
   return (
     
-    <div className='body'>
+    <div className='body-editmembers'>
       
       
         <form className='new-member-form' onSubmit={handleSubmit}>
@@ -116,12 +116,12 @@ const EditMembers: React.FC<Props> = ({id}) => {
             <div className='div-body'>   
                 <div className='label-wrapper'>
                 Name: 
-                <input type='text' className='body-text name-box' value={name} onChange={(e)=>setName(e.target.value)}></input>
+                <input type='text' className='body-text name-box-editmembers' value={name} onChange={(e)=>setName(e.target.value)}></input>
                 </div>
                 
                 <div className='label-wrapper'>
                 Email Address:
-                <input type='email'  className='body-text email-box'value={email} onChange={(e)=>setEmail(e.target.value)}></input>
+                <input type='email'  className='body-text email-box-editmembers'value={email} onChange={(e)=>setEmail(e.target.value)}></input>
                 </div>
                 <div className='label-wrapper'>
                 Role:

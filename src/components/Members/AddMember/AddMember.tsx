@@ -65,7 +65,7 @@ const [groups,setGroup] = useState<string>('')
   
   return (
     
-    <div className='body'>
+    <div className='body-addmembers'>
       
       
         <form className='new-member-form' onSubmit={handleSubmit}>
@@ -73,7 +73,7 @@ const [groups,setGroup] = useState<string>('')
             <div className='div-body'>   
                 <div className='label-wrapper'>
                 First Name: 
-                <input type='text' className='body-text' value={name} onChange={(e)=>setName(e.target.value)}></input>
+                <input type='text' className='body-text name-box-addmembers' value={name} onChange={(e)=>setName(e.target.value)}></input>
                 </div>
                 <div className='label-wrapper'>
                 Last Name: 
@@ -85,7 +85,7 @@ const [groups,setGroup] = useState<string>('')
                 </div>
                 <div className='label-wrapper'>
                 Role:
-                <select className='body-select role-box' value={role} onChange={(e)=>setRole(e.target.value)}>
+                <select className='body-select role-box-addmembers' value={role} onChange={(e)=>setRole(e.target.value)}>
                 <option value='Teacher' >Teacher</option>
                 <option value='Student'>Student</option>
                 <option value='Principal'>Principal</option>
@@ -97,7 +97,7 @@ const [groups,setGroup] = useState<string>('')
                 </div>
                 <div className='label-wrapper bottom-label'>
                 Group:
-                <select className='body-select role-box' value={groups} onChange={(e)=>setGroup(e.target.value)}>
+                <select className='body-select  group-box-addmembers' value={groups} onChange={(e)=>setGroup(e.target.value)}>
                 <option value='Employee' >Employee</option>
                 <option value='Former Staff'>Former Staff</option>
                 <option value='Admin'>Admin</option>

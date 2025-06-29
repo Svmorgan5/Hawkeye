@@ -52,27 +52,30 @@ const handleUpload = async () => {
    
       
       
-        <div className='new-member-form' >
+        <div className='new-member-form-memberlist' >
             
-            <label className='form-header' ><div className='header-text'>Add Member</div></label>
-            <div className='div-body'>   
-                Upload File (.csv or .rtf): 
-                <input type='file' className='file' onChange={handleFileChange}></input>
+            <label className='form-header-memberlist' ><div className='header-text'>Import File</div></label>
+            <div className='div-body-memberlist'>   
+                <div className='upload'>Upload File (.csv or .rtf): </div>
+                <div><input type='file' className='file' onChange={handleFileChange}></input></div>
                 
             </div>  
 
-            <div className='form-footer'>
+            <div className='form-footer-memberlist'>
+                <div>
                 <a href='/members'>
                 <input
                     type="button"
-                    className='cancel-button'
+                    className='cancel-button-memberlist'
                     value="Cancel" />
                  
                 </a>
-               
+               </div>
+               <div>
                 <button
-                    className='upload-button'
-                    onClick={handleUpload}>Upload File</button>
+                    className='upload-button-memberlist'
+                    onClick={handleUpload}>Import</button>
+                </div>
 
             </div>
 

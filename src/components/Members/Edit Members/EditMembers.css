@@ -1,10 +1,11 @@
-.body{
-    background: gray;
-    max-height:200px;
+ .body-editmembers{
+    padding-left:300px;
+    padding-top:100px;
+    height:800px;
     width:1400px;
 
-}
-.new-member-form-memberlist{
+} 
+.edit-member-form{
  
 
     /* Modal / Basic */
@@ -15,11 +16,9 @@ flex-direction: column;
 align-items: flex-start;
 padding: 0px;
 
-position: absolute;
-width: 480px;
-height: 175px;
-left: calc(45% - 520px/2 + 117px);
-top: 170px;
+height:320px;
+width:520px;
+
 
 /* Gray / gray-1 */
 background: #FFFFFF;
@@ -28,21 +27,19 @@ box-shadow: 0px 16px 13.3px 4px rgba(0, 0, 0, 0.25), 0px 6px 16px rgba(0, 0, 0, 
 border-radius: 2px;
 
 }
-.form-footer-memberlist{
-    display:flex;
-    flex-direction: row;
+.form-footer{
     box-sizing: border-box;
 
 /* Auto layout */
+display: flex;
+flex-direction: row;
 justify-content: right;
-padding-right:27px;
-padding-top:5px;
-margin-bottom:-50px;
-
+padding: 10px 22px;
+padding-bottom: -15px;
 gap: 10px;
 
-width: 480px;
-
+width: 510px;
+height: 5px;
 
 /* Gray / gray-5
 
@@ -51,7 +48,7 @@ Border
 border-top: 1px solid #D9D9D9;
 
 }
-.form-header-memberlist{
+.form-header{
     
     /* Head */
 
@@ -64,7 +61,7 @@ align-items: center;
 padding: 16px 24px;
 gap: 10px;
 
-width: 480px;
+width: 520px;
 height: 56px;
 
 /* Gray / gray-5
@@ -100,21 +97,20 @@ order: 0;
 flex-grow: 1;
 
 }
-.div-body-memberlist{
+.div-body{
     /* First Name : */
 
-display:flex;
-justify-content: center;
+
 
 /* Regular/14px | 22px */
 font-family: 'Roboto';
 font-style: normal;
 font-weight: 400;
-font-size: 16px;
+font-size: 14px;
 line-height: 22px;
 /* identical to box height, or 157% */
 padding:10px;
-gap:70px;
+
 /* Gray / gray-9 */
 color: #262626;
 
@@ -130,15 +126,8 @@ color: #262626;
     gap:60px;
     padding-top:3px;
 }
-.bottom-label-memberlist{
-   
-    padding-bottom:20px;
-}
-.upload{
-    padding-left:14px;
-   padding-top:2px;
-    justify-content: center;
-  
+.bottom-label{
+    padding-bottom:10px;
 }
 .save-button{
     /* Button */
@@ -173,7 +162,7 @@ color: #FFFFFF;
 
 
 }
-.upload-button-memberlist{
+.upload-button{
     /* Button */
 
 /* Auto layout */
@@ -189,22 +178,21 @@ height: 40px;
 margin-top:7px;
 background: #13C2C2;
 border-radius: 2px;
-justify-content: center;
+
 /* Button */
 
 /* Regular/16px | 24px */
 font-family: 'Roboto';
 font-style: normal;
-
-font-size: 16px;
+font-weight: 400;
+font-size: 14px;
 
 color: #FFFFFF;
 
 
 
-
 }
-.cancel-button-memberlist{
+.cancel-button{
     /* Button */
 
 box-sizing: border-box;
@@ -218,21 +206,20 @@ gap: 8px;
 
 width: 81px;
 height: 40px;
-color: #13C2C2;
+
 /* Gray / gray-1 */
 background: #FFFFFF;
 /* Gray / gray-5
 
 Border
 */
-
-border: 1px solid  #13C2C2;
+border: 1px solid #D9D9D9;
 border-radius: 2px;
 /* Regular/16px | 24px */
 font-family: 'Roboto';
 font-style: normal;
 font-weight: 400;
-font-size: 16px;
+font-size: 14px;
 
 /* identical to box height, or 150% */
 
@@ -240,13 +227,12 @@ font-size: 16px;
 
 
 }
-.cancel-button-memberlist:hover{
+.cancel-button:hover{
     background-color: rgb(86, 88, 88);
-    border-color: rgb(86, 88, 88);
     color: #FFFFFF;
 }
-.upload-button-memberlist:hover{
-    background-color:#056d6d;
+.save-button:hover{
+    background-color:#094646;
     color: #FFFFFF;
 }
 .body-text{
@@ -291,37 +277,15 @@ font-weight: 400;
 
 
 /*temp styling */
-.email-box{
- margin-left:-21px;
+.name-box-editmembers{
+ margin-left:35px;
 }
-.role-box{
-margin-left:40px;
+.email-box-editmembers{
+ margin-left:-15px;
 }
-.group-box{
-margin-left:29px;
+.role-box-editembers{
+margin-left:41px;
 }
-.file{
-   
-
-    /* Choose File Field */
-
-
-
-/* Auto layout */
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content:center;
-padding: 3px 8px;
-gap: 3px;
-
-width: 200px;
-height: 31px;
-
-background: #FFFFFF;
-border: 2px solid #CBD2E0;
-border-radius: 6px;
-color:#64676d
-
-
+.group-box-editmembers{
+margin-left:32px;
 }

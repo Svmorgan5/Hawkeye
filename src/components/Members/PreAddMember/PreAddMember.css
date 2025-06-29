@@ -24,9 +24,7 @@ color: #262626;
 
 
 }
-.add-button{
-    display: inline-block;
-}
+
 .member-notice{
     /* Click to include a new member in the system. */
 
@@ -47,4 +45,48 @@ color: #262626;
 display: inline-block;
 
 
+}
+.bottom{
+    /* OR Import Member’s List From Here */
+display: inline-block;
+width: 515px;
+height: 48px;
+
+/* Regular/16px | 24px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+/* or 150% */
+text-align: center;
+padding-top:10px;
+/* Gray / gray-9 */
+color: #262626;
+
+
+
+}
+
+.member-add-preadd{
+    width:220px;
+    height:35px;
+        display: flex;
+flex-direction: column;
+align-items: center;
+padding: 5px 16px;
+height:40px;
+gap: 8px;
+cursor:pointer;
+
+
+align-items: right;
+background: #13C2C2;
+color:white;
+border-radius: 0px 2px 2px 0px;
+border:none;
+display: inline-block;
+}
+.a{
+    text-transform: underline;
 }

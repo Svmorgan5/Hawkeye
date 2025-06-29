@@ -25,6 +25,7 @@ type Member = {
 const Members = () => {
   const [members, setMembers] = useState<Member[]>([])
   const [activeState,setActiveState] = useState<boolean>(true)
+  const [search,setSearch] = useState<string>('')
   const navigate = useNavigate();
 
   const toggleActiveState = () =>{
@@ -73,6 +74,24 @@ const Members = () => {
   getMembers()
   },[]);
   
+  const getMembers = async() =>{
+    try {
+      const response = await axios.get("http://127.0.0.1:5000/members/", {
+        headers:{
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAzODc3MzIsImlhdCI6MTc1MDM0NDUzMiwic3ViIjoiMSJ9.T8OYCfeOPJZjy_Rc15TM5z5a8Ial7z_8Nlg0Zqd8DbM`
+        }
+      });
+      const filteredMembers= response.data.filter((myMember:Member)=>myMember.name.includes(search)||myMember.email.includes(search)||myMember.groups.includes(search)||myMember.role.includes(search));
+      setMembers(filteredMembers)
+    
+      
+    } catch (error:any){
+    
+      console.error('Error message:', error.message);
+    }
+    // Log and extract JWT token from response
+    
+  };
 
   const deleteMember = async(id:any) =>{
     try {
@@ -107,8 +126,8 @@ const Members = () => {
           <div className='member-header-top'>
             <div className='breadcrumb'>Members</div>
             <div className='member-header-right'>
-              <input type='text' placeholder='Search members' className='member-search' ></input>
-              <input type='button' className='member-search-button' value='Search'></input>
+              <input type='text' placeholder='Search members' className='member-search' onChange={(e)=>setSearch(e.target.value)} value={search}></input>
+              <button className='member-search-button'  onClick={getMembers}>Search</button>
               
             </div>
           </div>
@@ -169,8 +188,11 @@ const Members = () => {
               </th> 
             </tr>
         </thead>
+        </table>
+        <div className="tbody">
+        <table className='table-in-table'>
+        <tbody>
         
-        <tbody className="tbody">
           {members?.map(member=> {
             if (member.active=== activeState && member.isVisible !== false){
               return(
@@ -193,10 +215,13 @@ const Members = () => {
             }
             
           })}
+       
         </tbody>
+        </table>
+        </div>
 
 
-      </table>
+     
 
      
     

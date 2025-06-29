@@ -1,9 +1,10 @@
-.body{
-    background: gray;
+ .body-addmembers{
+    padding-left:300px;
+    padding-top:100px;
     height:800px;
     width:1400px;
 
-}
+} 
 .new-member-form{
  
 
@@ -15,11 +16,9 @@ flex-direction: column;
 align-items: flex-start;
 padding: 0px;
 
-position: absolute;
-width: 520px;
-height: 325px;
-left: calc(45% - 520px/2 + 117px);
-top: 170px;
+height:320px;
+width:520px;
+
 
 /* Gray / gray-1 */
 background: #FFFFFF;
@@ -278,12 +277,15 @@ font-weight: 400;
 
 
 /*temp styling */
+.name-box-addmembers{
+ margin-left:-2px;
+}
 .email-box{
  margin-left:-21px;
 }
-.role-box{
-margin-left:40px;
+.role-box-addmembers{
+margin-left:41px;
 }
-.group-box{
-margin-left:29px;
+.group-box-addmembers{
+margin-left:31px;
 }
