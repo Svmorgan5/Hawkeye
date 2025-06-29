@@ -93,6 +93,13 @@ const Members = () => {
     
   };
 
+  useEffect(()=>{
+      getMembers()
+  },[search]);
+  const clearSearch = () => {
+    setSearch('');
+   
+  }
   const deleteMember = async(id:any) =>{
     const confirmed = window.confirm('Are you sure you want to delete this member? This action cannot be undone!');
     if(confirmed){
@@ -153,7 +160,12 @@ const Members = () => {
           <div className='member-header-top'>
             <div className='breadcrumb'>Members</div>
             <div className='member-header-right'>
-              <input type='text' placeholder='Search members' className='member-search' onChange={(e)=>setSearch(e.target.value)} value={search}></input>
+              <div className='members-search-wrapper'>
+          
+                <input type='text' placeholder='Search members' className='member-search' onChange={(e)=>setSearch(e.target.value)} value={search}></input>
+                <button onClick={clearSearch} className='member-search-cancel'>X</button>
+               
+              </div>
               <button className='member-search-button'  onClick={getMembers}>Search</button>
               
             </div>
