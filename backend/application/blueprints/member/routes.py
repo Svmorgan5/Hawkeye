@@ -1,10 +1,12 @@
-from flask import request, jsonify
+import os
+from flask import request, jsonify, current_app
 from backend.application.models import db, Member
 from backend.application.blueprints.member import members_bp
 from backend.application.blueprints.member.memberSchemas import member_schema, members_schema
 from marshmallow import ValidationError
 import csv
 import io
+from werkzeug.utils import secure_filename
 
 # Create a member (single)
 @members_bp.route('/', methods=['POST'])
@@ -19,10 +21,38 @@ def create_member():
     db.session.commit()
     return member_schema.jsonify(new_member), 201
 
-# Get all members
+
+
+@members_bp.route('/<int:member_id>/upload_image', methods=['POST'])
+def upload_member_image(member_id):
+    member = db.session.get(Member, member_id)
+    if not member:
+        return jsonify({"error": "Member not found"}), 404
+
+    if 'image' not in request.files:
+        return jsonify({"error": "No image file provided"}), 400
+
+    file = request.files['image']
+    filename = secure_filename(file.filename)
+    # Save to backend/application/static/uploads/
+    upload_folder = os.path.join(current_app.root_path, 'static', 'uploads')
+    os.makedirs(upload_folder, exist_ok=True)
+    upload_path = os.path.join(upload_folder, filename)
+    file.save(upload_path)
+
+    member.image = f'/static/uploads/{filename}'
+    db.session.commit()
+    return jsonify({"message": "Image uploaded", "image_url": member.image}), 200
+
+# Get all members or search members by name
 @members_bp.route('/', methods=['GET'])
 def get_members():
-    members = db.session.query(Member).all()
+    search = request.args.get('search')
+    query = db.session.query(Member)
+    if search:
+        #flexible search for member names not case sensitive
+        query = query.filter(Member.name.ilike(f"%{search}%"))
+    members = query.all()
     return members_schema.jsonify(members), 200
 
 # Get a single member
@@ -39,12 +69,31 @@ def update_member(member_id):
     member = db.session.get(Member, member_id)
     if not member:
         return jsonify({"error": "Member not found"}), 404
-    try:
-        member_data = member_schema.load(request.json, partial=True)
-    except ValidationError as e:
-        return jsonify(e.messages), 400
-    for field, value in member_data.items():
-        setattr(member, field, value)
+
+    # Check if the request is multipart (for image upload)
+    if request.content_type and request.content_type.startswith('multipart/form-data'):
+        # Handle image upload if present
+        if 'image' in request.files:
+            file = request.files['image']
+            filename = secure_filename(file.filename)
+            upload_folder = os.path.join(current_app.root_path, 'static', 'uploads')
+            os.makedirs(upload_folder, exist_ok=True)
+            upload_path = os.path.join(upload_folder, filename)
+            file.save(upload_path)
+            member.image = f'/static/uploads/{filename}'
+        # Handle other fields from form data
+        for field in ['name', 'email', 'role', 'groups']:
+            if field in request.form:
+                setattr(member, field, request.form[field])
+    else:
+        # Handle JSON update as before
+        try:
+            member_data = member_schema.load(request.json, partial=True)
+        except ValidationError as e:
+            return jsonify(e.messages), 400
+        for field, value in member_data.items():
+            setattr(member, field, value)
+
     db.session.commit()
     return member_schema.jsonify(member), 200
 

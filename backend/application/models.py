@@ -52,6 +52,8 @@ class Alert(Base):
     message: Mapped[str] = mapped_column(db.String(255), nullable=False)
     alert_type: Mapped[AlertType] = mapped_column(Enum(AlertType), nullable=False)
     timestamp: Mapped[date] = mapped_column(db.DateTime, nullable=False)
+    code: Mapped[str] = mapped_column(db.String(50), nullable=False)  
+    location: Mapped[str] = mapped_column(db.String(150), nullable=False)  # Location of the alert
     # Add other fields as needed (e.g., status, scheduled_time, etc.)
 
     cameras: Mapped[List["Camera"]] = relationship(
