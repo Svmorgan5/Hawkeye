@@ -1,11 +1,14 @@
+import os
 from . import users_bp
 from backend.application.blueprints.user.userSchemas import user_schema, users_schema, login_schema
-from flask import request, jsonify
+from flask import request, jsonify, current_app
 from backend.application.models import db, User
 from marshmallow import ValidationError
 from sqlalchemy import select, delete
 from backend.application.extensions import limiter, cache
 from backend.application.utils.utils import encode_token, token_required
+from werkzeug.utils import secure_filename
+
 
 
 @users_bp.route('/login', methods=['POST'])
@@ -54,6 +57,27 @@ def add_user():
    db.session.add(new_user)
    db.session.commit()
    return user_schema.jsonify(new_user), 201
+
+@users_bp.route('/<int:user_id>/upload_image', methods=['POST'])
+def upload_user_image(user_id):
+    user = db.session.get(User, user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    if 'image' not in request.files:
+        return jsonify({"error": "No image file provided"}), 400
+
+    file = request.files['image']
+    filename = secure_filename(file.filename)
+    # Save to backend/application/static/uploads/
+    upload_folder = os.path.join(current_app.root_path, 'static', 'uploads')
+    os.makedirs(upload_folder, exist_ok=True)
+    upload_path = os.path.join(upload_folder, filename)
+    file.save(upload_path)
+
+    user.image = f'/static/uploads/{filename}'
+    db.session.commit()
+    return jsonify({"message": "Image uploaded", "image_url": user.image}), 200
 
 #token required to get all users
 @users_bp.route('/', methods=['GET'])
