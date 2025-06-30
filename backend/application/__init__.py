@@ -13,16 +13,16 @@ from backend.application.blueprints.alert import alerts_bp
 
 
 #Just getting swagger ready for testing purposes.
-#SWAGGER_URL = '/api/docs' 
-#API_URL = '/static/swagger.yaml'
+SWAGGER_URL = '/api/docs' 
+API_URL = '/static/swagger.yml'
 
-#swaggerui_blueprint= get_swaggerui_blueprint(
-#    SWAGGER_URL,
-#    API_URL,
-#    config={
-#        'app_name': "Hawkeye API"
-#    }
-#)
+swaggerui_blueprint= get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+    'app_name': "Hawkeye API"
+    }
+)
 
 socketio = SocketIO()  # This should be at module level, not inside a function
 
@@ -48,6 +48,7 @@ def create_app(config_name):
     app.register_blueprint(cameras_bp, url_prefix='/cameras')
     
     app.register_blueprint(alerts_bp, url_prefix='/alerts')
+    app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
 
 
