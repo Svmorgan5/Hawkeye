@@ -50,8 +50,10 @@ def get_members():
     search = request.args.get('search')
     query = db.session.query(Member)
     if search:
-        #flexible search for member names not case sensitive
+        # flexible search for member names not case sensitive
         query = query.filter(Member.name.ilike(f"%{search}%"))
+    # Order results alphabetically by name
+    query = query.order_by(Member.name.asc())
     members = query.all()
     return members_schema.jsonify(members), 200
 

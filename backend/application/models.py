@@ -19,6 +19,7 @@ class User(Base):
     phone: Mapped[str] = mapped_column(db.String(25), nullable=True, unique=True)
     email: Mapped[str] = mapped_column(db.String(150), nullable=False, unique=True)
     password: Mapped[str] = mapped_column(db.String(150), nullable=False)
+    image: Mapped[str] = mapped_column(db.String(255), nullable=True)  # URL or path to the user's image
 
     cameras: Mapped[List["Camera"]] = relationship("Camera", back_populates="user", cascade="all, delete-orphan")
 
