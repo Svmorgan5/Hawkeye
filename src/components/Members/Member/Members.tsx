@@ -214,7 +214,8 @@ const Members = () => {
           
           <thead className="thead">
               <tr  className='th'>
-              <th>
+              <th className='left-cell'></th>
+              <th >
                 Name
               </th>
               <th>
@@ -241,7 +242,8 @@ const Members = () => {
               return(
               
             <tr key={member.id} className='tr'>
-              <td className='left-cell'><img src='\src\assets\member.png'></img><span className='member'>{member.name}</span></td>
+              <td className='left-cell'><img src='\src\assets\member.png'></img></td>
+              <td className='second-left-cell'><span className='member'>{member.name}</span></td>
               <td>{member.email}</td>
               <td>{member.role}</td>
               <td>{member.groups}</td>

@@ -32,6 +32,7 @@ border-radius: 2px;
   
     width:89%;
     overflow-y: scroll;
+    overflow-x: hidden;
     max-height: 500px;
     margin-right:0px;
     padding-right:0px;
@@ -45,7 +46,7 @@ border-radius: 2px;
     /* Table / Item / Header Item */
 border:none;
 background: #f0efef;
-width:25%;
+width:18%;
 min-width: 150px;
 height: 35px;
 text-align: left;
@@ -75,7 +76,7 @@ font-style: normal;
 font-weight: 400;
 font-size: 14px;
 line-height: 22px;
-
+width:19%;
 align-items: center;
 
 /* Gray / gray-9 */
@@ -86,9 +87,14 @@ color: #2e2d2d;
 }
 .left-cell{
     text-align:left;
-    padding-left:50px;
+    padding-left:30px;
     vertical-align: center;
+    width:5%;
 
+}
+.second-left-cell{
+    text-align:left;
+    vertical-align: center;
 }
 .member{
     margin-bottom:15px;
