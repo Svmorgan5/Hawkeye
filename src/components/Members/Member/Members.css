@@ -160,8 +160,12 @@ color:white;
 border-radius: 0px 2px 2px 0px;
 border:none;
 
+}
+.member-add:hover{
 
-
+background: #0c9c9c;
+font-weight:600;
+font-size: 13px;
 
 
 }
@@ -251,6 +255,7 @@ border:none;
     color: #727171;
     border-width: 1px;
     border-color: rgb(165, 165, 165);
+    cursor:pointer;
 }
 .member-search-cancel:hover{
     

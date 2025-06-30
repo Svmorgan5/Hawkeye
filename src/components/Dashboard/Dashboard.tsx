@@ -5,7 +5,7 @@ import bars from '../../assets/bars.png'
 import settings from  '../../assets/setting.png'
 import members from '../../assets/members.png'
 import Training from '../../assets/training.png'
-import Alerts from '../../assets/alerts.png'
+import Alert from '../../assets/alert.png'
 import Camera1 from '../../assets/Camera1.png'
 import Avatar1 from '../../assets/Avatar1.png'
 import Avatar2 from '../../assets/Avatar2.png'
@@ -20,7 +20,7 @@ const Dashboard = () => {
      <p className='dashboard-head' > 
         Welcome, Principal Roberts! </p>
     <div className="card-container">
-        <DashCard heading='Alerts' message='Lorem ipsum odor amet, consectetuer adipiscing elit.' picture={Alerts} link='/alerts' />
+        <DashCard heading='Alerts' message='Lorem ipsum odor amet, consectetuer adipiscing elit.' picture={Alert} link='/alerts' />
         <DashCard heading='Reports' message='Lorem ipsum odor amet, consectetuer adipiscing elit. ' picture={bars} link='/reports'/>
         <DashCard heading='Lockdowns' message='Lorem ipsum odor amet, consectetuer adipiscing elit. ' picture={bars} />
      

@@ -81,7 +81,11 @@ const Members = () => {
           'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAzODc3MzIsImlhdCI6MTc1MDM0NDUzMiwic3ViIjoiMSJ9.T8OYCfeOPJZjy_Rc15TM5z5a8Ial7z_8Nlg0Zqd8DbM`
         }
       });
-      const filteredMembers= response.data.filter((myMember:Member)=>myMember.name.includes(search)||myMember.email.includes(search)||myMember.groups.includes(search)||myMember.role.includes(search));
+      const filteredMembers= response.data.filter((myMember:Member)=>
+        myMember.name.toLowerCase().includes(search.toLowerCase())
+      ||myMember.email.toLowerCase().includes(search.toLowerCase())
+      ||myMember.groups.toLowerCase().includes(search.toLowerCase())
+      ||myMember.role.toLowerCase().includes(search.toLowerCase()));
       setMembers(filteredMembers)
     
       

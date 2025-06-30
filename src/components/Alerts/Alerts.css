@@ -1,0 +1,17 @@
+.alert-cards{
+    margin-top:100px;
+    display:flex;
+    flex-direction: row;
+}
+.alerts-table{
+    width:80%;
+    border-collapse: collapse;
+    
+}
+.alerts-table-head{
+    background-color:rgb(179, 179, 179);
+    border:none;
+    border-width: 0px;;
+    
+   
+}
