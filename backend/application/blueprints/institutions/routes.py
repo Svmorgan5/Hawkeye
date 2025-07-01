@@ -83,3 +83,46 @@ def delete_institution(current_user_id, institution_id):
     db.session.delete(institution)
     db.session.commit()
     return jsonify({"message": "Institution deleted"}), 200
+
+@institutions_bp.route('/overview', methods=['GET'])
+@token_required
+def get_institution_overview(current_user_id):
+    """
+    Get a summary dashboard for the institution the current user belongs to.
+
+    Returns:
+        JSON object containing:
+        - Institution metadata
+        - Total number of users
+        - Total number of members
+        - List of user roles associated with the institution
+
+    Access:
+        - Requires valid JWT token
+        - Returns 404 if user or their institution is not found
+    """
+
+    # Fetch the user making the request
+    user = db.session.get(User, current_user_id)
+    if not user or not user.institution_id:
+        return jsonify({"error": "User or institution not found"}), 404
+
+    # Fetch the user's institution
+    institution = db.session.get(Institution, user.institution_id)
+
+    # Fetch all users and members in this institution
+    users = db.session.query(User).filter_by(institution_id=user.institution_id).all()
+    members = db.session.query(Member).filter_by(institution_id=user.institution_id).all()
+
+    # Get distinct user roles for the institution
+    user_roles = list(set(u.role for u in users if u.role))
+
+    # Return structured response
+    return jsonify({
+        "institution": institution_schema.dump(institution),
+        "summary": {
+            "total_users": len(users),
+            "total_members": len(members),
+            "user_roles": user_roles
+        }
+    }), 200

@@ -16,3 +16,43 @@ securityDefinitions:
     name: Authorization
     in: header
 paths:
+
+  /institutions/overview:
+    get:
+      tags:
+        - Institutions
+      summary: Get a summary of the current user's institution
+      description: |
+        Returns high-level metadata and stats for the institution that the requesting user is a part of.
+        Includes total users, total members, and distinct user roles.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Institution summary retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  institution:
+                    type: object
+                    description: The institution details
+                  summary:
+                    type: object
+                    properties:
+                      total_users:
+                        type: integer
+                        example: 4
+                      total_members:
+                        type: integer
+                        example: 12
+                      user_roles:
+                        type: array
+                        items:
+                          type: string
+                        example: ['admin', 'viewer']
+        '404':
+          description: User or institution not found
+        '400':
+          description: Missing or invalid token
