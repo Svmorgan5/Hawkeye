@@ -20,6 +20,8 @@ class User(Base):
     email: Mapped[str] = mapped_column(db.String(150), nullable=False, unique=True)
     password: Mapped[str] = mapped_column(db.String(150), nullable=False)
     image: Mapped[str] = mapped_column(db.String(255), nullable=True)  # URL or path to the user's image
+    is_institution: Mapped[bool] = mapped_column(db.Boolean, default=False, nullable=False)
+    institution_name: Mapped[str] = mapped_column(db.String(150), nullable=True)
 
     cameras: Mapped[List["Camera"]] = relationship("Camera", back_populates="user", cascade="all, delete-orphan")
 
@@ -98,6 +100,8 @@ class Member(Base):
     groups: Mapped[str] = mapped_column(db.String(150), nullable=True)  # Comma-separated list of groups
     image: Mapped[str] = mapped_column(db.String(255), nullable=True)  # URL or path to the member's image
 
+    created_by_user_id: Mapped[int] = mapped_column(db.ForeignKey('users.id'), nullable=False)
+    created_by_user: Mapped["User"] = relationship("User")
 
     cameras: Mapped[List["Camera"]] = relationship(
         "Camera",

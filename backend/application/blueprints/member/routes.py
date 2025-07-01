@@ -1,20 +1,31 @@
 import os
 from flask import request, jsonify, current_app
-from backend.application.models import db, Member
+from backend.application.models import db, Member, User
 from backend.application.blueprints.member import members_bp
 from backend.application.blueprints.member.memberSchemas import member_schema, members_schema
 from marshmallow import ValidationError
 import csv
 import io
 from werkzeug.utils import secure_filename
+from backend.application.utils.utils import encode_token, token_required
+
 
 # Create a member (single)
 @members_bp.route('/', methods=['POST'])
-def create_member():
+@token_required
+def create_member(current_user_id):
+    user = db.session.get(User, current_user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
     try:
         member_data = member_schema.load(request.json)
     except ValidationError as e:
         return jsonify(e.messages), 400
+    
+    # Copy institution info from user to member
+    member_data['institution_name'] = user.institution_name
+    member_data['is_institution'] = user.is_institution
+    member_data['created_by_user_id'] = user.id
 
     new_member = Member(**member_data)
     db.session.add(new_member)
