@@ -23,7 +23,7 @@ const [email,setEmail] = useState<string>('')
 const [name,setName] = useState<string>('')
 const [last,setLast] = useState<string>('')
 const [role,setRole] = useState<string>('Teacher')
-const [groups,setGroup] = useState<string>('')
+const [groups,setGroup] = useState<string>('Employee')
 
   
  const handleSubmit = async (e: React.FormEvent) => {
@@ -50,7 +50,7 @@ const [groups,setGroup] = useState<string>('')
         setName('');
         setRole('Teacher');
         setLast('');
-        setGroup('');
+        setGroup('Employee');
     } catch (error:any){
         alert(`Could not add new Member. ${error.response.data}`)
       console.error('Error message:', error.message);
@@ -87,11 +87,9 @@ const [groups,setGroup] = useState<string>('')
                 Role:
                 <select className='body-select role-box-addmembers' value={role} onChange={(e)=>setRole(e.target.value)}>
                 <option value='Teacher' >Teacher</option>
-                <option value='Student'>Student</option>
                 <option value='Principal'>Principal</option>
                 <option value='Office Staff'>Office Staff</option>
                 <option value='Kitchen Staff'>Kitchen Staff</option>
-                <option value='Parent'>Parent</option>
                 </select>
 
                 </div>
@@ -101,7 +99,6 @@ const [groups,setGroup] = useState<string>('')
                 <option value='Employee' >Employee</option>
                 <option value='Former Staff'>Former Staff</option>
                 <option value='Admin'>Admin</option>
-                <option value='Student'>Student</option>
                 <option value='KParent'>Parent</option>
                 <option value='Other'>Other</option>
                 </select>

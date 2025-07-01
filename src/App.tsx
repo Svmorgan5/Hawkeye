@@ -26,6 +26,7 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import PreAddMember from './components/Members/PreAddMember/PreAddMember';
 import MemberList from './components/Members/MemberList/MemberList';
+import AddAlert from './components/Alerts/AddAlerts/AddAlert';
 
 const EditMemberWrapper =() => {
     
@@ -78,6 +79,7 @@ function App() {
                 <Route path='editmember/:id' element={<EditMemberWrapper />} />
                 <Route path='/preaddmember' element={<PreAddMember />} />
                 <Route path='/memberlist' element={<MemberList />} />
+                <Route path='/addalert' element={<AddAlert />} />
                 
                 
                 

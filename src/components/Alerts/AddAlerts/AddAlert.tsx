@@ -1,7 +1,7 @@
 
 import axios from 'axios'
 import '../../../assets/member.png'
-import './AddMembers.css'
+// import './AddMembers.css'
 
 import { useEffect, useState} from 'react'
 
@@ -22,25 +22,27 @@ type Alert = {
 const AddAlert = () => {
 
    
-    message:string
+
 
 const [code,setCode] = useState<string>('')
 const [location,setLocation] = useState<string>('')
-const [time,setTime] = useState<Date|null>()
-const [alert_type,setAlert_type] = useState<string>('Teacher')
+const [time,setTime] = useState<any>()
+const [alert_type,setAlert_type] = useState<string>('')
 const [message,setMessage] = useState<string>('')
+const [camera,setCamera] = useState<number|null>(null)
 
   
  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();  
        
     try {
-      await axios.post("http://127.0.0.1:5000/members/", {
+      await axios.post("http://127.0.0.1:5000/alerts/", {
           code:`${code}`,
           location:`${location}`,
           time: `${time}`,
           alert_type:`${alert_type}`,
           message:`${message}`,
+          // camera?:`${camera}`
         
       },{
         headers:{
@@ -56,6 +58,7 @@ const [message,setMessage] = useState<string>('')
         setTime(null);
         setAlert_type('');
         setMessage('');
+        setCamera(null);
     } catch (error:any){
         alert(`Could not add new Alert. ${error.response.data}`)
       console.error('Error message:', error.message);
@@ -76,40 +79,36 @@ const [message,setMessage] = useState<string>('')
         <form className='new-member-form' onSubmit={handleSubmit}>
             <label className='form-header' ><div className='header-text'>Add Alert</div></label>
             <div className='div-body'>   
-                <div className='label-wrapper'>
-                First Name: 
-                <input type='text' className='body-text name-box-addmembers' value={name} onChange={(e)=>setName(e.target.value)}></input>
-                </div>
-                <div className='label-wrapper'>
-                Last Name: 
-                <input className='body-text' type='text' value={last} onChange={(e)=>setLast(e.target.value)}></input>
-                </div>
-                <div className='label-wrapper'>
-                Email Address:
-                <input type='email'  className='body-text email-box'value={email} onChange={(e)=>setEmail(e.target.value)}></input>
-                </div>
-                <div className='label-wrapper'>
-                Role:
-                <select className='body-select role-box-addmembers' value={role} onChange={(e)=>setRole(e.target.value)}>
-                <option value='Teacher' >Teacher</option>
-                <option value='Student'>Student</option>
-                <option value='Principal'>Principal</option>
-                <option value='Office Staff'>Office Staff</option>
-                <option value='Kitchen Staff'>Kitchen Staff</option>
-                <option value='Parent'>Parent</option>
+               <div className='label-wrapper'>
+                Code:
+                <select className='body-select role-box-addmembers' value={code} onChange={(e)=>setCode(e.target.value)}>
+                <option selected={true} value='Code Red' >Code Red</option>
+                <option value='Code Blue'>Code Blue</option>
+                <option value='Lockdown'>Lockdown</option>
+                <option value='Shelter in place'>Shelter in place</option>
+                <option value='Fire Drill'>Fire Drill</option>
                 </select>
 
                 </div>
-                <div className='label-wrapper bottom-label'>
-                Group:
-                <select className='body-select  group-box-addmembers' value={groups} onChange={(e)=>setGroup(e.target.value)}>
-                <option value='Employee' >Employee</option>
-                <option value='Former Staff'>Former Staff</option>
-                <option value='Admin'>Admin</option>
-                <option value='Student'>Student</option>
-                <option value='KParent'>Parent</option>
-                <option value='Other'>Other</option>
-                </select>
+                <div className='label-wrapper'>
+                Location:
+                <input type='text' className='body-text name-box-addmembers' value={location} onChange={(e)=>setLocation(e.target.value)}></input>
+                </div>
+                <div className='label-wrapper'>
+                Time
+                <input className='body-text' type='date' value={time} onChange={(e)=>setTime(e.target.value)}></input>
+                </div>
+                <div className='label-wrapper'>
+                Alert Type
+                <input type='text'  className='body-text email-box'value={alert_type} onChange={(e)=>setAlert_type(e.target.value)}></input>
+                </div>
+                <div className='label-wrapper'>
+               
+                Message
+                <input type='text'  className='body-text email-box'value={message} onChange={(e)=>setMessage(e.target.value)}></input>
+                </div>
+               
+                <div className='label-wrapper'>
                 </div>
             <div className='form-footer'>
                 <a href='/members'>
@@ -133,4 +132,37 @@ const [message,setMessage] = useState<string>('')
   );
 };
 
-export default AddMembers
+export default AddAlert
+
+
+
+
+// # Create Alert
+// @alerts_bp.route('/', methods=['POST'])
+// def create_alert():
+//     try:
+//         alert_data = alert_schema.load(request.json)
+//     except ValidationError as e:
+//         return jsonify(e.messages), 400
+
+//     camera_ids = request.json.get('camera_ids', [])
+//     cameras = db.session.query(Camera).filter(Camera.id.in_(camera_ids)).all() if camera_ids else []
+
+//     new_alert = alert_data
+//     new_alert.cameras = cameras
+
+//     db.session.add(new_alert)
+//     db.session.commit()
+
+//     from backend.application import socketio
+//     socketio.emit('new_alert', {
+//         'id': new_alert.id,
+//         'message': new_alert.message,
+//         'code': new_alert.code,
+//         'location': new_alert.location,
+//         'alert_type': new_alert.alert_type.value,
+//         'timestamp': new_alert.timestamp.isoformat(),
+//     })
+
+//     return alert_schema.jsonify(new_alert), 201
+
