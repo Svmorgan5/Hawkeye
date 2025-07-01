@@ -7,5 +7,8 @@ with app.app_context():
     #db.drop_all()  # Drop all tables if they exist & need be
     db.create_all()
 
+from backend.application.scheduler import start_scheduler  
+scheduler = start_scheduler(app)
+
 if __name__ == "__main__":
     socketio.run(app, debug=True)

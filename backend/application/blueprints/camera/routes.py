@@ -19,16 +19,12 @@ def add_camera(current_user_id):
     except ValidationError as e:
         return jsonify(e.messages), 400
 
-    new_camera = Camera(
-        name=camera_data['name'],
-        location=camera_data['location'],
-        user_id=current_user_id,
-        snapshot_url=camera_data['snapshot_url']  # If WE WANT TO MAKE IT REQUIRED
-    )
+    # Set the user_id (since it's not coming from the client)
+    camera_data.user_id = current_user_id
 
-    db.session.add(new_camera)
+    db.session.add(camera_data)
     db.session.commit()
-    return camera_schema.jsonify(new_camera), 201
+    return camera_schema.jsonify(camera_data), 201
 
 
 @cameras_bp.route('/', methods=['GET'])
@@ -37,7 +33,7 @@ def add_camera(current_user_id):
 @cache.cached(timeout=300)  # Cache the cameras for 5 minutes
 def get_cameras(current_user_id):
     cameras = db.session.execute(
-        select(Camera).where(Camera.user_id == current_user_id)
+        select(Camera).where(Camera.user_id == current_user_id) #Only pulls cameras from the logged in user
     ).scalars().all()
     return cameras_schema.jsonify(cameras), 200
 

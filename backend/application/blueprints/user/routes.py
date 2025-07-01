@@ -36,7 +36,7 @@ def login():
 
 
 @users_bp.route('/', methods=['POST'])
-@limiter.limit("5 per hour")
+@limiter.limit("50 per hour")
 def add_user():
    try:
       user_data = user_schema.load(request.json)

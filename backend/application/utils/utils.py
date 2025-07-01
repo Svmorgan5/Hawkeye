@@ -6,6 +6,7 @@ from flask import request, jsonify
 import os
 import json
 from urllib.request import urlopen
+from backend.application.models import db, User, Member, Camera
 
 
 SECRET_KEY = os.environ.get('SECRET_KEY') or "super secret secrets"
@@ -54,6 +55,24 @@ def token_required(f):
             return jsonify({'message': 'You must be logged in to access this.'}), 400
         
     return decorated
+
+#notifction function for all users/members of an institution when an alert is created for one of their cameras
+
+def notify_institution_on_alert(camera_id, alert_id):
+    camera = db.session.get(Camera, camera_id)
+    if not camera or not camera.institution_id:
+        return
+
+    institution_id = camera.institution_id
+
+    users = db.session.query(User).filter_by(institution_id=institution_id).all()
+    members = db.session.query(Member).filter_by(institution_id=institution_id).all()
+
+    for user in users:
+        print(f"Notify user {user.email} about alert {alert_id} from camera {camera.name}")
+
+    for member in members:
+        print(f"Notify member {member.email} about alert {alert_id} from camera {camera.name}")
 
 
 

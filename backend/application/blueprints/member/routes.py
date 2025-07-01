@@ -59,7 +59,7 @@ def upload_member_image(member_id):
 # Get all members or search members by name
 @members_bp.route('/', methods=['GET'])
 @token_required
-def get_members():
+def get_members(current_user_id):  
     search = request.args.get('search')
     query = db.session.query(Member)
     if search:
@@ -73,7 +73,7 @@ def get_members():
 # Get a single member
 @members_bp.route('/<int:member_id>', methods=['GET'])
 @token_required
-def get_member(member_id):
+def get_member(current_user_id, member_id):
     member = db.session.get(Member, member_id)
     if not member:
         return jsonify({"error": "Member not found"}), 404
@@ -82,7 +82,7 @@ def get_member(member_id):
 # Update a member
 @members_bp.route('/<int:member_id>', methods=['PUT'])
 @token_required
-def update_member(member_id):
+def update_member(current_user_id, member_id):
     member = db.session.get(Member, member_id)
     if not member:
         return jsonify({"error": "Member not found"}), 404
@@ -117,7 +117,7 @@ def update_member(member_id):
 # Delete a member
 @members_bp.route('/<int:member_id>', methods=['DELETE'])
 @token_required
-def delete_member(member_id):
+def delete_member(current_user_id,member_id):
     member = db.session.get(Member, member_id)
     if not member:
         return jsonify({"error": "Member not found"}), 404

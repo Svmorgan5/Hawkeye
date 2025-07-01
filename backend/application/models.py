@@ -1,6 +1,6 @@
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from flask_sqlalchemy import SQLAlchemy
-from datetime import date
+from datetime import date, datetime
 from typing import List
 from sqlalchemy import Table, Enum
 from enum import Enum as PyEnum
@@ -35,6 +35,7 @@ class Institution(Base):
 
     users: Mapped[List["User"]] = relationship("User", back_populates="institution")
     members: Mapped[List["Member"]] = relationship("Member", back_populates="institution")
+    cameras: Mapped[List["Camera"]] = relationship("Camera", back_populates="institution")  
 
 
 
@@ -69,6 +70,7 @@ class Alert(Base):
     timestamp: Mapped[date] = mapped_column(db.DateTime, nullable=False)
     code: Mapped[str] = mapped_column(db.String(50), nullable=False)  
     location: Mapped[str] = mapped_column(db.String(150), nullable=False)  # Location of the alert
+    scheduled_time: Mapped[datetime] = mapped_column(db.DateTime, nullable=True) 
     # Add other fields as needed (e.g., status, scheduled_time, etc.)
 
     cameras: Mapped[List["Camera"]] = relationship(
@@ -84,6 +86,8 @@ class Camera(Base):
     name: Mapped[str] = mapped_column(db.String(100), nullable=False)
     location: Mapped[str] = mapped_column(db.String(150))
     user_id: Mapped[int] = mapped_column(db.ForeignKey('users.id'), nullable=False)
+    institution_id: Mapped[int] = mapped_column(db.ForeignKey('institutions.id'), nullable=True)  
+
     snapshot_url: Mapped[str] = mapped_column(db.String(255), nullable=True)  
     stream_url: Mapped[str] = mapped_column(db.String(255), nullable=True)
     alerts: Mapped[List["Alert"]] = relationship(
@@ -93,7 +97,7 @@ class Camera(Base):
     )
 
     user: Mapped["User"] = relationship("User", back_populates="cameras")
-
+    institution: Mapped["Institution"] = relationship("Institution", back_populates="cameras")  
     members: Mapped[List["Member"]] = relationship(
         "Member",
         secondary=camera_member,
