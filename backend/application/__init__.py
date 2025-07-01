@@ -10,6 +10,7 @@ from backend.application.blueprints.user import users_bp
 from backend.application.blueprints.camera import cameras_bp
 from backend.application.blueprints.member import members_bp
 from backend.application.blueprints.alert import alerts_bp
+from backend.application.blueprints.institutions import institutions_bp
 
 
 #Just getting swagger ready for testing purposes.
@@ -24,14 +25,14 @@ swaggerui_blueprint= get_swaggerui_blueprint(
     }
 )
 
-socketio = SocketIO()  # This should be at module level, not inside a function
+socketio = SocketIO()  
 
 def create_app(config_name):
 
     app = Flask(__name__)
     app.config.from_object(f'config.{config_name}')
     CORS(app)
-    socketio.init_app(app, cors_allowed_origins="*")  # Initialize SocketIO with CORS support
+    socketio.init_app(app, cors_allowed_origins="*")  # Initialize SocketIO (PUSH NOTIFICATIONS) with CORS support
     # add extensions
     db.init_app(app)
     ma.init_app(app)
@@ -39,14 +40,12 @@ def create_app(config_name):
     cache.init_app(app)
 
 #Adding room for URL prefixes in the future
+## Uncomment the following lines to register other blueprints when they are created for API access
+## Remember to add BPs to imports above to finish connection
     app.register_blueprint(users_bp, url_prefix='/users')
-
-    ## Uncomment the following lines to register other blueprints when they are created for API access
-    ## Remember to add BPs to imports above to finish connection
-
     app.register_blueprint(members_bp, url_prefix='/members')
     app.register_blueprint(cameras_bp, url_prefix='/cameras')
-    
+    app.register_blueprint(institutions_bp, url_prefix='/institutions')
     app.register_blueprint(alerts_bp, url_prefix='/alerts')
     app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 

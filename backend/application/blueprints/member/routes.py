@@ -23,8 +23,8 @@ def create_member(current_user_id):
         return jsonify(e.messages), 400
     
     # Copy institution info from user to member
-    member_data['institution_name'] = user.institution_name
-    member_data['is_institution'] = user.is_institution
+    member_data['institution_id'] = user.institution_id
+    member_data['institution'] = user.institution
     member_data['created_by_user_id'] = user.id
 
     new_member = Member(**member_data)

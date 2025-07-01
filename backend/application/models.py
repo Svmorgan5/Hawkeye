@@ -19,11 +19,23 @@ class User(Base):
     phone: Mapped[str] = mapped_column(db.String(25), nullable=True, unique=True)
     email: Mapped[str] = mapped_column(db.String(150), nullable=False, unique=True)
     password: Mapped[str] = mapped_column(db.String(150), nullable=False)
-    image: Mapped[str] = mapped_column(db.String(255), nullable=True)  # URL or path to the user's image
-    is_institution: Mapped[bool] = mapped_column(db.Boolean, default=False, nullable=False)
-    institution_name: Mapped[str] = mapped_column(db.String(150), nullable=True)
+    image: Mapped[str] = mapped_column(db.String(255), nullable=True) # URL or path to the user's image
+    role: Mapped[str] = mapped_column(db.String(50), nullable=False)  # e.g., 'admin', 'viewer', 'owner', etc.
+    
+    institution_id: Mapped[int] = mapped_column(db.ForeignKey('institutions.id'), nullable=True)
+    institution: Mapped["Institution"] = relationship("Institution", back_populates="users")
+    cameras: Mapped[List["Camera"]] = relationship("Camera", back_populates="user")
 
-    cameras: Mapped[List["Camera"]] = relationship("Camera", back_populates="user", cascade="all, delete-orphan")
+class Institution(Base):
+    __tablename__ = 'institutions'
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(db.String(150), nullable=False, unique=True)
+    is_school: Mapped[bool] = mapped_column(db.Boolean, nullable=False)
+    # Add more fields as needed (address, type, etc.)
+
+    users: Mapped[List["User"]] = relationship("User", back_populates="institution")
+    members: Mapped[List["Member"]] = relationship("Member", back_populates="institution")
+
 
 
 # Association table for many-to-many relationship between Camera and Alert
@@ -65,7 +77,6 @@ class Alert(Base):
         back_populates="alerts"
     )
 
-
 class Camera(Base):
     __tablename__ = 'cameras'
 
@@ -89,14 +100,12 @@ class Camera(Base):
         back_populates="cameras"
     )
 
-
-
 class Member(Base):
     __tablename__ = 'members'
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[str] = mapped_column(db.String(150), nullable=False, unique=True)
     name: Mapped[str] = mapped_column(db.String(150), nullable=False)
-    role: Mapped[str] = mapped_column(db.String(50), nullable=False)  # e.g., 'admin', 'viewer', etc.
+    role: Mapped[str] = mapped_column(db.String(50), nullable=False)  # e.g., 'admin', 'viewer', 'owner', etc.
     groups: Mapped[str] = mapped_column(db.String(150), nullable=True)  # Comma-separated list of groups
     image: Mapped[str] = mapped_column(db.String(255), nullable=True)  # URL or path to the member's image
 
@@ -108,5 +117,8 @@ class Member(Base):
         secondary=camera_member,
         back_populates="members"
     )
+
+    institution_id: Mapped[int] = mapped_column(db.ForeignKey('institutions.id'), nullable=True)
+    institution: Mapped["Institution"] = relationship("Institution", back_populates="members")
 
 
