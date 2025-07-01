@@ -35,6 +35,7 @@ def create_member(current_user_id):
 
 
 @members_bp.route('/<int:member_id>/upload_image', methods=['POST'])
+@token_required
 def upload_member_image(member_id):
     member = db.session.get(Member, member_id)
     if not member:
@@ -57,6 +58,7 @@ def upload_member_image(member_id):
 
 # Get all members or search members by name
 @members_bp.route('/', methods=['GET'])
+@token_required
 def get_members():
     search = request.args.get('search')
     query = db.session.query(Member)
@@ -70,6 +72,7 @@ def get_members():
 
 # Get a single member
 @members_bp.route('/<int:member_id>', methods=['GET'])
+@token_required
 def get_member(member_id):
     member = db.session.get(Member, member_id)
     if not member:
@@ -78,6 +81,7 @@ def get_member(member_id):
 
 # Update a member
 @members_bp.route('/<int:member_id>', methods=['PUT'])
+@token_required
 def update_member(member_id):
     member = db.session.get(Member, member_id)
     if not member:
@@ -112,6 +116,7 @@ def update_member(member_id):
 
 # Delete a member
 @members_bp.route('/<int:member_id>', methods=['DELETE'])
+@token_required
 def delete_member(member_id):
     member = db.session.get(Member, member_id)
     if not member:
@@ -122,6 +127,7 @@ def delete_member(member_id):
 
 # Bulk create members from CSV or RTF
 @members_bp.route('/upload', methods=['POST'])
+@token_required
 def upload_members():
     if 'file' not in request.files:
         return jsonify({"error": "No file uploaded"}), 400
