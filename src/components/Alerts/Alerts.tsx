@@ -1,5 +1,5 @@
 import '../../components/Dashboard/Dashboard.css'
-import '../Alerts/Alerts.css'
+import './Alerts.css'
 import DashCard from '../Dashboard/DashCard';
 import Alert from '../../assets/Alert.png'
 import axios from 'axios'
@@ -26,15 +26,19 @@ const Alerts = () => {
           'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAzODc3MzIsImlhdCI6MTc1MDM0NDUzMiwic3ViIjoiMSJ9.T8OYCfeOPJZjy_Rc15TM5z5a8Ial7z_8Nlg0Zqd8DbM`
         }
       });
-      setAlerts(response.data)
-      console.log(response.data)
+      const filteredAlerts= response.data.filter((myAlert:Alert)=>
+        myAlert.code.toLowerCase().includes(search.toLowerCase())
+      ||myAlert.location.toLowerCase().includes(search.toLowerCase())
+      ||myAlert.alert_type.toLowerCase().includes(search.toLowerCase())
+      ||myAlert.message.toLowerCase().includes(search.toLowerCase())
+      ||myAlert.timestamp.toLowerCase().includes(search.toLowerCase()));
+      setAlerts(filteredAlerts)
     
       
     } catch (error:any){
     
       console.error('Error message:', error.message);
     }
-    // Log and extract JWT token from response
     
   };
 
@@ -79,53 +83,104 @@ const Alerts = () => {
        <div className ='alert-header'>
           <div className='alert-header-top'>
             <div className='breadcrumb'>Alert</div>
-            <div className='alert-header-right'>
-              <div className='alerts-search-wrapper'>
-          
-                <input type='text' placeholder='Search alerts' className='alert-search' onChange={(e)=>setSearch(e.target.value)} value={search}></input>
-                <button onClick={clearSearch} className='alert-search-cancel'>X</button>
-               
-              </div>
-              <button className='alert-search-button'  onClick={getAlerts}>Search</button>
+            
               
-            </div>
+              
+              
+          
           </div>
     <div className="alert-cards">
-     <div><DashCard  heading='Shared Alerts' message='View all shared alerts. ' picture={Alert} link='/alerts'/></div>
+     <div><DashCard  heading='Shared Alerts' message='View all shared alerts. ' picture={Alert} link='/alerts' sizing='double'/></div>
       <div> <DashCard  heading='Alerts' message='View all recent alerts.' picture={Alert} link='/alerts'/></div>
        
 
 
 
     </div>
-    <div className='table'>
-    <table className='alerts-table'>
-      <thead className='alerts-table-head'>
-        <th> 
-          <input  
-            type="checkbox"></input>
-        </th>
-        <th> Code </th>
-        <th> Date/Time </th>
-        <th> Location </th>
-        
+    <div className='member-header-bottom'>
+            <div>
+              
+              <table className="alerts-type-table">
+                <tr >
+                  {/* {activeState? */}
+                  {/* (
+                    <> */}
+                  <td style={{ cursor: 'pointer' }} className='inactive-table'> {/*onClick = {toggleActiveState}>*/}
+                     All Alerts
+                  </td>
+                  <td  style={{ cursor: 'pointer' }}className='inactive-table'> {/*onClick = {toggleActiveState}>*/}
+                    Scheduled
+                  </td> 
+                  <td style={{ cursor: 'pointer' }} className='inactive-table'> {/*onClick = {toggleActiveState}>*/}
+                     Test Alert
+                  </td>
+                  <td  style={{ cursor: 'pointer' }}className='inactive-table'> {/*onClick = {toggleActiveState}>*/}
+                    Real Alert
+                  </td> 
+                   <td  style={{ cursor: 'pointer' }}className='inactive-table'> {/*onClick = {toggleActiveState}>*/}
+                    Archive
+                  </td> 
+                  <td>
+                    <div className='alerts-search-wrapper'>
+          
+                <input type='text' placeholder='Search alerts' className='alert-search' onChange={(e)=>setSearch(e.target.value)} value={search}></input>
+                <button onClick={clearSearch} className='alert-search-cancel'>X</button>
+                
+               
+              </div>
+              
+                  </td>
+                  <td>
+                    
+           <a href="/preaddmember"><input type='button' className='member-add member-header-right' value='+ Add Member' ></input></a>
+      
+                  </td>
+                  {/* </>
+                  ) */}
+                  {/* :
+                  (
+                    <>
+                  <td  style={{ cursor: 'pointer' }} className='inactive-table' onClick = {toggleActiveState}>
+                     Active
+                  </td>
+                  <td  style={{ cursor: 'pointer' }} className='active-table' onClick = {toggleActiveState}>
+                    Inactive
+                  </td> 
+                  </>
+                  ) */}
+                  {/* } */}
+                </tr>
+              </table>
+            </div>
+          </div>
+
+    <table className='table'>
+      <thead className='thead'>
+        <tr className='th'>
+       
+        <th > Code </th>
+        <th > Date/Time </th>
+        <th > Location </th>
+        <th > Message </th>
+        </tr>
         
       </thead>
       </table>
-      </div>
-      <div className='table'>
+      
+      <div className="tbody">
+        <table className='table-in-table'>
+        <tbody>
 
-      <table>
+    
       {alerts?.map(alert=> {
           
               return(
               <>
             <tr key={alert.id} className='tr'>
-              
-              <td className='second-left-cell'><input type='checkbox'></input></td>
-              <td className='second-left-cell'>{alert.code}</td>
+              <td >{alert.code}</td>
               <td>{alert.timestamp}</td>
               <td>{alert.location}</td>
+              <td>{alert.message}</td>
              
              
             </tr>
@@ -134,10 +189,12 @@ const Alerts = () => {
             
             
           })}
+          </tbody>
     </table>
     </div>
     </div>
     </div>
+   
     
   );
 };
