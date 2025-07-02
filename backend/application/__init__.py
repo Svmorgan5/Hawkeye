@@ -11,6 +11,7 @@ from backend.application.blueprints.camera import cameras_bp
 from backend.application.blueprints.member import members_bp
 from backend.application.blueprints.alert import alerts_bp
 from backend.application.blueprints.institutions import institutions_bp
+from backend.application.blueprints.notification.routes import notification_bp
 
 
 #Just getting swagger ready for testing purposes.
@@ -48,6 +49,7 @@ def create_app(config_name):
     app.register_blueprint(institutions_bp, url_prefix='/institutions')
     app.register_blueprint(alerts_bp, url_prefix='/alerts')
     app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
+    app.register_blueprint(notification_bp)
 
 
 

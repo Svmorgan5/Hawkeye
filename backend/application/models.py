@@ -79,6 +79,20 @@ class Alert(Base):
         back_populates="alerts"
     )
 
+class Notification(Base):
+    __tablename__ = 'notifications'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    message: Mapped[str] = mapped_column(db.String(255), nullable=False)
+    timestamp: Mapped[datetime] = mapped_column(db.DateTime, default=datetime.utcnow)
+
+    sender_user_id: Mapped[int] = mapped_column(db.ForeignKey('users.id'), nullable=True)
+    sender_member_id: Mapped[int] = mapped_column(db.ForeignKey('members.id'), nullable=True)
+
+    sender_user: Mapped["User"] = relationship("User", foreign_keys=[sender_user_id])
+    sender_member: Mapped["Member"] = relationship("Member", foreign_keys=[sender_member_id])
+
+
 class Camera(Base):
     __tablename__ = 'cameras'
 

@@ -1,7 +1,11 @@
+from dotenv import load_dotenv
 import os
 
+load_dotenv()
+
+
 class DevelopmentConfig:
-    SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://root:ABC123@localhost/Hawkeye_db'
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
     DEBUG = True
     CACHE_TYPE = 'SimpleCache'
 
@@ -13,5 +17,6 @@ class TestingConfig:
 
 
 class ProductionConfig:
-    SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
     CACHE_TYPE = 'SimpleCache'
+
