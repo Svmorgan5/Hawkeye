@@ -26,8 +26,8 @@ const AddAlert = () => {
 
 const [code,setCode] = useState<string>('')
 const [location,setLocation] = useState<string>('')
-const [time,setTime] = useState<any>()
-const [alert_type,setAlert_type] = useState<string>('')
+const [time,setTime] = useState<string>('')
+const [alert_type,setAlert_type] = useState<string>('scheduled')
 const [message,setMessage] = useState<string>('')
 const [camera,setCamera] = useState<number|null>(null)
 
@@ -39,7 +39,7 @@ const [camera,setCamera] = useState<number|null>(null)
       await axios.post("http://127.0.0.1:5000/alerts/", {
           code:`${code}`,
           location:`${location}`,
-          time: `${time}`,
+          timestamp: `${time}`,
           alert_type:`${alert_type}`,
           message:`${message}`,
           // camera?:`${camera}`
@@ -56,11 +56,11 @@ const [camera,setCamera] = useState<number|null>(null)
         setCode('');
         setLocation('');
         setTime(null);
-        setAlert_type('');
+        setAlert_type('scheduled');
         setMessage('');
         setCamera(null);
     } catch (error:any){
-        alert(`Could not add new Alert. ${error.response.data}`)
+        alert(`Could not add new Alert. ${error.message}`)
       console.error('Error message:', error.message);
     }
     // Log and extract JWT token from response
@@ -96,14 +96,26 @@ const [camera,setCamera] = useState<number|null>(null)
                 </div>
                 <div className='label-wrapper'>
                 Time
-                <input className='body-text' type='date' value={time} onChange={(e)=>setTime(e.target.value)}></input>
+                <input className='body-text' type='datetime-local' value={time} onChange={(e)=>setTime(e.target.value)}></input>
                 </div>
+                
+
                 <div className='label-wrapper'>
                 Alert Type
-                <input type='text'  className='body-text email-box'value={alert_type} onChange={(e)=>setAlert_type(e.target.value)}></input>
+                <select className='body-select role-box-addmembers' value={alert_type} onChange={(e)=>setAlert_type(e.target.value)}>
+                <option selected={true} value='scheduled' >Scheduled</option>
+                <option value='test'>Test</option>
+                <option value='real'>Real</option>
+                <option value='archived'>Archived</option>
+            
+                </select>
+
                 </div>
+
+
+
                 <div className='label-wrapper'>
-               
+              
                 Message
                 <input type='text'  className='body-text email-box'value={message} onChange={(e)=>setMessage(e.target.value)}></input>
                 </div>
