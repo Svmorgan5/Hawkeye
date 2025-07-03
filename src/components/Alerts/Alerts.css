@@ -38,6 +38,7 @@ max-width: 1200px;
 border: 1px solid #F0F0F0;
 border-collapse: collapse;
 border-radius: 2px;
+max-height: 400px;
 
 }
 .thead{
@@ -54,6 +55,7 @@ border-radius: 2px;
     max-height: 500px;
     margin-right:0px;
     padding-right:0px;
+    
 }
 .tr{
     width:100%;

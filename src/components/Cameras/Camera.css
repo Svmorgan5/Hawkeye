@@ -1,10 +1,17 @@
+.camera-cards-page{
+    max-height: 600px;
+    overflow-y: scroll;
+
+}
 .camera-cards-holder{
 
     display:flex;
     flex-direction: row;
+    
   
 }
 .camera-cards-element{
     flex-basis: 300px;
     flex-grow: 1;
+    
 }

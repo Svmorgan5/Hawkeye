@@ -36,6 +36,7 @@ const LiveStreamPlayer = () => {
       <video
         ref={videoRef}
         controls
+        muted
         style={{ width: '100%', maxWidth: '800px' }}
       />
     </div>

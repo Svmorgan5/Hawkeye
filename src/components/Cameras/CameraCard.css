@@ -1,3 +1,74 @@
 .camera-card-holder{
     max-width:350px;
+    border-color:rgb(174, 174, 174);
+    border:solid;
+    border-width: 1px;
+    color: #a7a6a6;
+    margin-bottom: 30px;;
+    border-radius: 4px;
+}
+
+.video-location{
+   /* Cameras */
+/* Main St Camera 1 */
+
+width: 200px;
+height: 24px;
+
+/* Semibold/16px | 24px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 18px;
+line-height: 24px;
+/* identical to box height, or 150% */
+padding:0px;
+    margin:0px;
+
+/* Gray / gray-9 */
+color: #262626;
+
+ padding:4px;
+    margin:0px;
+    padding-bottom:5px;
+    padding-left: px;
+    justify-content: left;
+    text-align: left;
+
+}
+.td-lock{
+    width:1%;
+    padding:8px;
+    margin:0px;
+    
+    
+    
+}
+.video-info{
+    text-align:left;
+    justify-content: left;
+    
+    padding:0px;
+    margin:0px;
+    padding-bottom:5px;
+
+padding-left: 5px;
+
+width: 200px;
+height: 22px;
+
+/* Regular/14px | 22px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 22px;
+/* identical to box height, or 157% */
+
+/* Gray / gray-7 */
+color: #8C8C8C;
+
+
+
+
 }
