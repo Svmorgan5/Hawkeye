@@ -277,15 +277,26 @@ font-weight: 400;
 
 
 /*temp styling */
-.name-box-addmembers{
- margin-left:-2px;
+.code-box-addalerts{
+ margin-left:0px;
 }
-.email-box{
- margin-left:-21px;
+.location-box-addalerts{
+ margin-left:-20px;
+}
+.time-box-addalerts{
+ margin-left:5px;
+ width:220px;
+ justify-content: left;
+ margin-bottom: 15px;
+ color: #64676d;
+ text-transform: uppercase;
 }
 .role-box-addmembers{
-margin-left:41px;
+margin-left:0px;
 }
-.group-box-addmembers{
-margin-left:31px;
+.alert-box-addalerts{
+margin-left:-25px;
+}
+.message-box-addalerts{
+margin-left:-13px;
 }

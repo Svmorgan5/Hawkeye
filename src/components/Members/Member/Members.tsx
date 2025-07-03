@@ -170,7 +170,7 @@ const Members = () => {
                 <button onClick={clearSearch} className='member-search-cancel'>X</button>
                
               </div>
-              <button className='member-search-button'  onClick={getMembers}>Search</button>
+          
               
             </div>
           </div>

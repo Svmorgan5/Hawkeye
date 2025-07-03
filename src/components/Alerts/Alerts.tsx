@@ -19,6 +19,8 @@ type Alert = {
 const Alerts = () => {
   const [alerts,setAlerts] = useState<Alert[]>()
   const [search,setSearch] = useState<string>('')
+  const [alertState, setAlertState] = useState<string>('all')
+
   const getAlerts =  async() =>{
     try {
       const response = await axios.get("http://127.0.0.1:5000/alerts/", {
@@ -71,10 +73,19 @@ const Alerts = () => {
   },[search]);
 
   const clearSearch = () => {
-    setAlerts([]);
+
+    setSearch('');
    
   }
 
+  const activeTableClass = (theClass:string) =>{
+    if(theClass===alertState)
+      return 'active-table alerts-type-table-td'
+    else
+      return 'inactive-table alerts-type-table-td'
+  } 
+  
+ 
 
  
   return (
@@ -85,8 +96,7 @@ const Alerts = () => {
             <div className='breadcrumb'>Alert</div>
             
               
-              
-              
+           
           
           </div>
     <div className="alert-cards">
@@ -98,59 +108,51 @@ const Alerts = () => {
 
     </div>
     <div className='member-header-bottom'>
-            <div>
-              
+            <div className='alert-types-and-search'>
+              <div>
               <table className="alerts-type-table">
                 <tr >
                   {/* {activeState? */}
                   {/* (
                     <> */}
-                  <td style={{ cursor: 'pointer' }} className='inactive-table'> {/*onClick = {toggleActiveState}>*/}
+                  <td  style={{ cursor: 'pointer' }} className={activeTableClass("all")} onClick={()=>setAlertState('all')}>
                      All Alerts
                   </td>
-                  <td  style={{ cursor: 'pointer' }}className='inactive-table'> {/*onClick = {toggleActiveState}>*/}
+                  <td  style={{ cursor: 'pointer' }}className={activeTableClass("scheduled")} onClick={()=>setAlertState('scheduled')}>
                     Scheduled
                   </td> 
-                  <td style={{ cursor: 'pointer' }} className='inactive-table'> {/*onClick = {toggleActiveState}>*/}
+                  <td style={{ cursor: 'pointer' }} className={activeTableClass("test")} onClick={()=>setAlertState('test')}>
                      Test Alert
                   </td>
-                  <td  style={{ cursor: 'pointer' }}className='inactive-table'> {/*onClick = {toggleActiveState}>*/}
+                  <td  style={{ cursor: 'pointer' }}className={activeTableClass("real")} onClick={()=>setAlertState('real')}>
                     Real Alert
                   </td> 
-                   <td  style={{ cursor: 'pointer' }}className='inactive-table'> {/*onClick = {toggleActiveState}>*/}
+                   <td  style={{ cursor: 'pointer' }}className={activeTableClass("archived")} onClick={()=>setAlertState('archived')}>
                     Archive
                   </td> 
-                  <td>
-                    <div className='alerts-search-wrapper'>
-          
-                <input type='text' placeholder='Search alerts' className='alert-search' onChange={(e)=>setSearch(e.target.value)} value={search}></input>
-                <button onClick={clearSearch} className='alert-search-cancel'>X</button>
-                
-               
-              </div>
-              
-                  </td>
-                  <td>
-                    
-           <a href="/preaddmember"><input type='button' className='member-add member-header-right' value='+ Add Member' ></input></a>
-      
-                  </td>
-                  {/* </>
-                  ) */}
-                  {/* :
-                  (
-                    <>
-                  <td  style={{ cursor: 'pointer' }} className='inactive-table' onClick = {toggleActiveState}>
-                     Active
-                  </td>
-                  <td  style={{ cursor: 'pointer' }} className='active-table' onClick = {toggleActiveState}>
-                    Inactive
-                  </td> 
-                  </>
-                  ) */}
-                  {/* } */}
+                 
+                  
                 </tr>
               </table>
+              </div>
+             
+              <div className='alert-search-table-cell'>
+             
+                
+                <input type='text' placeholder='Search alerts' className='alert-search' onChange={(e)=>setSearch(e.target.value)} value={search}></input>
+                <button onClick={clearSearch} className='alert-search-cancel'>Clear Search</button>
+                
+                   <a href="/addalert"><input type='button' className='alert-add' value='+ Add Alert' ></input></a>
+                </div>
+          
+               
+                    
+       
+      
+                
+        
+              
+       
             </div>
           </div>
 
@@ -159,7 +161,8 @@ const Alerts = () => {
         <tr className='th'>
        
         <th > Code </th>
-        <th > Date/Time </th>
+        <th > Date </th>
+        <th > Time </th>
         <th > Location </th>
         <th > Message </th>
         </tr>
@@ -176,14 +179,18 @@ const Alerts = () => {
           
               return(
               <>
+              {(alertState==='all'||alertState===alert.alert_type)&&
             <tr key={alert.id} className='tr'>
               <td >{alert.code}</td>
-              <td>{alert.timestamp}</td>
+              <td>{(alert.timestamp).split('T')[0]}</td>
+              <td>{(alert.timestamp).split('T')[1]}</td>
               <td>{alert.location}</td>
               <td>{alert.message}</td>
              
+              
              
             </tr>
+             }
             </>
             )
             

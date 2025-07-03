@@ -1,7 +1,7 @@
 
 import axios from 'axios'
 import '../../../assets/member.png'
-// import './AddMembers.css'
+import './AddAlert.css'
 
 import { useEffect, useState} from 'react'
 
@@ -90,19 +90,16 @@ const [camera,setCamera] = useState<number|null>(null)
                 </select>
 
                 </div>
-                <div className='label-wrapper'>
+                <div className='label-wrapper '>
                 Location:
-                <input type='text' className='body-text name-box-addmembers' value={location} onChange={(e)=>setLocation(e.target.value)}></input>
+                <input type='text' className='body-text location-box-addalerts' value={location} onChange={(e)=>setLocation(e.target.value)}></input>
                 </div>
-                <div className='label-wrapper'>
-                Time
-                <input className='body-text' type='datetime-local' value={time} onChange={(e)=>setTime(e.target.value)}></input>
-                </div>
+                
                 
 
                 <div className='label-wrapper'>
                 Alert Type
-                <select className='body-select role-box-addmembers' value={alert_type} onChange={(e)=>setAlert_type(e.target.value)}>
+                <select className='body-select alert-box-addalerts' value={alert_type} onChange={(e)=>setAlert_type(e.target.value)}>
                 <option selected={true} value='scheduled' >Scheduled</option>
                 <option value='test'>Test</option>
                 <option value='real'>Real</option>
@@ -114,16 +111,20 @@ const [camera,setCamera] = useState<number|null>(null)
 
 
 
-                <div className='label-wrapper'>
+                <div className='label-wrapper '>
               
                 Message
-                <input type='text'  className='body-text email-box'value={message} onChange={(e)=>setMessage(e.target.value)}></input>
+                <input type='text'  className='body-text message-box-addalerts'value={message} onChange={(e)=>setMessage(e.target.value)}></input>
                 </div>
-               
+               <div className='label-wrapper'>
+                Time
+                <input className='body-text time-box-addalerts' type='datetime-local' value={time} onChange={(e)=>setTime(e.target.value)}></input>
+                </div>
                 <div className='label-wrapper'>
+                  
                 </div>
             <div className='form-footer'>
-                <a href='/members'>
+                <a href='/alerts'>
                 <input
                     type="button"
                     className='cancel-button'
