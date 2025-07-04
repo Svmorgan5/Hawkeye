@@ -2,6 +2,7 @@ import '../../components/Dashboard/Dashboard.css'
 import './Alerts.css'
 import DashCard from '../Dashboard/DashCard';
 import Alert from '../../assets/Alert.png'
+import Bars from '../../assets/bars.png'
 import axios from 'axios'
 import { useEffect, useState } from 'react';
 
@@ -101,7 +102,7 @@ const Alerts = () => {
           </div>
     <div className="alert-cards">
      <div><DashCard  heading='Shared Alerts' message='View all shared alerts. ' picture={Alert} link='/alerts' sizing='double'/></div>
-      <div> <DashCard  heading='Alerts' message='View all recent alerts.' picture={Alert} link='/alerts'/></div>
+      <div> <DashCard  heading='Alerts' message='View all recent alerts.' picture={Bars} link='/alerts'/></div>
        
 
 

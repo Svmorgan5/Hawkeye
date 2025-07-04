@@ -38,8 +38,9 @@ max-width: 1200px;
 border: 1px solid #F0F0F0;
 border-collapse: collapse;
 border-radius: 2px;
-max-height: 400px;
+height:100px;
 
+overflow-y: scroll;
 }
 .thead{
     
@@ -52,7 +53,7 @@ max-height: 400px;
     width:89%;
     overflow-y: scroll;
     overflow-x: hidden;
-    max-height: 500px;
+    height: 275px;
     margin-right:0px;
     padding-right:0px;
     
