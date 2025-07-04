@@ -4,7 +4,7 @@
     flex-direction: row;
 }
 .alerts-table{
-    width:80%;
+    width:100%;
     border-collapse: collapse;
     
 }
@@ -12,18 +12,19 @@
     background-color:rgb(179, 179, 179);
     border:none;
     border-width: 0px;;
+    width:100%;
     
    
 }
 
 /* Table / *Group* */
 .table{
-table-layout: fixed;
+
 margin-top:20px;
 margin-left:40px;
 margin-right:40px;
-width:95%;
-
+width:100%;
+min-width: 1010px;
 border: 1px solid #F0F0F0;
 border-collapse: collapse;
 border-radius: 2px;
@@ -34,7 +35,7 @@ border-radius: 2px;
 padding-left:10px;
 width:100%;
 margin-left: 40px ;
-max-width: 1200px;
+
 border: 1px solid #F0F0F0;
 border-collapse: collapse;
 border-radius: 2px;
@@ -42,15 +43,10 @@ height:100px;
 
 overflow-y: scroll;
 }
-.thead{
-    
-    border:none;
-    width:89%;
-    
-}
-.tbody{
+
+.tbody-alerts{
   
-    width:89%;
+    width:100%;
     overflow-y: scroll;
     overflow-x: hidden;
     height: 275px;
@@ -276,5 +272,8 @@ font-size: 13px;
     max-width: 950px;
     margin-bottom:-10px;
     margin-top: 10px;
+}
+.alerts-body{
+    padding-left:50px;
 }
 

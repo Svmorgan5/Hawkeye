@@ -100,6 +100,7 @@ const Alerts = () => {
            
           
           </div>
+    <div className = 'alerts-body'>
     <div className="alert-cards">
      <div><DashCard  heading='Shared Alerts' message='View all shared alerts. ' picture={Alert} link='/alerts' sizing='double'/></div>
       <div> <DashCard  heading='Alerts' message='View all recent alerts.' picture={Bars} link='/alerts'/></div>
@@ -171,7 +172,7 @@ const Alerts = () => {
       </thead>
       </table>
       
-      <div className="tbody">
+      <div className="tbody-alerts">
         <table className='table-in-table'>
         <tbody>
 
@@ -202,7 +203,7 @@ const Alerts = () => {
     </div>
     </div>
     </div>
-   
+   </div>
     
   );
 };
