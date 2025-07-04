@@ -1,0 +1,38 @@
+.camera-cards-page{
+    max-height: 600px;
+    overflow-y: scroll;
+
+}
+.camera-cards-holder{
+
+    display:flex;
+    flex-direction: row;
+    
+  
+}
+.camera-cards-element{
+    flex-basis: 300px;
+    flex-grow: 1;
+    
+}
+.video-blocked{
+    background-color: rgb(170, 162, 162);
+    height:196px;
+    color: rgb(66, 62, 62);
+    text-align: center;
+    padding-top:80px;
+    font-size:30px;
+    font-weight: 700;
+    font-family: 'DIN Condensed', 'Arial Narrow', Arial, sans-serif;
+}
+.camera-search-table-cell{
+   
+    padding-top:20px;
+    padding-bottom:20px;
+    text-align: right;
+}
+.main-camera-page{
+   margin-left:40px;
+   margin-right:40px;
+   margin-top: 10px;
+}

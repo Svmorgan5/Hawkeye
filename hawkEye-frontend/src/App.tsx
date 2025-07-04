@@ -9,14 +9,14 @@ import './index.css'
 import Cameras from './components/Cameras/Cameras';
 import Alerts from './components/Alerts/Alerts';
 import Reports from './components/Reports/Reports';
-import Members from './components/Members/Members';
+import Members from './components/Members/Member/Members';
 import Help from './components/Help/Help';
 import Header from './Header/Header';
 import Landing from './pages/LandingPage/Landing'
 import Video from './components/Video-Tutorials/Video';
 import History from './components/History/History'
 import Content from './components/Content/Content'
-import AddMembers from './components/Members/AddMember';
+import AddMembers from './components/Members/AddMember/AddMember';
 import Drills from './components/Drills/Drills'
 import Integration from './components/Intergration/Integration';
 import Billing from './components/Billing/Billing';
@@ -24,6 +24,10 @@ import Profile from './components/SchoolProfile/SchoolProfile';
 import EditMembers from './components/Members/Edit Members/EditMembers';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import PreAddMember from './components/Members/PreAddMember/PreAddMember';
+import MemberList from './components/Members/MemberList/MemberList';
+import AddAlert from './components/Alerts/AddAlerts/AddAlert';
+import AddCamera from './components/Cameras/AddCamera/AddCamera';
 
 const EditMemberWrapper =() => {
     
@@ -63,7 +67,7 @@ function App() {
                 <Route path="/alerts" element={<Alerts />} />
                 <Route path="/reports" element={<Reports />} />
                 <Route path="/members" element={<Members />} />
-                <Route path="/add_member" element={<AddMembers />} />
+                <Route path="/addmember" element={<AddMembers />} />
                 <Route path="/help" element={<Help />} />
                 <Route path='/history' element={<History />}/>
                 <Route path='/video' element={<Video />}/>
@@ -74,6 +78,10 @@ function App() {
                 <Route path='/integration' element={<Integration />}/>
                 <Route path='/profile' element={<Profile />}/>
                 <Route path='editmember/:id' element={<EditMemberWrapper />} />
+                <Route path='/preaddmember' element={<PreAddMember />} />
+                <Route path='/memberlist' element={<MemberList />} />
+                <Route path='/addalert' element={<AddAlert />} />
+                 <Route path='/addcamera' element={<AddCamera />} />
                 
                 
                 

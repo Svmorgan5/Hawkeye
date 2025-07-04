@@ -1,3 +1,11 @@
+
+
+aiohappyeyeballs==2.6.1
+aiohttp==3.12.13
+aiosignal==1.3.2
+APScheduler==3.11.0
+attrs==25.3.0
+
 beautifulsoup4==4.13.4
 blinker==1.9.0
 cachelib==0.13.0
@@ -43,6 +51,8 @@ SQLAlchemy==2.0.41
 StrEnum==0.4.15
 token-bucket==0.3.0
 typing_extensions==4.13.2
+tzdata==2025.2
+tzlocal==5.3.1
 urllib3==2.4.0
 Werkzeug==3.1.3
 wrapt==1.17.2
