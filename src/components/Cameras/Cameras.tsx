@@ -5,6 +5,14 @@ import './Camera.css'
 const Cameras = () => {
   return (
     <div className="under-construction">
+       <div className='camera-search-table-cell'>
+             
+                
+                <input type='text' placeholder='Search alerts' className='alert-search'  value='change to search'></input>
+                <button className='alert-search-cancel'>Clear Search</button>
+                
+                   <a href="/addalert"><input type='button' className='alert-add' value='+ Add Camera' ></input></a>
+          </div>
     <div className='camera-cards-page'>
       <div className='camera-cards-holder'>
        <div className='camera-cards-element'> <CameraCard URL='https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8' location='Kitchen' status={false} /></div>

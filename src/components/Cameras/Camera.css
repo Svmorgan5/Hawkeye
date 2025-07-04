@@ -25,3 +25,9 @@
     font-weight: 700;
     font-family: 'DIN Condensed', 'Arial Narrow', Arial, sans-serif;
 }
+.camera-search-table-cell{
+   
+    padding-top:20px;
+    padding-bottom:20px;
+    text-align: left;
+}
