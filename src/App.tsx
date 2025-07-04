@@ -27,6 +27,7 @@ import { useState, useEffect } from 'react';
 import PreAddMember from './components/Members/PreAddMember/PreAddMember';
 import MemberList from './components/Members/MemberList/MemberList';
 import AddAlert from './components/Alerts/AddAlerts/AddAlert';
+import AddCamera from './components/Cameras/AddCamera/AddCamera';
 
 const EditMemberWrapper =() => {
     
@@ -80,6 +81,7 @@ function App() {
                 <Route path='/preaddmember' element={<PreAddMember />} />
                 <Route path='/memberlist' element={<MemberList />} />
                 <Route path='/addalert' element={<AddAlert />} />
+                 <Route path='/addcamera' element={<AddCamera />} />
                 
                 
                 

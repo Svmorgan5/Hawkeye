@@ -26,7 +26,7 @@ const AddAlert = () => {
 
 const [code,setCode] = useState<string>('Code Red')
 const [location,setLocation] = useState<string>('')
-const [time,setTime] = useState<string>('')
+const [time,setTime] = useState<string|null>('')
 const [alert_type,setAlert_type] = useState<string>('scheduled')
 const [message,setMessage] = useState<string>('')
 const [camera,setCamera] = useState<number|null>(null)

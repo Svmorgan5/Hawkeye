@@ -29,5 +29,10 @@
    
     padding-top:20px;
     padding-bottom:20px;
-    text-align: left;
+    text-align: right;
+}
+.main-camera-page{
+   margin-left:40px;
+   margin-right:40px;
+   margin-top: 10px;
 }

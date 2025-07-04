@@ -1,4 +1,5 @@
 .camera-card-holder{
+    
     max-width:350px;
     border-color:rgb(174, 174, 174);
     border:solid;
@@ -81,4 +82,62 @@ color: #8C8C8C;
     height:196px;
     border-bottom:solid;
     border-width: 1px;
+}
+.camera-search{
+    width:220px;
+    border-radius: 2px 0px 0px 2px;
+    border-width: 1px;
+    border-color: rgb(165, 165, 165);
+    padding:5px;
+}
+.camera-search-cancel{
+    height:26px;
+    background-color: rgb(182, 111, 111);
+    color: #ffffff;
+    border-left:none;
+    padding:6px;
+   
+    padding-top:5px;
+ 
+    margin-left:4px;
+    border-radius: 0px 2px 2px 0px;
+
+    border-width: 1px;
+    border-color: rgb(165, 165, 165);
+    cursor:pointer;
+    font-family: roboto;
+
+}
+.camera-search-cancel:hover{
+    
+
+    
+     background-color: rgb(142, 67, 67);
+   
+    
+}
+.camera-add{
+    
+    height:26px;
+    background-color: rgb(73, 184, 209);
+    color: #ffffff;
+    border-left:none;
+    padding:6px;
+   
+    padding-top:5px;
+   
+    margin-left:4px;
+    border-radius: 0px 2px 2px 0px;
+
+    border-width: 1px;
+    border-color: rgb(165, 165, 165);
+    cursor:pointer;
+    font-family: roboto;
+
+
+}
+.camera-header-top{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
 }

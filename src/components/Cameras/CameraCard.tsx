@@ -7,7 +7,7 @@ import LiveStreamBlocked from '../Cameras/LiveStreamBlocked';
 
 type CameraCardProps ={
   URL: string,
-  status: boolean,
+  status: boolean|any,
   location: string,
 }
 
@@ -16,7 +16,7 @@ const CameraCard = (props:CameraCardProps) => {
     <div className="camera-card-holder">
      
         <div className='camera-card-video'>
-            {props.status?<LiveStreamBlocked />:<LiveStreamPlayer />}
+            {props.status?<LiveStreamBlocked />:<LiveStreamPlayer URL={props.URL} status={false} location={props.location}/>}
         </div>
          
          <div className='card-video'>

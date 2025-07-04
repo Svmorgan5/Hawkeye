@@ -2,10 +2,18 @@
 import React, { useEffect, useRef } from 'react';
 import Hls from 'hls.js';
 
-const LiveStreamPlayer = () => {
-  const videoRef = useRef(null);
-  const streamUrl = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'; // Replace with your live HLS URL
+type LiveProps = {
+  URL:string
+  status: boolean,
+  location:string
+}
 
+const LiveStreamPlayer = (liveProps:LiveProps) => {
+  const videoRef = useRef(null);
+  const streamUrl = `${liveProps.URL}`; // Replace with your live HLS URL
+
+  
+console.log('HLS supported:', Hls.isSupported());
   useEffect(() => {
     const video = videoRef.current;
 
