@@ -1,7 +1,9 @@
 import '../../UnderConstruction.css'
 import LiveStreamPlayer from '../Cameras/LiveStreamPlayer';
 import unlock from '../../assets/Unlock.png'
+import lock from '../../assets/lock.png'
 import './CameraCard.css'
+import LiveStreamBlocked from '../Cameras/LiveStreamBlocked';
 
 type CameraCardProps ={
   URL: string,
@@ -14,14 +16,14 @@ const CameraCard = (props:CameraCardProps) => {
     <div className="camera-card-holder">
      
         <div className='camera-card-video'>
-            <LiveStreamPlayer />
+            {props.status?<LiveStreamBlocked />:<LiveStreamPlayer />}
         </div>
          
          <div className='card-video'>
         <table className='video-table'>
           <tr>
             <td className=' video-location td-lock'>
-               <img src={unlock}></img> 
+               <img className='lock-image' src={props.status?(`${lock}`):(`${unlock}`)}></img> 
             </td>
            <td className='video-location '>
               {props.location}
@@ -30,7 +32,7 @@ const CameraCard = (props:CameraCardProps) => {
           <tr >
             <td className='video location td-lock'></td>
             <td className='video-info'>
-              {status?'Unlocked':'Locked'}
+              {props.status?'Locked':'Unlocked'}
             </td>
           </tr>
         </table>

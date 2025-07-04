@@ -15,3 +15,13 @@
     flex-grow: 1;
     
 }
+.video-blocked{
+    background-color: rgb(170, 162, 162);
+    height:196px;
+    color: rgb(66, 62, 62);
+    text-align: center;
+    padding-top:80px;
+    font-size:30px;
+    font-weight: 700;
+    font-family: 'DIN Condensed', 'Arial Narrow', Arial, sans-serif;
+}

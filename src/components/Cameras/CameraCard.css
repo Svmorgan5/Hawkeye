@@ -72,3 +72,13 @@ color: #8C8C8C;
 
 
 }
+.lock-image{
+    width:20px;
+    height:auto;
+  
+}
+.camera-card-video{
+    height:196px;
+    border-bottom:solid;
+    border-width: 1px;
+}
