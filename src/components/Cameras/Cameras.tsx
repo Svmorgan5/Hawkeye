@@ -27,9 +27,11 @@ const Cameras = () => {
         }
         
       });
-      console.log(response.data)
-      console.log({token})
-      setCameras(response.data)
+      const filteredCameras:Camera[]= response.data.filter((myCamera:Camera)=>
+        myCamera.location.toLowerCase().includes(search.toLowerCase()))
+   
+   
+      setCameras(filteredCameras)
       
     
       
@@ -42,15 +44,15 @@ const Cameras = () => {
   };
 
   getCameras()
-  },[]);
+  },[search]);
 
   return (
     <div className="main-camera-page">
       <div className='camera-header-top'>
             <div className='breadcrumb'>Cameras</div>
    <div className='camera-search-table-cell'>
-                <input type='text' placeholder='Search cameras' className='camera-search'  value={search} onClick={(e)=>setSearch(e.target.value)}></input>
-                <button className='camera-search-cancel'>Clear Search</button>
+                <input type='text' placeholder='Search cameras' className='camera-search'  value={search} onChange={(e)=>setSearch(e.target.value)}></input>
+                <button className='camera-search-cancel' onClick={()=>setSearch('')}>Clear Search</button>
                 
                    <a href="/addcamera"><input type='button' className='camera-add' value='+ Add Camera' ></input></a>
           </div>
