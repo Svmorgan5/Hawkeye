@@ -56,16 +56,17 @@ const Cameras = () => {
         
           </div>
     <div className='camera-cards-page'>
-     
+               <div className='camera-cards-holder'>
       {cameras.map((camera)=>
-                   <div className='camera-cards-holder'>
+         
               
-            <div className='camera-cards-element'>{camera.stream_url} <CameraCard URL={camera.stream_url} location={camera.location} status={false} name={camera.location} /></div>
+            <div className='camera-cards-element'> <CameraCard URL={camera.stream_url} location={camera.location} status={false} name={camera.location} /></div>
           
-             </div>
+             
       )
       
       }
+      </div>
         </div>
          
      

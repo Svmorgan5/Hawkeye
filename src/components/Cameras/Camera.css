@@ -3,18 +3,7 @@
     overflow-y: scroll;
 
 }
-.camera-cards-holder{
 
-    display:flex;
-    flex-direction: row;
-    
-  
-}
-.camera-cards-element{
-    flex-basis: 300px;
-    flex-grow: 1;
-    
-}
 .video-blocked{
     background-color: rgb(170, 162, 162);
     height:196px;
@@ -36,3 +25,40 @@
    margin-right:40px;
    margin-top: 10px;
 }
+
+
+.camera-cards-holder{
+
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap:10px;
+    
+
+    
+  
+}
+
+
+.camera-cards-element{
+
+    display: flex;
+    flex-direction: column;
+    width:30% ;
+    flex-shrink: 1;
+    /* max-width: 370px; */
+}
+
+@media screen and (max-width:1090px) {
+  
+.camera-cards-element{
+
+  
+    flex: 1 1 calc(50% - 10px);
+    max-width: 370px;
+    
+}
+
+    
+}
+

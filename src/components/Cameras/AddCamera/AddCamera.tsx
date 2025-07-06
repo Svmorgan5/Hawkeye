@@ -21,6 +21,7 @@ const AddCamera = () => {
 const [URL,setURL] = useState<string>('')
 const token= sessionStorage.getItem('jwtToken_key')
 const [location,setLocation] = useState<string>('')
+const [name,setName] = useState<string>('')
 
 
   
@@ -73,6 +74,11 @@ const [location,setLocation] = useState<string>('')
             <label className='form-header' ><div className='header-text'>Add Camera</div></label>
             <div className='div-body'>   
               
+                <div className='label-wrapper '>
+              
+                    Name
+                    <input type='text'  className='body-text message-box-addalerts'value={name} onChange={(e)=>setName(e.target.value)}></input>
+                </div>
                <div className='label-wrapper '>
               
                     URL

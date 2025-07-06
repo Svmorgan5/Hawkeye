@@ -82,7 +82,7 @@ color: #8C8C8C;
 }
 .camera-card-video{
     height:196px;
-    border-bottom:solid;
+    /* border-bottom:solid; */
     border-width: 1px;
 }
 .camera-search{
@@ -144,8 +144,3 @@ color: #8C8C8C;
     justify-content: space-between;
 }
 
-.camera-cards-element {
-  flex: 1 1 calc(33.333% - 10px); /* grow, shrink, basis */
-  max-width: calc(33.333% - 10px); /* limit max width */
-  box-sizing: border-box;
-}
