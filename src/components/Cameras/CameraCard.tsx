@@ -17,7 +17,7 @@ const CameraCard = (props:CameraCardProps) => {
     <div className="camera-card-holder">
      
         <div className='camera-card-video'>
-            {props.status?<LiveStreamBlocked />:<LiveStreamPlayer URL={props.URL} status={false} location={props.location}/>}
+            {props.status?<LiveStreamBlocked />:<LiveStreamPlayer URL={props.URL} status={false} location={props.location} name={props.name}/>}
         </div>
          
          <div className='card-video'>

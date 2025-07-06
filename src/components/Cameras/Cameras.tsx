@@ -4,6 +4,7 @@ import './Camera.css'
 import {useEffect, useState } from 'react'
 import axios from 'axios'
 
+
 type Camera = {
   id:number,
   stream_url: string,
@@ -54,20 +55,19 @@ const Cameras = () => {
           </div>
         
           </div>
-    
+    <div className='camera-cards-page'>
+     
       {cameras.map((camera)=>
-           <div className='camera-cards-page'>
-             <div className='camera-cards-holder'>
+                   <div className='camera-cards-holder'>
               
             <div className='camera-cards-element'>{camera.stream_url} <CameraCard URL={camera.stream_url} location={camera.location} status={false} name={camera.location} /></div>
-            <div className='camera-cards-element'>{camera.stream_url} <CameraCard URL={camera.stream_url} location={camera.location} status={false} name={camera.location} /></div>
-            <div className='camera-cards-element'>{camera.stream_url} <CameraCard URL={camera.stream_url} location={camera.location} status={false} name={camera.location}/></div>
-
+          
              </div>
-           </div>
       )
       
       }
+        </div>
+         
      
  
     </div>

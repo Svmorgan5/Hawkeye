@@ -1,6 +1,8 @@
 .camera-card-holder{
-    
-    max-width:350px;
+    display: flex;
+    flex-direction: column;
+    max-width:800px;
+    gap:10px;
     border-color:rgb(174, 174, 174);
     border:solid;
     border-width: 1px;
@@ -140,4 +142,10 @@ color: #8C8C8C;
     display:flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.camera-cards-element {
+  flex: 1 1 calc(33.333% - 10px); /* grow, shrink, basis */
+  max-width: calc(33.333% - 10px); /* limit max width */
+  box-sizing: border-box;
 }

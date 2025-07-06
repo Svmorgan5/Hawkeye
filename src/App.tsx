@@ -29,6 +29,7 @@ import MemberList from './components/Members/MemberList/MemberList';
 import AddAlert from './components/Alerts/AddAlerts/AddAlert';
 import AddCamera from './components/Cameras/AddCamera/AddCamera';
 
+
 const EditMemberWrapper =() => {
     
     const {id} = useParams();
