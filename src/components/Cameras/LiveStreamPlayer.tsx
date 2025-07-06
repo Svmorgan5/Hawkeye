@@ -46,7 +46,7 @@ console.log('HLS supported:', Hls.isSupported());
         ref={videoRef}
         controls
         muted
-        style={{ width:'100%', maxWidth:'370px', minHeight: '197px', paddingTop: '0px',marginTop:'0px', backgroundColor:'lightGray', textAlign:'center' }}
+        style={{ width:'100%', maxWidth:'370px', minHeight: '197px', paddingTop: '0px',marginTop:'0px', backgroundColor:'black', textAlign:'center' }}
       />
     </div>
   );

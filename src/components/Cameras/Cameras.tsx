@@ -17,6 +17,7 @@ const Cameras = () => {
 
   const [cameras, setCameras] = useState<Camera[]>([])
   const token=sessionStorage.getItem('jwtToken_key')
+  const [search,setSearch] = useState<string>('')
   useEffect(()=> {
     const getCameras = async() =>{
     try {
@@ -48,7 +49,7 @@ const Cameras = () => {
       <div className='camera-header-top'>
             <div className='breadcrumb'>Cameras</div>
    <div className='camera-search-table-cell'>
-                <input type='text' placeholder='Search cameras' className='camera-search'  value='change to search'></input>
+                <input type='text' placeholder='Search cameras' className='camera-search'  value={search} onClick={(e)=>setSearch(e.target.value)}></input>
                 <button className='camera-search-cancel'>Clear Search</button>
                 
                    <a href="/addcamera"><input type='button' className='camera-add' value='+ Add Camera' ></input></a>

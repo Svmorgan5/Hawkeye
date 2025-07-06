@@ -55,6 +55,7 @@
 
   
     flex: 1 1 calc(50% - 10px);
+    width:calc(50% - 10px);
     max-width: 370px;
     
 }
@@ -62,3 +63,18 @@
     
 }
 
+
+@media screen and (max-width:900px) {
+  
+.camera-cards-element{
+
+  
+    flex: 1 1 calc(100% - 10px);
+    width:calc(100% - 10px);
+
+ 
+    
+}
+
+    
+}
