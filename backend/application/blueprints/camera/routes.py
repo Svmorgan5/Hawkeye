@@ -12,7 +12,7 @@ import re
 
 @cameras_bp.route('/', methods=['POST'])
 @token_required
-@limiter.limit("5 per hour")  # Limit to 5 requests per hour to avoid brute force attacks
+# @limiter.limit("5 per hour")  # Limit to 5 requests per hour to avoid brute force attacks
 def add_camera(current_user_id):
     try:
         camera_data = camera_schema.load(request.json)
@@ -29,7 +29,7 @@ def add_camera(current_user_id):
 
 @cameras_bp.route('/', methods=['GET'])
 @token_required
-@limiter.limit("10 per hour")  # Limit to 10 requests per hour
+# @limiter.limit("10 per hour")  # Limit to 10 requests per hour
 @cache.cached(timeout=300)  # Cache the cameras for 5 minutes
 def get_cameras(current_user_id):
     cameras = db.session.execute(
