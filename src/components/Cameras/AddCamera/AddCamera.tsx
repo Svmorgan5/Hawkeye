@@ -19,6 +19,7 @@ const AddCamera = () => {
 
 
 const [URL,setURL] = useState<string>('')
+const token= sessionStorage.getItem('jwtToken_key')
 const [location,setLocation] = useState<string>('')
 
 
@@ -36,7 +37,7 @@ const [location,setLocation] = useState<string>('')
       
       },{
         headers:{
-        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE2ODIyMTUsImlhdCI6MTc1MTYzOTAxNSwic3ViIjoiMSJ9.C0vmsC7QpiZvOR6uYl8hGLvZX-A639HARNAwiChOzeM`,
+        'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
        

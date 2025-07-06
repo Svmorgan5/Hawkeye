@@ -28,12 +28,13 @@ const EditMembers: React.FC<Props> = ({id}) => {
     const [groups,setGroup] = useState<string>('')
     const [active,setActive] = useState<boolean>(true)
     const navigate = useNavigate();
+    const token = sessionStorage.getItem('jwtToken_key')
   useEffect(()=> {
     const getMembers = async() =>{
     try {
       const response = await axios.get("http://127.0.0.1:5000/members/", {
         headers:{
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAzODc3MzIsImlhdCI6MTc1MDM0NDUzMiwic3ViIjoiMSJ9.T8OYCfeOPJZjy_Rc15TM5z5a8Ial7z_8Nlg0Zqd8DbM`
+          'Authorization':  `Bearer ${token}`,
         }
       });
       const myMember = response.data.find((m:Member)=>m.id===id)
@@ -80,7 +81,7 @@ const EditMembers: React.FC<Props> = ({id}) => {
         
       },{
         headers:{
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAzODc3MzIsImlhdCI6MTc1MDM0NDUzMiwic3ViIjoiMSJ9.T8OYCfeOPJZjy_Rc15TM5z5a8Ial7z_8Nlg0Zqd8DbM`
+           'Authorization': `Bearer ${token}`,
         }
        
       });

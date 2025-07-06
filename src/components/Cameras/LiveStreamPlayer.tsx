@@ -5,7 +5,8 @@ import Hls from 'hls.js';
 type LiveProps = {
   URL:string
   status: boolean,
-  location:string
+  location:string,
+  name:string
 }
 
 const LiveStreamPlayer = (liveProps:LiveProps) => {

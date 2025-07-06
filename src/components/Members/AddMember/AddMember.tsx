@@ -24,6 +24,7 @@ const [name,setName] = useState<string>('')
 const [last,setLast] = useState<string>('')
 const [role,setRole] = useState<string>('Teacher')
 const [groups,setGroup] = useState<string>('Employee')
+const token = sessionStorage.getItem('jwtToken_key')
 
   
  const handleSubmit = async (e: React.FormEvent) => {
@@ -40,7 +41,7 @@ const [groups,setGroup] = useState<string>('Employee')
         
       },{
         headers:{
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAzODc3MzIsImlhdCI6MTc1MDM0NDUzMiwic3ViIjoiMSJ9.T8OYCfeOPJZjy_Rc15TM5z5a8Ial7z_8Nlg0Zqd8DbM`,
+          'Authorization':  `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
        

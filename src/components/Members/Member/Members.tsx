@@ -4,6 +4,7 @@ import '../../../assets/member.png'
 import { useNavigate } from 'react-router-dom'
 
 
+
 import { useEffect, useState} from 'react'
 // import EditMembers from './Edit Members/EditMembers'
 
@@ -27,6 +28,7 @@ const Members = () => {
   const [activeState,setActiveState] = useState<boolean>(true)
   const [search,setSearch] = useState<string>('')
   const navigate = useNavigate();
+  const token = sessionStorage.getItem('jwtToken_key')
 
   const toggleActiveState = () =>{
     setActiveState(prev=>!prev);
@@ -57,7 +59,7 @@ const Members = () => {
     try {
       const response = await axios.get("http://127.0.0.1:5000/members/", {
         headers:{
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAzODc3MzIsImlhdCI6MTc1MDM0NDUzMiwic3ViIjoiMSJ9.T8OYCfeOPJZjy_Rc15TM5z5a8Ial7z_8Nlg0Zqd8DbM`
+          'Authorization': `Bearer ${token}`
         }
       });
       setMembers(response.data)
@@ -78,7 +80,7 @@ const Members = () => {
     try {
       const response = await axios.get("http://127.0.0.1:5000/members/", {
         headers:{
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAzODc3MzIsImlhdCI6MTc1MDM0NDUzMiwic3ViIjoiMSJ9.T8OYCfeOPJZjy_Rc15TM5z5a8Ial7z_8Nlg0Zqd8DbM`
+          'Authorization': `Bearer ${token}`
         }
       });
       const filteredMembers= response.data.filter((myMember:Member)=>
@@ -110,7 +112,7 @@ const Members = () => {
       try {
         await axios.delete(`http://127.0.0.1:5000/members/${id}`, {
           headers:{
-            'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAzODc3MzIsImlhdCI6MTc1MDM0NDUzMiwic3ViIjoiMSJ9.T8OYCfeOPJZjy_Rc15TM5z5a8Ial7z_8Nlg0Zqd8DbM`
+            'Authorization': `Bearer ${token}`
           }
         });
       
@@ -139,7 +141,7 @@ const Members = () => {
         
       },{
         headers:{
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAzODc3MzIsImlhdCI6MTc1MDM0NDUzMiwic3ViIjoiMSJ9.T8OYCfeOPJZjy_Rc15TM5z5a8Ial7z_8Nlg0Zqd8DbM`
+          'Authorization': `Bearer ${token}`
         }
        
       });

@@ -7,28 +7,32 @@ import axios from 'axios'
 type Camera = {
   id:number,
   stream_url: string,
+  location:string,
   name:string
+
 }
 
 const Cameras = () => {
 
   const [cameras, setCameras] = useState<Camera[]>([])
+  const token=sessionStorage.getItem('jwtToken_key')
   useEffect(()=> {
     const getCameras = async() =>{
     try {
       const response = await axios.get("http://127.0.0.1:5000/cameras/", {
         headers:{
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE2ODIyMTUsImlhdCI6MTc1MTYzOTAxNSwic3ViIjoiMSJ9.C0vmsC7QpiZvOR6uYl8hGLvZX-A639HARNAwiChOzeM`
+          'Authorization': `Bearer ${token}`
         }
         
       });
       console.log(response.data)
+      console.log({token})
       setCameras(response.data)
       
     
       
     } catch (error:any){
-    
+    console.log({token})
       console.error('Error message:', error.message);
     }
     // Log and extract JWT token from response
@@ -55,14 +59,9 @@ const Cameras = () => {
            <div className='camera-cards-page'>
              <div className='camera-cards-holder'>
               
-            <div className='camera-cards-element'>{camera.stream_url} <CameraCard URL={camera.stream_url} location="hello" status={false} /></div>
-          
-           <div className='camera-cards-element'>{camera.stream_url} <CameraCard URL=' https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8' location="hello" status={false} /></div>
-          
-          
-          
-         
-
+            <div className='camera-cards-element'>{camera.stream_url} <CameraCard URL={camera.stream_url} location={camera.location} status={false} name={camera.location} /></div>
+            <div className='camera-cards-element'>{camera.stream_url} <CameraCard URL={camera.stream_url} location={camera.location} status={false} name={camera.location} /></div>
+            <div className='camera-cards-element'>{camera.stream_url} <CameraCard URL={camera.stream_url} location={camera.location} status={false} name={camera.location}/></div>
 
              </div>
            </div>

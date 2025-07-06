@@ -30,7 +30,7 @@ const [time,setTime] = useState<string|null>('')
 const [alert_type,setAlert_type] = useState<string>('scheduled')
 const [message,setMessage] = useState<string>('')
 const [camera,setCamera] = useState<number|null>(null)
-
+const token = sessionStorage.getItem('jwtToken_key')
   
  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();  
@@ -46,7 +46,7 @@ const [camera,setCamera] = useState<number|null>(null)
         
       },{
         headers:{
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAzODc3MzIsImlhdCI6MTc1MDM0NDUzMiwic3ViIjoiMSJ9.T8OYCfeOPJZjy_Rc15TM5z5a8Ial7z_8Nlg0Zqd8DbM`,
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
        

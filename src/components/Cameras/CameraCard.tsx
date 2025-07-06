@@ -9,6 +9,7 @@ type CameraCardProps ={
   URL: string,
   status: boolean|any,
   location: string,
+  name:string
 }
 
 const CameraCard = (props:CameraCardProps) => {

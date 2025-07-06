@@ -21,12 +21,13 @@ const Alerts = () => {
   const [alerts,setAlerts] = useState<Alert[]>()
   const [search,setSearch] = useState<string>('')
   const [alertState, setAlertState] = useState<string>('all')
+  const token = sessionStorage.getItem('jwtToken_key')
 
   const getAlerts =  async() =>{
     try {
       const response = await axios.get("http://127.0.0.1:5000/alerts/", {
         headers:{
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAzODc3MzIsImlhdCI6MTc1MDM0NDUzMiwic3ViIjoiMSJ9.T8OYCfeOPJZjy_Rc15TM5z5a8Ial7z_8Nlg0Zqd8DbM`
+          'Authorization': `Bearer ${token}`
         }
       });
       const filteredAlerts= response.data.filter((myAlert:Alert)=>
@@ -51,7 +52,8 @@ const Alerts = () => {
     try {
       const response = await axios.get("http://127.0.0.1:5000/alerts/", {
         headers:{
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAzODc3MzIsImlhdCI6MTc1MDM0NDUzMiwic3ViIjoiMSJ9.T8OYCfeOPJZjy_Rc15TM5z5a8Ial7z_8Nlg0Zqd8DbM`
+          'Authorization': `Bearer ${token}`
+
         }
       });
       setAlerts(response.data)
