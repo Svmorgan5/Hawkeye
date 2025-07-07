@@ -11,9 +11,7 @@ display: flex;
 align-items: center;
 text-align: center;
 color: #032B3A;
-flex: none;
-order: 0;
-flex-grow: 0;
+
 margin-left:130px;
 }
 
@@ -26,9 +24,8 @@ font-weight: 600;
 font-size: 16px;
 line-height: 12px;
 color: #262626;
-flex: none;
-order: 0;
-flex-grow: 0;
+
+
 }
 
 .text{
@@ -52,7 +49,7 @@ border-radius: 6px;
 
 /* Inside auto layout */
 flex: none;
-order: 1;
+
 flex-grow: 0;
 }
 
@@ -71,7 +68,7 @@ height: 100%;
 
 /* Inside auto layout */
 flex: none;
-order: 0;
+
 flex-grow: 0;
 }
 
@@ -91,9 +88,7 @@ height: 10%;
 min-height: 60px;
 
 /* Inside auto layout */
-flex: none;
-order: 0;
-flex-grow: 0;
+
 }
 
 
@@ -104,9 +99,7 @@ flex-grow: 0;
 background: #F0F2F5;
 
 /* Inside auto layout */
-flex: none;
-order: 1;
-flex-grow: 0;
+
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -132,10 +125,7 @@ gap: 10px;
 width: 398px;
 height: 80px;
 
-/* Inside auto layout */
-flex: none;
-order: 1;
-flex-grow: 0;
+
 
 }
 .password-warning{
@@ -148,9 +138,7 @@ font-size: 12px;
 line-height: 20px;
 
 color: #262626;
-flex: none;
-order: 0;
-flex-grow: 0;
+
 }
 
 
@@ -174,9 +162,7 @@ margin-top:-30px;
 color: #FFFFFF;
 /* Inside auto layout */
 flex: none;
-order: 1;
-flex-grow: 0;
-z-index: 1;
+
 border:none;
 }
 
@@ -195,10 +181,8 @@ line-height: 20px;
 /* Gray / gray-9 */
 color: #262626;
 
-/* Inside auto layout */
-flex: none;
-order: 0;
-flex-grow: 0;
+
+
 margin-top:-60px;
 }
 .password-intro{
@@ -232,10 +216,49 @@ line-height: 22px;
 color: #262626;
 /* Inside auto layout */
 flex: none;
-order: 1;
-flex-grow: 0;
+0;
 margin-left: -70px;
    
+}
+.container-signin{
+  display:flex;
+  flex-direction: row;
+  height:100%;
+  min-height: 900px;
+}
+
+.full-page{
+  height:100%;
+  min-height: 900px;
+}
+
+.div-left-signin{
+  flex: 1 1 calc(50% - 0px);
+
+}
+.div-right-signin{
+  flex: 1 1 calc(50% - 0px);
+  
+  padding-top: 200px;;
+
+}
+
+.add-business{
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 42px 156px;
+gap: 8px;
+width: 550px;
+height: 100px;
+background: #FFFFFF;
+border-radius: 16px;
+font-size: 23px;
+font-family: 'Roboto';
+font-weight: 600;
+margin-bottom:15px;
+
 }
 
 @media (max-width: 1600px) {

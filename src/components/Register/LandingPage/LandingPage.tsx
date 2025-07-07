@@ -29,7 +29,7 @@ const LandingPage = () => {
         <div className='header-container-right'>
             
         <a className='a-landing' href="/signin">Log In</a>
-        <a href='register'>
+        <a href='/addbus'>
         <button className="landing-sign-up">
             Sign Up
         </button>

@@ -31,7 +31,8 @@ import AddCamera from './components/Cameras/AddCamera/AddCamera';
 import NewCameraBlank from './components/Cameras/AddCamera/NewCameraBlank.tsx/NewCameraBlank';
 import LandingPage from './components/Register/LandingPage/LandingPage';
 import { TokenProvider, useTokenContext } from './Context/Context';
-import { useContext } from 'react';
+import AddBus from './components/Register/AddBus';
+
 
 
 
@@ -39,8 +40,8 @@ const EditMemberWrapper =() => {
     
     const {id} = useParams();
     const [idInt, setId] = useState<number>(0);
+ 
    
-    
     
     useEffect(() =>{
 
@@ -63,6 +64,12 @@ function App() {
   const {token, dispatch} = useTokenContext();
   
 
+  useEffect(() =>{
+      const tempToken = sessionStorage.getItem('jwtToken_key')
+      if(tempToken){
+        dispatch({type:'SET_TOKEN', payload:tempToken})
+      }
+  },[])
   useEffect(()=>{
     if(token){
       setLogin(true)
@@ -92,18 +99,11 @@ function App() {
                 <Route path='/' element={<LandingPage />}/>
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/register" element={<Register />} />
+                 <Route path='/addbus' element={<AddBus />} />
               </Routes>
         </div>
           </>
-      //   <div className="container">
-      //   <div className="div-left" >
-       
-      //     <TheSignUp />
-      //  </div>
-      //  <div className="div-right" >
-      //     <Register />
-      //  </div>
-      // </div>
+     
     ):
     (
     <div className='container-main'>
@@ -112,8 +112,6 @@ function App() {
           <div> <Header /></div>
             <div>
               <Routes>
-                <Route path="/signin" element={<SignIn />} />
-                <Route path="/register" element={<Register />} />
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/alerts" element={<Alerts />} />

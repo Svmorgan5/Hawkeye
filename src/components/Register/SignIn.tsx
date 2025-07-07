@@ -8,6 +8,8 @@ import NavBar from '../NavBar/NavBar';
 import Header from '../../Header/Header';
 import '../../App.css'
 import { useTokenContext } from '../../Context/Context';
+import SignUp from '../SignUp';
+import TheSignUp from '../../pages/TheSignUp/TheSignUp';
 
 // import User from './User';
 
@@ -40,8 +42,9 @@ const SignIn:React.FC = () =>{
       // Log and extract JWT token from response
       console.log("The returned data ", response.data)
       const jwtToken = response.data.token;
-      setToken(jwtToken)
       sessionStorage.setItem('jwtToken_key', jwtToken);
+      dispatch({type:'SET_TOKEN',payload:jwtToken})
+      
       
       
       
@@ -88,9 +91,14 @@ const SignIn:React.FC = () =>{
 
 
     return (
-      <>
       
-        <div className='main-page'>
+      
+           <div className="container-signin">
+              <div className="div-left-signin" >
+       
+                <TheSignUp />
+              </div>
+       <div className='div-right-signin'>
         <form className="form" onSubmit={handleLogin}>
         <p className="Welcome">Login Here:</p>
      
@@ -100,24 +108,15 @@ const SignIn:React.FC = () =>{
             <label  className='label'>User Name:</label>
             <input  className='text'  type='email' value={email} onChange={(e) => setEmail(e.target.value)}></input>
         </div>
-        <div className='form-div'>
+        <div className='form-div' style={{paddingBottom:'35px'}}>
             <label className='label'>Password:</label>
             <input className='text'  type='password' value={password} onChange={(e) => setPassword(e.target.value)} ></input>
         </div>
         
-        <div className='password-div'>
-            <div className='password-rules'>
-            <div className='password-intro'>Password Should Contain At Least:</div>
-            One Number 
-            <br></br>One Capital Letter 
-            <br></br> One Special Charecter 
-            </div>
-       
-            
-        </div>
+        
         
         <div className='button-container'></div>
-         <button className='submit' type='submit'>
+         <button className='submit' type='submit' style={{marginLeft:'145px'}}>
             Submit
         </button>
         <p className='already-signed'>Not a user yet? Click here to <a href="#">register</a></p> 
@@ -128,9 +127,9 @@ const SignIn:React.FC = () =>{
 //         <User />
 //       }   */}
         </div>
-        
-      
-     </>   
+      </div>
+
+  
        
     );
 };
