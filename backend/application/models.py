@@ -11,6 +11,20 @@ class Base(DeclarativeBase):
 
 db = SQLAlchemy(model_class=Base)
 
+user_institution = Table(
+    "user_institution",
+    Base.metadata,
+    db.Column("user_id", db.ForeignKey("users.id"), primary_key=True),
+    db.Column("institution_id", db.ForeignKey("institutions.id"), primary_key=True),
+)
+
+member_institution = Table(
+    "member_institution",
+    Base.metadata,
+    db.Column("member_id", db.ForeignKey("members.id"), primary_key=True),
+    db.Column("institution_id", db.ForeignKey("institutions.id"), primary_key=True),
+)
+
 class User(Base):
     __tablename__ = 'users'
 
@@ -26,12 +40,30 @@ class User(Base):
     institution: Mapped["Institution"] = relationship("Institution", back_populates="users")
     cameras: Mapped[List["Camera"]] = relationship("Camera", back_populates="user")
 
+    institutions = relationship(
+        "Institution",
+        secondary=user_institution,
+        back_populates="users_multi"
+    )
+
 class Institution(Base):
     __tablename__ = 'institutions'
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(db.String(150), nullable=False, unique=True)
     is_school: Mapped[bool] = mapped_column(db.Boolean, nullable=False)
     # Add more fields as needed (address, type, etc.)
+
+
+    users_multi = relationship(
+        "User",
+        secondary=user_institution,
+        back_populates="institutions"
+    )
+    members_multi = relationship(
+        "Member",
+        secondary=member_institution,
+        back_populates="institutions"
+    )
 
     users: Mapped[List["User"]] = relationship("User", back_populates="institution")
     members: Mapped[List["Member"]] = relationship("Member", back_populates="institution")
@@ -120,6 +152,12 @@ class Member(Base):
         "Camera",
         secondary=camera_member,
         back_populates="members"
+    )
+
+    institutions = relationship(
+        "Institution",
+        secondary=member_institution,
+        back_populates="members_multi"
     )
 
     institution_id: Mapped[int] = mapped_column(db.ForeignKey('institutions.id'), nullable=True)
