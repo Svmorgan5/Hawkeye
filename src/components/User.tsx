@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 interface User {
   id: number;
@@ -11,6 +12,7 @@ const UsersList: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState<string | null>(null);
   const token = localStorage.getItem('token'); // JWT from login
+ 
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -29,6 +31,7 @@ const UsersList: React.FC = () => {
 
         const data = await response.json();
         setUsers(data);
+       
       } catch (err: any) {
         setError(err.message);
       }

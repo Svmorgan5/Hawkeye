@@ -32,6 +32,7 @@ const [name,setName] = useState<string>('')
       await axios.post("http://127.0.0.1:5000/cameras/", {
           stream_url:`${URL}`,
           location:`${location}`,
+          name:`${name}`
      
      
          

@@ -3,6 +3,7 @@ import CameraCard from './CameraCard'
 import './Camera.css'
 import {useEffect, useState } from 'react'
 import axios from 'axios'
+import NewCameraBlank from './AddCamera/NewCameraBlank.tsx/NewCameraBlank'
 
 
 type Camera = {
@@ -47,7 +48,9 @@ const Cameras = () => {
   },[search]);
 
   return (
-    <div className="main-camera-page">
+    <>
+    {(cameras.length!=0)?
+    (<div className="main-camera-page">
       <div className='camera-header-top'>
             <div className='breadcrumb'>Cameras</div>
    <div className='camera-search-table-cell'>
@@ -74,7 +77,10 @@ const Cameras = () => {
          
      
  
-    </div>
+    </div>):
+    (<NewCameraBlank />)
+    }
+    </>
   );
 };
 

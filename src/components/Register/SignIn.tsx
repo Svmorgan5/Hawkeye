@@ -1,18 +1,29 @@
 import './Register.css'
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
+import Dashboard from '../Dashboard/Dashboard';
+import App from '../../App';
+import NavBar from '../NavBar/NavBar';
+import Header from '../../Header/Header';
+import '../../App.css'
+import { useTokenContext } from '../../Context/Context';
+
 // import User from './User';
+
 
 
 const SignIn:React.FC = () =>{
     
+  
 
   // State variables to store user credentials
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [token, setToken] = useState('')
-
-
+  const {token, dispatch} = useTokenContext();
+  const navigate = useNavigate();
+  
+  
   // Function to handle form submission and obtain JWT token from reqres.in
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();    
@@ -22,22 +33,34 @@ const SignIn:React.FC = () =>{
       // Make a POST request to your login endpoint with user credentials
       const response = await axios.post("http://127.0.0.1:5000/users/login", {
   email,
-  password
+  password,
+  
 })
+      
       // Log and extract JWT token from response
       console.log("The returned data ", response.data)
       const jwtToken = response.data.token;
-      // Set the token so the User component will show up on the page
       setToken(jwtToken)
-
+      sessionStorage.setItem('jwtToken_key', jwtToken);
+      
+      
+      
+      // Set the token so the User component will show up on the page
+     
+      
       // Store JWT token in local storage or state for future use
       // You can see this by going to:
       // developer tools | Application tab | Session Storage dropdown
-      sessionStorage.setItem('jwtToken_key', jwtToken);
+      
       // Optional: Redirect user to another page upon successful login
       // history.push('/dashboard');
+ 
+       
+    
     } catch (error) {
       console.error('Login failed:', error);
+    }finally{
+      navigate('/')
     }
   };
 
@@ -65,6 +88,8 @@ const SignIn:React.FC = () =>{
 
 
     return (
+      <>
+      
         <div className='main-page'>
         <form className="form" onSubmit={handleLogin}>
         <p className="Welcome">Login Here:</p>
@@ -104,6 +129,8 @@ const SignIn:React.FC = () =>{
 //       }   */}
         </div>
         
+      
+     </>   
        
     );
 };

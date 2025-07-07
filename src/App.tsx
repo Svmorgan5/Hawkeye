@@ -22,18 +22,25 @@ import Integration from './components/Intergration/Integration';
 import Billing from './components/Billing/Billing';
 import Profile from './components/SchoolProfile/SchoolProfile';
 import EditMembers from './components/Members/Edit Members/EditMembers';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import PreAddMember from './components/Members/PreAddMember/PreAddMember';
 import MemberList from './components/Members/MemberList/MemberList';
 import AddAlert from './components/Alerts/AddAlerts/AddAlert';
 import AddCamera from './components/Cameras/AddCamera/AddCamera';
+import NewCameraBlank from './components/Cameras/AddCamera/NewCameraBlank.tsx/NewCameraBlank';
+import LandingPage from './components/Register/LandingPage/LandingPage';
+import { TokenProvider, useTokenContext } from './Context/Context';
+import { useContext } from 'react';
+
 
 
 const EditMemberWrapper =() => {
     
     const {id} = useParams();
     const [idInt, setId] = useState<number>(0);
+   
+    
     
     useEffect(() =>{
 
@@ -47,24 +54,68 @@ const EditMemberWrapper =() => {
 
   }
 
+ 
 
 function App() {
+ 
+  const navigate = useNavigate();
+  const [login,setLogin] = useState<boolean|null>(false)
+  const {token, dispatch} = useTokenContext();
   
+
+  useEffect(()=>{
+    if(token){
+      setLogin(true)
+     
+      
+    }
+    
+    
+  },[token])
+
+   
+    
+  
+
   return (
-    <div className='container-main'>
-          <div className="div-left"><NavBar /></div>
+    <>
+    
+    {!login?
+   
+    
+    
+    (
+        <>
         
-        
-          <div className="container div-right" >
-              <div> <Header /></div>
-             
-             <div>
+        <div>
               <Routes>
-                
+                <Route path='/' element={<LandingPage />}/>
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/register" element={<Register />} />
+              </Routes>
+        </div>
+          </>
+      //   <div className="container">
+      //   <div className="div-left" >
+       
+      //     <TheSignUp />
+      //  </div>
+      //  <div className="div-right" >
+      //     <Register />
+      //  </div>
+      // </div>
+    ):
+    (
+    <div className='container-main'>
+          <div className="div-left"><NavBar /></div>
+          <div className="container div-right" >
+          <div> <Header /></div>
+            <div>
+              <Routes>
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/" element={<Dashboard />} />
                 <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/cameras" element={<Cameras />} />
                 <Route path="/alerts" element={<Alerts />} />
                 <Route path="/reports" element={<Reports />} />
                 <Route path="/members" element={<Members />} />
@@ -82,27 +133,20 @@ function App() {
                 <Route path='/preaddmember' element={<PreAddMember />} />
                 <Route path='/memberlist' element={<MemberList />} />
                 <Route path='/addalert' element={<AddAlert />} />
-                 <Route path='/addcamera' element={<AddCamera />} />
-                
-                
-                
-
-
-                
+                <Route path='/addcamera' element={<AddCamera />} />
+                <Route path='/cameras' element={<Cameras />} />
+                <Route path='/newCamera' element={<NewCameraBlank />} />
               </Routes>
-              </div>
-        </div>
+            </div>
+          </div>
     </div>
-    // <div className="container">
-    //   <div className="div-left" >
-       
-    //   <TheSignUp />
-    //   </div>
-    //   <div className="div-right" >
-    //   <Register />
-    //   </div>
-    // </div>
-  );
-}
+    )
+    }
 
+    </>
+
+     
+  );
+
+}
 export default App;
