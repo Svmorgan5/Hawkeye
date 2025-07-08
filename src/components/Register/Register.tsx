@@ -2,7 +2,9 @@ import './Register.css'
 import axios from 'axios'
 import { useState } from 'react';
 
-const [firstName,setFirstName] = useState<string>('')
+   
+const Register:React.FC = () =>{
+     const [firstName,setFirstName] = useState<string>('')
     const [lastName,setLastName] = useState<string>('')
     const [email,setEmail] = useState<string>('')
     const [phone,setPhone] = useState<string>('')
@@ -12,14 +14,21 @@ type User = {
     email:string,
     phone:string,
 }
-const Register:React.FC = () =>{
-    
     const handleSubmit = async (e:Event)=> {
         e.preventDefault();
+        const token = sessionStorage.getItem('jwtToken_key')
         try {
         await axios.post("http://127.0.0.1:5000/users/", {
+
+        email: `${email}`,
+        name: `${firstName} ${lastName}`,
+        phone: `${phone}`,
+       
+        
+      },{
             headers:{
-            'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAyMjcxODIsImlhdCI6MTc1MDE4Mzk4Miwic3ViIjoiMSJ9.at8C6X1UxE91dyOXoSFU9DOurupPKCMhHeyh9SCwTho`
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
             }
         });
         
@@ -34,7 +43,7 @@ const Register:React.FC = () =>{
 
     return (
         <div className='main-page'>
-        <form className="form" onSubmit={handleSubmit}>
+        <form className="form" onSubmit={()=>handleSubmit}>
         <p className="Welcome">Welcome!</p>
         <div className='form-div'>
             <label  className='label'>Enter First Name:</label>
@@ -42,7 +51,7 @@ const Register:React.FC = () =>{
         </div>
         <div className='form-div'>
             <label  className='label'>Enter Last Name:</label>
-            <input  className='text'  type='text'></input>
+            <input  className='text'  type='text' value={lastName} onChange={(e)=>setLastName(e.target.value)}></input>
         </div>
         <div className='form-div'>
             <label  className='label'>E-mail Address:</label>
