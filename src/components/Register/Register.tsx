@@ -1,6 +1,7 @@
 import './Register.css'
 import axios from 'axios'
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
    
 const Register:React.FC = () =>{
@@ -8,46 +9,116 @@ const Register:React.FC = () =>{
     const [lastName,setLastName] = useState<string>('')
     const [email,setEmail] = useState<string>('')
     const [phone,setPhone] = useState<string>('')
+     const [password,setPassword] = useState<string>('')
+     const [role,setRole] = useState<string>('')
+     const [passwordConfirm,setPasswordConfirm] = useState<string>('')
+     const [submitData, setSubmitData] = useState<boolean>(false)
+     const navigate = useNavigate()
 
 type User = {
     name: string,
     email:string,
     phone:string,
+    password:string,
+    role:string,
 }
-    const handleSubmit = async (e:Event)=> {
+    const handleSubmit = async (e:React.FormEvent)=> {
+
         e.preventDefault();
         const token = sessionStorage.getItem('jwtToken_key')
-        try {
-        await axios.post("http://127.0.0.1:5000/users/", {
-
-        email: `${email}`,
-        name: `${firstName} ${lastName}`,
-        phone: `${phone}`,
-       
         
-      },{
-            headers:{
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-            }
-        });
-        
-        } catch (error:any){
 
-        console.error('Error message:', error.message);
+        if(password!=passwordConfirm){
+            alert('Passwords do not match');
+            setSubmitData(false);
         }
-    // Log and extract JWT token from response
+        else if(firstName===''){
+            alert('First Name Missing');
+            setSubmitData(false);
+            console.log(`firstName:${firstName}`)
+        }
+        else if(lastName==='')
+            {
+            alert('Last Name Missing');
+            setSubmitData(false);
+        }
+        else if(email==='')
+            {
+            alert('Email Missing');
+            setSubmitData(false);
+        }
+        else if(role==='')
+            {
+            alert('Role Missing');
+            setSubmitData(false);
+        }
+        else if(password==='')
+            {
+            alert('Password Missing');
+            setSubmitData(false);
+        }
+        else
+            setSubmitData(true)
+
+        if(submitData===true)
+        {
+                try {
+                await axios.post("http://127.0.0.1:5000/users/", {
+
+                email: `${email}`,
+                name: `${firstName} ${lastName}`,
+                password: `${password}`,
+                role:`${role}`,
+            
+                
+            },{
+                    headers:{
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                    }
+                });
+                alert('New User has been created! You are now being redirected to login page to log in');
+                setFirstName('');
+                setLastName('');
+                setPassword('');
+                setEmail('');
+                setPhone('');
+                setRole('');
+                setPasswordConfirm('');
+                navigate('/signin')
+                } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    // Most likely a backend response error
+                    if (error.response) {
+                        console.error("Backend responded with an error:", error.response.data);
+                        alert(`Error: ${error.response.data.message || JSON.stringify(error.response.data)}`);
+                    } else if (error.request) {
+                        console.error("Request made but no response received:", error.request);
+                        alert("No response from the server. Please try again later.");
+                    } else {
+                        console.error("Error in setting up the request:", error.message);
+                        alert(`Request error: ${error.message}`);
+                    }
+                } else {
+                    console.error("Unexpected error:", error);
+                    alert("An unexpected error occurred.");
+                }
+            }
+        }
+        
+        
+            // Log and extract JWT token from response
     
   };
   
 
     return (
         <div className='main-page'>
-        <form className="form" onSubmit={()=>handleSubmit}>
+        <form className="form" onSubmit={handleSubmit}>
         <p className="Welcome">Welcome!</p>
         <div className='form-div'>
             <label  className='label'>Enter First Name:</label>
-            <input className='text' type='text'></input>
+            <input className='text' type='text' value={firstName} onChange={(e)=>setFirstName(e.target.value)}></input>
         </div>
         <div className='form-div'>
             <label  className='label'>Enter Last Name:</label>
@@ -55,15 +126,19 @@ type User = {
         </div>
         <div className='form-div'>
             <label  className='label'>E-mail Address:</label>
-            <input  className='text'  type='email'></input>
+            <input  className='text'  type='email' value={email} onChange={(e)=>setEmail(e.target.value)}></input>
+        </div>
+        <div className='form-div'>
+            <label  className='label'>Role:</label>
+            <input  className='text'  type='text' value={role} onChange={(e)=>setRole(e.target.value)}></input>
         </div>
         <div className='form-div'>
             <label className='label'>Password:</label>
-            <input className='text'  type='password'  ></input>
+            <input className='text'  type='password'  value={password} onChange={(e)=>setPassword(e.target.value)}></input>
         </div>
         <div className='form-div'>
             <label className='label'>Re-Type Password:</label>
-            <input className='text'  type='password'  ></input>
+            <input className='text'  type='password'  value={passwordConfirm} onChange={(e)=>setPasswordConfirm(e.target.value)}></input>
         </div>
         
         
