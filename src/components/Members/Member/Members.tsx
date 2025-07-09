@@ -46,7 +46,7 @@ const Members = () => {
     setMembers(prevMembers => 
       prevMembers.map(member=>
         member.id===id?
-          {...member,isVisible:false}:
+          {...member,isVisible:!member.isVisible}:
           member
         ))
   }
@@ -63,6 +63,7 @@ const Members = () => {
         }
       });
       setMembers(response.data)
+      console.log(response.data)
     
       
     } catch (error:any){
@@ -240,7 +241,7 @@ const Members = () => {
         <tbody>
         
           {members?.map(member=> {
-            if (member.active=== activeState && member.isVisible !== false){
+            if (member.active!= activeState){
               return(
               
             <tr key={member.id} className='tr'>

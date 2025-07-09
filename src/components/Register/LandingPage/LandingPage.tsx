@@ -4,6 +4,7 @@ import LandingImages from '../../../assets/LandingImages.png'
 import {useNavigate,Routes,Route} from 'react-router-dom'
 import Dashboard from '../../Dashboard/Dashboard'
 import { useEffect } from 'react'
+import logo from '../../../assets/logo.png'
 
 const LandingPage = () => {
     const navigate=useNavigate()
@@ -22,29 +23,28 @@ const LandingPage = () => {
         
     
     (
-    <div>
+    <div className='landing-page-container'>
         <div className="desktop-header">
-        
+       <p className='HAWKEYEEDS-desktop'>HAWKEYE EDS</p>
 
-        <div className='header-container-right'>
+            <div className='header-container-right'>
             
-        <a className='a-landing' href="/signin">Log In</a>
-        <a href='/addbus'>
-        <button className="landing-sign-up">
-            Sign Up
-        </button>
-        </a>
+                <a className='a-landing' href="/signin">Log In</a>
+                <a href='/addbus'>
+                    <button className="landing-sign-up">
+                    Sign Up
+                    </button>
+                </a>
+            </div>
         </div>
-    </div>
-        <img src={LandingImages} style={{width:"100%"}}></img>
- <div className="desktop-header">
-        
-
-        <div className='header-container-right'>
-            
-            
+        <div className='desktop-middle'>
+            <img src={LandingImages} className='desktop-image'></img>
         </div>
-    </div>
+        <div className="desktop-footer">
+             <div className='desktop-footer-left'>
+                <img className='desktop-logo-image' src={logo}></img>
+            </div>
+        </div>
     </div>
     
     )

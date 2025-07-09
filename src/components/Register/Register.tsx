@@ -2,6 +2,7 @@ import './Register.css'
 import axios from 'axios'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import TheSignUp from '../../pages/TheSignUp/TheSignUp';
 
    
 const Register:React.FC = () =>{
@@ -10,7 +11,7 @@ const Register:React.FC = () =>{
     const [email,setEmail] = useState<string>('')
     const [phone,setPhone] = useState<string>('')
      const [password,setPassword] = useState<string>('')
-     const [role,setRole] = useState<string>('')
+     const [role,setRole] = useState<string>('Admin')
      const [passwordConfirm,setPasswordConfirm] = useState<string>('')
      const [submitData, setSubmitData] = useState<boolean>(false)
      const navigate = useNavigate()
@@ -113,8 +114,13 @@ type User = {
   
 
     return (
-        <div className='main-page'>
-        <form className="form" onSubmit={handleSubmit}>
+        <div className="container-signin">
+            <div className="div-left-signin" >
+       
+            <TheSignUp />
+            </div>
+       <div className='div-right-signin'>
+        <form style={{'marginTop':'-150px'}} className="form" onSubmit={handleSubmit}>
         <p className="Welcome">Welcome!</p>
         <div className='form-div'>
             <label  className='label'>Enter First Name:</label>
@@ -127,10 +133,6 @@ type User = {
         <div className='form-div'>
             <label  className='label'>E-mail Address:</label>
             <input  className='text'  type='email' value={email} onChange={(e)=>setEmail(e.target.value)}></input>
-        </div>
-        <div className='form-div'>
-            <label  className='label'>Role:</label>
-            <input  className='text'  type='text' value={role} onChange={(e)=>setRole(e.target.value)}></input>
         </div>
         <div className='form-div'>
             <label className='label'>Password:</label>
@@ -166,7 +168,7 @@ type User = {
         
         </form>
         </div>
-        
+        </div>
        
     );
 };

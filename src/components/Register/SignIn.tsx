@@ -22,7 +22,8 @@ const SignIn:React.FC = () =>{
   // State variables to store user credentials
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {token, dispatch} = useTokenContext();
+  const {token, userName, dispatch} = useTokenContext();
+  
   const navigate = useNavigate();
   
   
@@ -44,6 +45,7 @@ const SignIn:React.FC = () =>{
       const jwtToken = response.data.token;
       sessionStorage.setItem('jwtToken_key', jwtToken);
       dispatch({type:'SET_TOKEN',payload:jwtToken})
+      // dispatch({type:'SET_USER_NAME',payload:jwtToken})
       
       
       

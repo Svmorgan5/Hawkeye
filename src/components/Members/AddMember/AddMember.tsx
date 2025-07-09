@@ -87,21 +87,24 @@ const token = sessionStorage.getItem('jwtToken_key')
                 <div className='label-wrapper'>
                 Role:
                 <select className='body-select role-box-addmembers' value={role} onChange={(e)=>setRole(e.target.value)}>
-                <option value='Teacher' >Teacher</option>
-                <option value='Principal'>Principal</option>
-                <option value='Office Staff'>Office Staff</option>
-                <option value='Kitchen Staff'>Kitchen Staff</option>
+                <option value='Teacher' >Admin</option>
+                <option value='Principal'>Sub-admin</option>
+                <option value='Office Staff'>Account Payable</option>
+                <option value='Kitchen Staff'>Teacher</option>
+                <option value='Kitchen Staff'>Employee</option>
+                <option value='Kitchen Staff'>Security Gaurd</option>
+                <option value='Kitchen Staff'>SRO</option>
                 </select>
 
                 </div>
                 <div className='label-wrapper bottom-label'>
                 Group:
                 <select className='body-select  group-box-addmembers' value={groups} onChange={(e)=>setGroup(e.target.value)}>
-                <option value='Employee' >Employee</option>
-                <option value='Former Staff'>Former Staff</option>
-                <option value='Admin'>Admin</option>
-                <option value='KParent'>Parent</option>
-                <option value='Other'>Other</option>
+                <option value='Employee' >Administrators</option>
+                <option value='Former Staff'>Teachers</option>
+                <option value='Admin'>Employees</option>
+                <option value='KParent'>Security Personnel</option>
+                
                 </select>
                 </div>
             <div className='form-footer'>
