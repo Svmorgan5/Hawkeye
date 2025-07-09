@@ -14,12 +14,13 @@ background: #032B3A;
 display:flex;
 flex-direction: row;
 width: 100%;  
-height:100px;
+height:150px;
 background: #032B3A;
  justify-content: right;
  padding-right:30px;
  margin-top:-10px;
  justify-content: left;
+ overflow: hidden;
 }
 .header-container-right{
     /* Header buttons */
@@ -112,9 +113,10 @@ color: #000000;
    
 }
 .HAWKEYEEDS-desktop{
-width: 800px;
+
 height: 1px;
 margin:40px;
+width:800px;
 font-family: 'Audiowide';
 font-style: normal;
 font-weight: 400;
@@ -127,4 +129,11 @@ margin-top:30px;
 padding-bottom:15px;
 
 
+}
+@media screen and (max-width:600px){
+.HAWKEYEEDS-desktop{
+width:400px;
+font-size: 24px;
+margin-top:28px;
+}
 }

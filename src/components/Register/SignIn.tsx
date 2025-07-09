@@ -98,11 +98,11 @@ const SignIn:React.FC = () =>{
            <div className="container-signin">
               <div className="div-left-signin" >
        
-                <TheSignUp />
+                <SignUp message='Log  in!' />
               </div>
        <div className='div-right-signin'>
         <form className="form" onSubmit={handleLogin}>
-        <p className="Welcome">Login Here:</p>
+        <p className="Welcome">Welcome Back! <br></br>Please Log In:</p>
      
 
 
@@ -111,17 +111,17 @@ const SignIn:React.FC = () =>{
             <input  className='text'  type='email' value={email} onChange={(e) => setEmail(e.target.value)}></input>
         </div>
         <div className='form-div' style={{paddingBottom:'35px'}}>
-            <label className='label'>Password:</label>
+            <label className='label-signin'>Password:</label>
             <input className='text'  type='password' value={password} onChange={(e) => setPassword(e.target.value)} ></input>
         </div>
         
         
         
         <div className='button-container'></div>
-         <button className='submit' type='submit' style={{marginLeft:'145px'}}>
+         <button className='submit-register' type='submit' style={{marginLeft:'145px'}}>
             Submit
         </button>
-        <p className='already-signed'>Not a user yet? Click here to <a href="#">register</a></p> 
+        <p className='already-signed'>Not a user yet? Click here to <a href="/register" className='a-login'>Register</a></p> 
         
         </form>
          {/* <button onClick={logoutUser}>Logout</button>

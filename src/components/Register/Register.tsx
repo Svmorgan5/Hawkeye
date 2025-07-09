@@ -121,7 +121,14 @@ type User = {
             </div>
        <div className='div-right-signin'>
         <form style={{'marginTop':'-150px'}} className="form" onSubmit={handleSubmit}>
-        <p className="Welcome">Welcome!</p>
+        <p className="Welcome-signup">Welcome!</p>
+         
+        <div className='form-div'>
+            <div><label  className='label'>Buisness Type:</label></div>
+            <div className='form-div-top'><div><input type='radio'  className='bus-type' name="bus-type"></input>School</div><div>
+          <input type='radio' name='bus-type' className='bus-type'></input>Other Business Type</div></div>
+            
+        </div>
         <div className='form-div'>
             <label  className='label'>Enter First Name:</label>
             <input className='text' type='text' value={firstName} onChange={(e)=>setFirstName(e.target.value)}></input>
@@ -130,6 +137,7 @@ type User = {
             <label  className='label'>Enter Last Name:</label>
             <input  className='text'  type='text' value={lastName} onChange={(e)=>setLastName(e.target.value)}></input>
         </div>
+        
         <div className='form-div'>
             <label  className='label'>E-mail Address:</label>
             <input  className='text'  type='email' value={email} onChange={(e)=>setEmail(e.target.value)}></input>
@@ -160,12 +168,15 @@ type User = {
             
         </div>
         
-        <div className='button-container'></div>
+        
          <button className='submit' type='submit'>
             Submit
         </button>
-        <p className='already-signed'>Already a User <a href="#">Log-in</a></p> 
         
+      <div className='already-signed-container'>
+        <p className='already-signed'>Already a User <a href="signin" className='a-login'>Log-in</a></p> 
+        </div>
+       
         </form>
         </div>
         </div>
