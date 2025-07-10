@@ -47,7 +47,7 @@ const SignIn:React.FC = () =>{
       dispatch({type:'SET_TOKEN',payload:jwtToken})
       // dispatch({type:'SET_USER_NAME',payload:jwtToken})
       
-      
+      navigate('/')
       
       
       // Set the token so the User component will show up on the page
@@ -64,8 +64,7 @@ const SignIn:React.FC = () =>{
     
     } catch (error) {
       console.error('Login failed:', error);
-    }finally{
-      navigate('/')
+      alert(`Error, was not able to log you in. ${error}`)
     }
   };
 

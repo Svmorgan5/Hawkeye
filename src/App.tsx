@@ -32,6 +32,7 @@ import NewCameraBlank from './components/Cameras/AddCamera/NewCameraBlank.tsx/Ne
 import LandingPage from './components/Register/LandingPage/LandingPage';
 import { TokenProvider, useTokenContext } from './Context/Context';
 import AddBus from './components/Register/AddBus';
+import Messages from './components/Messages/Messages';
 
 
 
@@ -134,6 +135,7 @@ function App() {
                 <Route path='/addcamera' element={<AddCamera />} />
                 <Route path='/cameras' element={<Cameras />} />
                 <Route path='/newCamera' element={<NewCameraBlank />} />
+                <Route path='/messages' element={<Messages />}/>
               </Routes>
             </div>
           </div>

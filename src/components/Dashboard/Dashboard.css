@@ -1,7 +1,7 @@
 .card-container{
     display:flex;
     flex-direction: row;
-    margin-bottom:30px;
+    margin-bottom:20px;
     margin-left:20px;
 }
 
@@ -110,7 +110,7 @@ color: #08979C;
 
 .dashboard-head{
 padding-left: 47px;
-padding-bottom: 35px;
+padding-bottom: 15px;
 /* Semibold/24px | 32px */
 font-family: 'Roboto';
 font-style: normal;
@@ -169,26 +169,17 @@ color: #8C8C8C;
 }
 .camera-button{
 /* Button */
-position: absolute;
-width: 132px;
+margin-top:7px;
+width: 134px;
 height: 32px;
-left: 1178px;
-top: 795px;
+text-align: center;
+justify-content: center;
 
 /* Cyan / cyan-7 */
 border: 1px solid #08979C;
 border-radius: 2px;
 
 
-/* Content */
-/* Auto layout */
-display: flex;
-flex-direction: row;
-align-items: center;
-
-
-
-padding:10px;
 /* Regular/14px | 22px */
 font-family: 'Roboto';
 font-style: normal;
@@ -199,7 +190,8 @@ line-height: 22px;
 background-color: #FFFFFF;
 /* Cyan / cyan-7 */
 color: #08979C;
-
+margin-right:-3px;
+margin-top:10px;
 
 }
 .camera-button:hover{
@@ -209,4 +201,8 @@ color: #08979C;
 }
 .double{
     width:550px;
+}
+.camera-button-holder{
+    text-align: right;
+    width:86%;
 }

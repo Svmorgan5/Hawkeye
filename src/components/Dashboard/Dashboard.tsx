@@ -13,8 +13,18 @@ import Avatar3 from '../../assets/Avatar3.png'
 import Avatar4 from '../../assets/Avatar4.png'
 import Avatar from '../../assets/Avatar.png'
 import Avatar5 from '../../assets/Avatar5.png'
+import { useNavigate } from 'react-router-dom';
+
+
+
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const navigateToCameras = () => {
+    console.log('test cameras')
+    navigate('/cameras')
+  }
   return (
+
     <>
     <p className='breadcrumb'>Dashboard</p>
      <p className='dashboard-head' > 
@@ -41,7 +51,9 @@ const Dashboard = () => {
       <img className='camera-frame' src={Avatar5}></img>
    
     </div>
-    <button className='camera-button'>View all cameras</button> 
+    <div className='camera-button-holder'>
+    <button className='camera-button' onClick={navigateToCameras}>View all cameras</button> 
+    </div>
   </>
 
 

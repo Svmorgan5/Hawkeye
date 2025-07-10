@@ -87,8 +87,8 @@ const token = sessionStorage.getItem('jwtToken_key')
                 <div className='label-wrapper'>
                 Role:
                 <select className='body-select role-box-addmembers' value={role} onChange={(e)=>setRole(e.target.value)}>
-                <option value='Teacher' >Admin</option>
-                <option value='Principal'>Sub-admin</option>
+                <option value='Teacher' >Admin Primary</option>
+                <option value='Principal'>Admin</option>
                 <option value='Office Staff'>Account Payable</option>
                 <option value='Kitchen Staff'>Teacher</option>
                 <option value='Kitchen Staff'>Employee</option>
