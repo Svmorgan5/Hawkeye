@@ -4,6 +4,7 @@ from datetime import datetime, timezone, timedelta
 from functools import wraps
 from flask import request, jsonify
 import os
+import boto3
 import json
 from urllib.request import urlopen
 from backend.application.models import db, User, Member, Camera
@@ -11,6 +12,24 @@ from backend.application.models import db, User, Member, Camera
 
 SECRET_KEY = os.environ.get('SECRET_KEY') or "super secret secrets"
 
+
+#s3 = boto3.client(
+ #   's3',
+ #   aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
+ #   aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
+ #   region_name='us-east-1'  # Change to your region
+#)
+#BUCKET_NAME = 'your-bucket-name'
+
+#def upload_file_to_s3(file_obj, s3_key):
+#    s3.upload_fileobj(file_obj, BUCKET_NAME, s3_key, ExtraArgs={'ACL': 'private'})
+
+#def generate_presigned_url(s3_key, expires_in=3600):
+#    return s3.generate_presigned_url(
+#        'get_object',
+#        Params={'Bucket': BUCKET_NAME, 'Key': s3_key},
+#        ExpiresIn=expires_in
+#    )
 
 
 def encode_token(user_id):

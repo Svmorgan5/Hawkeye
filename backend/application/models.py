@@ -9,8 +9,11 @@ from enum import Enum as PyEnum
 class Base(DeclarativeBase):
     pass
 
+# Initialize SQLAlchemy with custom base
+
 db = SQLAlchemy(model_class=Base)
 
+# Many-to-many tables linking users/members to institutions
 user_institution = Table(
     "user_institution",
     Base.metadata,
@@ -25,6 +28,22 @@ member_institution = Table(
     db.Column("institution_id", db.ForeignKey("institutions.id"), primary_key=True),
 )
 
+# Many-to-many table linking cameras to alerts
+camera_alert = Table(
+    "camera_alert",
+    Base.metadata,
+    db.Column("camera_id", db.ForeignKey("cameras.id"), primary_key=True),
+    db.Column("alert_id", db.ForeignKey("alerts.id"), primary_key=True),
+)
+
+# Many-to-many table linking cameras to members
+camera_member = Table(
+    "camera_member",
+    Base.metadata,
+    db.Column("camera_id", db.ForeignKey("cameras.id"), primary_key=True),
+    db.Column("member_id", db.ForeignKey("members.id"), primary_key=True),
+)
+
 class User(Base):
     __tablename__ = 'users'
 
@@ -33,13 +52,15 @@ class User(Base):
     phone: Mapped[str] = mapped_column(db.String(25), nullable=True, unique=True)
     email: Mapped[str] = mapped_column(db.String(150), nullable=False, unique=True)
     password: Mapped[str] = mapped_column(db.String(150), nullable=False)
-    image: Mapped[str] = mapped_column(db.String(255), nullable=True) # URL or path to the user's image
-    role: Mapped[str] = mapped_column(db.String(50), nullable=False)  # e.g., 'admin', 'viewer', 'owner', etc.
-    
-    institution_id: Mapped[int] = mapped_column(db.ForeignKey('institutions.id'), nullable=True)
+    image: Mapped[str] = mapped_column(db.String(255), nullable=True)
+    role: Mapped[str] = mapped_column(db.String(50), nullable=False)
+
+    # Single institution FK for primary association
+    institution_id: Mapped[int] = mapped_column(db.ForeignKey('institutions.id'), nullable=False)
     institution: Mapped["Institution"] = relationship("Institution", back_populates="users")
     cameras: Mapped[List["Camera"]] = relationship("Camera", back_populates="user")
 
+    # Support multiple institutions
     institutions = relationship(
         "Institution",
         secondary=user_institution,
@@ -48,12 +69,18 @@ class User(Base):
 
 class Institution(Base):
     __tablename__ = 'institutions'
+
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(db.String(150), nullable=False, unique=True)
     is_school: Mapped[bool] = mapped_column(db.Boolean, nullable=False)
-    # Add more fields as needed (address, type, etc.)
 
+    # Relationships to users and members
+    users: Mapped[List["User"]] = relationship("User", back_populates="institution")
+    members: Mapped[List["Member"]] = relationship("Member", back_populates="institution")
+    cameras: Mapped[List["Camera"]] = relationship("Camera", back_populates="institution")
+    alerts: Mapped[List["Alert"]] = relationship("Alert", back_populates="institution")
 
+    # Many-to-many support
     users_multi = relationship(
         "User",
         secondary=user_institution,
@@ -64,28 +91,6 @@ class Institution(Base):
         secondary=member_institution,
         back_populates="institutions"
     )
-
-    users: Mapped[List["User"]] = relationship("User", back_populates="institution")
-    members: Mapped[List["Member"]] = relationship("Member", back_populates="institution")
-    cameras: Mapped[List["Camera"]] = relationship("Camera", back_populates="institution")  
-
-
-
-# Association table for many-to-many relationship between Camera and Alert
-camera_alert = Table(
-    "camera_alert",
-    Base.metadata,
-    db.Column("camera_id", db.ForeignKey("cameras.id"), primary_key=True),
-    db.Column("alert_id", db.ForeignKey("alerts.id"), primary_key=True),
-)
-## 
-
-camera_member = Table(
-    "camera_member",
-    Base.metadata,
-    db.Column("camera_id", db.ForeignKey("cameras.id"), primary_key=True),
-    db.Column("member_id", db.ForeignKey("members.id"), primary_key=True),
-)
 
 class AlertType(PyEnum):
     SCHEDULED = "scheduled"
@@ -100,11 +105,15 @@ class Alert(Base):
     message: Mapped[str] = mapped_column(db.String(255), nullable=False)
     alert_type: Mapped[AlertType] = mapped_column(Enum(AlertType), nullable=False)
     timestamp: Mapped[date] = mapped_column(db.DateTime, nullable=False)
-    code: Mapped[str] = mapped_column(db.String(50), nullable=False)  
-    location: Mapped[str] = mapped_column(db.String(150), nullable=False)  # Location of the alert
-    scheduled_time: Mapped[datetime] = mapped_column(db.DateTime, nullable=True) 
-    # Add other fields as needed (e.g., status, scheduled_time, etc.)
+    code: Mapped[str] = mapped_column(db.String(50), nullable=False)
+    location: Mapped[str] = mapped_column(db.String(150), nullable=False)
+    scheduled_time: Mapped[datetime] = mapped_column(db.DateTime, nullable=True)
 
+    # Link alert to institution
+    institution_id: Mapped[int] = mapped_column(db.ForeignKey('institutions.id'), nullable=False)
+    institution: Mapped["Institution"] = relationship("Institution", back_populates="alerts")
+
+    # Cameras associated with this alert
     cameras: Mapped[List["Camera"]] = relationship(
         "Camera",
         secondary=camera_alert,
@@ -118,18 +127,19 @@ class Camera(Base):
     name: Mapped[str] = mapped_column(db.String(100), nullable=False)
     location: Mapped[str] = mapped_column(db.String(150))
     user_id: Mapped[int] = mapped_column(db.ForeignKey('users.id'), nullable=False)
-    institution_id: Mapped[int] = mapped_column(db.ForeignKey('institutions.id'), nullable=True)  
+    institution_id: Mapped[int] = mapped_column(db.ForeignKey('institutions.id'), nullable=False)
 
-    snapshot_url: Mapped[str] = mapped_column(db.String(255), nullable=True)  
+    snapshot_url: Mapped[str] = mapped_column(db.String(255), nullable=True)
     stream_url: Mapped[str] = mapped_column(db.String(255), nullable=True)
+
+    # Relationships
+    user: Mapped["User"] = relationship("User", back_populates="cameras")
+    institution: Mapped["Institution"] = relationship("Institution", back_populates="cameras")
     alerts: Mapped[List["Alert"]] = relationship(
         "Alert",
         secondary=camera_alert,
         back_populates="cameras"
     )
-
-    user: Mapped["User"] = relationship("User", back_populates="cameras")
-    institution: Mapped["Institution"] = relationship("Institution", back_populates="cameras")  
     members: Mapped[List["Member"]] = relationship(
         "Member",
         secondary=camera_member,
@@ -141,26 +151,27 @@ class Member(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[str] = mapped_column(db.String(150), nullable=False, unique=True)
     name: Mapped[str] = mapped_column(db.String(150), nullable=False)
-    role: Mapped[str] = mapped_column(db.String(50), nullable=False)  # e.g., 'admin', 'viewer', 'owner', etc.
-    groups: Mapped[str] = mapped_column(db.String(150), nullable=True)  # Comma-separated list of groups
-    image: Mapped[str] = mapped_column(db.String(255), nullable=True)  # URL or path to the member's image
+    role: Mapped[str] = mapped_column(db.String(50), nullable=False)
+    groups: Mapped[str] = mapped_column(db.String(150), nullable=True)
+    image: Mapped[str] = mapped_column(db.String(255), nullable=True)
+    # Whether the member is active
+    active: Mapped[bool] = mapped_column(db.Boolean, default=True, nullable=False)
 
     created_by_user_id: Mapped[int] = mapped_column(db.ForeignKey('users.id'), nullable=False)
     created_by_user: Mapped["User"] = relationship("User")
 
-    cameras: Mapped[List["Camera"]] = relationship(
-        "Camera",
-        secondary=camera_member,
-        back_populates="members"
-    )
-
+    # Link member to institution
+    institution_id: Mapped[int] = mapped_column(db.ForeignKey('institutions.id'), nullable=False)
+    institution: Mapped["Institution"] = relationship("Institution", back_populates="members")
     institutions = relationship(
         "Institution",
         secondary=member_institution,
         back_populates="members_multi"
     )
 
-    institution_id: Mapped[int] = mapped_column(db.ForeignKey('institutions.id'), nullable=True)
-    institution: Mapped["Institution"] = relationship("Institution", back_populates="members")
-
-
+    # Cameras this member can access
+    cameras: Mapped[List["Camera"]] = relationship(
+        "Camera",
+        secondary=camera_member,
+        back_populates="members"
+    )

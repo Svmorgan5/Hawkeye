@@ -1,4 +1,5 @@
 import os
+import re
 from . import users_bp
 from backend.application.blueprints.user.userSchemas import user_schema, users_schema, login_schema
 from flask import request, jsonify, current_app
@@ -42,6 +43,22 @@ def add_user():
       user_data = user_schema.load(request.json)
    except ValidationError as e:
       return jsonify(e.messages), 400
+   
+   password = user_data.password
+   errors = []
+   if len(password) < 8:
+       errors.append("Password must be at least 8 characters long.")
+   if not re.search(r"[A-Z]", password):
+       errors.append("Password must contain at least one uppercase letter.")
+   if not re.search(r"[a-z]", password):
+       errors.append("Password must contain at least one lowercase letter.")
+   if not re.search(r"\d", password):
+       errors.append("Password must contain at least one number.")
+   if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
+       errors.append("Password must contain at least one special character.")
+
+   if errors:
+       return jsonify({"error": " ".join(errors)}), 400
 
    query = select(User).where(User.email == user_data.email)
    user = db.session.execute(query).scalars().first()
@@ -145,3 +162,15 @@ def delete_user(user_id):
    db.session.commit()
 
    return jsonify({"message":"User deleted successfully."}), 200
+
+@users_bp.route('/logout', methods=['POST'])
+@token_required
+def logout(current_user_id):
+    # Optional: Add token to blacklist for immediate invalidation
+    # token = request.headers.get('Authorization', '').replace('Bearer ', '')
+    # add_to_blacklist(token)  # You'd need to implement this
+    
+    return jsonify({
+        "status": "success",
+        "message": "Successfully logged out"
+    }), 200

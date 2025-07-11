@@ -48,7 +48,7 @@ def create_app(config_name):
     app.register_blueprint(institutions_bp, url_prefix='/institutions')
     app.register_blueprint(alerts_bp, url_prefix='/alerts')
     app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
-
+    
 
 
 

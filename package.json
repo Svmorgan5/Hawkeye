@@ -1,0 +1,25 @@
+{
+  "name": "hawkeye",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Svmorgan5/Hawkeye.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Svmorgan5/Hawkeye/issues"
+  },
+  "homepage": "https://github.com/Svmorgan5/Hawkeye#readme"
+}
