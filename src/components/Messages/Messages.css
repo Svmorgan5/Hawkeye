@@ -1,12 +1,14 @@
 .message-inbox{
-    height:300px;
-    width: 300px;
+    max-height:650px;
+    width: 330px;
     border:solid;
     border-width:1px;
     border-radius: 8px;
     margin-left:20px;
     margin-top:45px;
-       border-color: rgb(174, 175, 175);
+    border-color: rgb(174, 175, 175);
+    overflow-y: hidden;
+    overflow-x:hidden;
    
 }
 .inbox-title{
@@ -37,9 +39,57 @@ color: #2C2D33;
 }
 .inbox-contacts{
     overflow-y: scroll;
+    max-height:600px;
 }
 .contact-image{
-    width:40px;
+    width:60px;
     height:auto;
-    border-radius: 4px;;
+    border-radius: 4px;
+    margin-left:11px;
+}
+.contact-holder{
+    display:flex;
+    flex-direction: row;
+    padding-top: 15px;
+}
+.message-container{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom:10px;
+    padding-top:4px;
+}
+.contact-name{
+    /* Jane Doe */
+
+padding-left:10px;
+/* Paragraph 1/Medium */
+font-family: 'Inter';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 19px;
+
+/* Black/60 */
+color: #45464E;
+
+}
+.the-message{
+    /* Hi, i want make enquiries about yo... */
+padding-left:10px;
+
+width: 239px;
+height: 17px;
+
+/* Paragraph 2/Regular */
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 17px;
+/* identical to box height */
+
+/* Black/30 */
+color: #8B8D97;
+
 }

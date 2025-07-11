@@ -1,96 +1,182 @@
 
 import './Messages.css'
-import avatar3 from '../../assets/Avatar3.png'
+import member from '../../assets/member.png'
 const Messages: React.FC = () => {
     return(
         <>
         <div className='message-inbox'>
        <p className='inbox-title'>Inbox </p>
-       <input className='inbox-search' type='text' placeholder='Search char or contact'></input>
+       <input className='inbox-search' type='text' placeholder='Search chat or contact'></input>
         <div className='inbox-contacts'>
-            <div className="contact-holder">
-                <div >
-                    <img className='contact-image' src={avatar3}></img>
+           
+
+             <div className="contact-holder">
+                <div className='image-container'>
+                    <img className='contact-image' src={member}></img>
                 </div>
-                <div className='contact-name'>
-                    Jane  Doe
+                <div className='message-container'>
+                    <div className='contact-name'>
+                        Jane  Doe
+                    </div>
+                    <div className='the-message'>
+                        Hi, I want to make enquiries abou...
+                    </div>
+                </div>  
+            </div>
+
+
+             <div className="contact-holder">
+                <div className='image-container'>
+                    <img className='contact-image' src={member}></img>
                 </div>
-                <div>
-                    Hi, I want to make enquiries abou...
+                <div className='message-container'>
+                    <div className='contact-name'>
+                        Jane  Doe
+                    </div>
+                    <div className='the-message'>
+                        Hi, I want to make enquiries abou...
+                    </div>
+                </div>  
+            </div>
+
+
+             <div className="contact-holder">
+                <div className='image-container'>
+                    <img className='contact-image' src={member}></img>
                 </div>
+                <div className='message-container'>
+                    <div className='contact-name'>
+                        Jane  Doe
+                    </div>
+                    <div className='the-message'>
+                        Hi, I want to make enquiries abou...
+                    </div>
+                </div>  
+            </div>
+
+
+             <div className="contact-holder">
+                <div className='image-container'>
+                    <img className='contact-image' src={member}></img>
+                </div>
+                <div className='message-container'>
+                    <div className='contact-name'>
+                        Jane  Doe
+                    </div>
+                    <div className='the-message'>
+                        Hi, I want to make enquiries abou...
+                    </div>
+                </div>  
             </div>
 
              <div className="contact-holder">
-                <div >
-                    <img className='contact-image' src={avatar3}></img>
+                <div className='image-container'>
+                    <img className='contact-image' src={member}></img>
                 </div>
-                <div className='contact-name'>
-                    Jane  Doe
-                </div>
-                <div>
-                    Hi, I want to make enquiries abou...
-                </div>
+                <div className='message-container'>
+                    <div className='contact-name'>
+                        Jane  Doe
+                    </div>
+                    <div className='the-message'>
+                        Hi, I want to make enquiries abou...
+                    </div>
+                </div>  
             </div>
+
 
              <div className="contact-holder">
-                <div >
-                    <img className='contact-image' src={avatar3}></img>
+                <div className='image-container'>
+                    <img className='contact-image' src={member}></img>
                 </div>
-                <div className='contact-name'>
-                    Jane  Doe
-                </div>
-                <div>
-                    Hi, I want to make enquiries abou...
-                </div>
+                <div className='message-container'>
+                    <div className='contact-name'>
+                        Jane  Doe
+                    </div>
+                    <div className='the-message'>
+                        Hi, I want to make enquiries abou...
+                    </div>
+                </div>  
             </div>
+
 
              <div className="contact-holder">
-                <div >
-                    <img className='contact-image' src={avatar3}></img>
+                <div className='image-container'>
+                    <img className='contact-image' src={member}></img>
                 </div>
-                <div className='contact-name'>
-                    Jane  Doe
-                </div>
-                <div>
-                    Hi, I want to make enquiries abou...
-                </div>
+                <div className='message-container'>
+                    <div className='contact-name'>
+                        Jane  Doe
+                    </div>
+                    <div className='the-message'>
+                        Hi, I want to make enquiries abou...
+                    </div>
+                </div>  
             </div>
+
 
              <div className="contact-holder">
-                <div >
-                    <img className='contact-image' src={avatar3}></img>
+                <div className='image-container'>
+                    <img className='contact-image' src={member}></img>
                 </div>
-                <div className='contact-name'>
-                    Jane  Doe
-                </div>
-                <div>
-                    Hi, I want to make enquiries abou...
-                </div>
+                <div className='message-container'>
+                    <div className='contact-name'>
+                        Jane  Doe
+                    </div>
+                    <div className='the-message'>
+                        Hi, I want to make enquiries abou...
+                    </div>
+                </div>  
             </div>
+
 
              <div className="contact-holder">
-                <div >
-                    <img className='contact-image' src={avatar3}></img>
+                <div className='image-container'>
+                    <img className='contact-image' src={member}></img>
                 </div>
-                <div className='contact-name'>
-                    Jane  Doe
-                </div>
-                <div>
-                    Hi, I want to make enquiries abou...
-                </div>
+                <div className='message-container'>
+                    <div className='contact-name'>
+                        Jane  Doe
+                    </div>
+                    <div className='the-message'>
+                        Hi, I want to make enquiries abou...
+                    </div>
+                </div>  
+            </div>
 
-                 <div className="contact-holder">
-                <div >
-                    <img className='contact-image' src={avatar3}></img>
+
+             <div className="contact-holder">
+                <div className='image-container'>
+                    <img className='contact-image' src={member}></img>
                 </div>
-                <div className='contact-name'>
-                    Jane  Doe
-                </div>
-                <div>
-                    Hi, I want to make enquiries abou...
-                </div>
+                <div className='message-container'>
+                    <div className='contact-name'>
+                        Jane  Doe
+                    </div>
+                    <div className='the-message'>
+                        Hi, I want to make enquiries abou...
+                    </div>
+                </div>  
             </div>
+
+
+             <div className="contact-holder">
+                <div className='image-container'>
+                    <img className='contact-image' src={member}></img>
+                </div>
+                <div className='message-container'>
+                    <div className='contact-name'>
+                        Jane  Doe
+                    </div>
+                    <div className='the-message'>
+                        Hi, I want to make enquiries abou...
+                    </div>
+                </div>  
             </div>
+
+
+
+
+
         </div>
         </div>
         </>
