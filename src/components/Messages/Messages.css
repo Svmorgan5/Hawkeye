@@ -5,10 +5,11 @@
     border-width:1px;
     border-radius: 8px;
     margin-left:20px;
-    margin-top:45px;
     border-color: rgb(174, 175, 175);
     overflow-y: hidden;
     overflow-x:hidden;
+    box-shadow: 1px 1px 18px rgb(149, 148, 148);
+    
    
 }
 .inbox-title{
@@ -20,15 +21,16 @@ width: 74px;
 height: 38px;
 font-family: 'Roboto';
 font-style: normal;
-font-weight: 400;
+font-weight: 500;
 font-size: 28px;
 line-height: 38px;
-color: #2C2D33;
+color: #45464E;
+
 }
 .inbox-search{
     font-size: 12px;;
     margin-left:10px;
-    margin-top: 3px;;
+    margin-top: 3px;
     padding:8px;
     border:solid 1.25px;
     border-radius:4px;
@@ -42,7 +44,10 @@ color: #2C2D33;
     max-height:600px;
 }
 .contact-image{
-    width:60px;
+    width:47px;
+   
+    margin: 6px;
+   
     height:auto;
     border-radius: 4px;
     margin-left:11px;
@@ -50,7 +55,11 @@ color: #2C2D33;
 .contact-holder{
     display:flex;
     flex-direction: row;
-    padding-top: 15px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: solid;
+    border-color: rgb(231, 229, 229);
+    border-width: .5px;
 }
 .message-container{
     display:flex;
@@ -92,4 +101,105 @@ line-height: 17px;
 /* Black/30 */
 color: #8B8D97;
 
+}
+
+
+.message-page-container{
+    display:flex;
+    flex-direction: row;
+    margin-top:45px;
+    width:1200px;
+    justify-content: space-between;
+}
+.the-actual-messages{
+   
+    width:812px;
+    max-height:650px;
+    
+    
+   
+    border:solid;
+    border-width:1px;
+    border-radius: 8px;
+    margin-left:20px;
+    border-color: rgb(174, 175, 175);
+    overflow-y: hidden;
+    overflow-x:hidden;
+    box-shadow: 1px 1px 18px rgb(149, 148, 148);
+}
+
+.the-actual-messages-header{
+    display:flex;
+    flex-direction: row;
+}
+
+.tam-contact-image{
+    width:47px;
+    margin: 20px;
+    height:auto;
+    border-radius: 24px;
+   
+}
+.the-actual-messages-header{
+    display:flex;
+    flex-direction: row;
+    /* margin-top: 10px; */
+    padding-top: 10px;
+    border-bottom: solid;
+    border-color: rgb(231, 229, 229);
+    border-width: .5px;
+    
+}
+.tam-message-container{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom:10px;
+    padding-top:4px;
+}
+.tam-contact-name{
+    /* Jane Doe */
+
+padding-left:10px;
+/* Paragraph 1/Medium */
+font-family: 'Inter';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 19px;
+
+/* Black/60 */
+color: #45464E;
+
+}
+.tam-status{
+    /* Hi, i want make enquiries about yo... */
+    display: flex;
+    gap:5px;
+padding-left:10px;
+
+width: 239px;
+height: 17px;
+
+/* Paragraph 2/Regular */
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 17px;
+/* identical to box height */
+
+/* Black/30 */
+color: rgb(43, 159, 1);
+
+}
+.circle{
+    font-size:10px;
+}
+.tam-info-container{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom:25px;
+    padding-top:17px;
 }
