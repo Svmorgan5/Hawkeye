@@ -71,7 +71,7 @@ def add_user():
       email=user_data.email,
       phone=user_data.phone,
       password=user_data.password,
-      role=user_data.role
+      role=user_data.role,
    )
 
    db.session.add(new_user)

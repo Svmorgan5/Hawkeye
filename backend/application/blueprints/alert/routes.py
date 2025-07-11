@@ -17,15 +17,26 @@ from backend.application.utils.utils import notify_institution_on_alert, token_r
 @token_required
 def create_alert(current_user_id):
     try:
-        alert_data = alert_schema.load(request.json)
+        alert_data = alert_schema.load(request.json, session=db.session)
     except ValidationError as e:
         return jsonify(e.messages), 400
 
     camera_ids = request.json.get('camera_ids', [])
     cameras = db.session.query(Camera).filter(Camera.id.in_(camera_ids)).all() if camera_ids else []
-
     new_alert = alert_data
     new_alert.cameras = cameras
+
+    # Set required fields that weren’t provided
+    from datetime import datetime
+    new_alert.timestamp = datetime.utcnow()
+    new_alert.code = "ALERT-" + str(new_alert.timestamp.timestamp()).replace('.', '')
+    current_user = db.session.get(User, current_user_id)
+    if not current_user or not current_user.institution_id:
+        return jsonify({"error": "User institution not found."}), 400
+    new_alert.institution_id = current_user.institution_id
+    # Optionally derive location from the first associated camera if not provided
+    if not new_alert.location and cameras:
+        new_alert.location = cameras[0].location
 
     db.session.add(new_alert)
     db.session.commit()

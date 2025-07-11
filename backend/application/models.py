@@ -56,7 +56,7 @@ class User(Base):
     role: Mapped[str] = mapped_column(db.String(50), nullable=False)
 
     # Single institution FK for primary association
-    institution_id: Mapped[int] = mapped_column(db.ForeignKey('institutions.id'), nullable=False)
+    institution_id: Mapped[int] = mapped_column(db.ForeignKey('institutions.id'), nullable=True)
     institution: Mapped["Institution"] = relationship("Institution", back_populates="users")
     cameras: Mapped[List["Camera"]] = relationship("Camera", back_populates="user")
 
@@ -67,12 +67,24 @@ class User(Base):
         back_populates="users_multi"
     )
 
+    invitations_sent: Mapped[List["Invitation"]] = relationship(
+        "Invitation",
+        back_populates="inviter",
+        cascade="all, delete-orphan"
+    )
+
 class Institution(Base):
     __tablename__ = 'institutions'
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(db.String(150), nullable=False, unique=True)
     is_school: Mapped[bool] = mapped_column(db.Boolean, nullable=False)
+    address: Mapped[str] = mapped_column(db.String(255), nullable=True)
+    phone: Mapped[str] = mapped_column(db.String(25), nullable=True, unique=True)
+
+    logo: Mapped[str] = mapped_column(db.String(255), nullable=True)
+    image1: Mapped[str] = mapped_column(db.String(255), nullable=True)
+    image2: Mapped[str] = mapped_column(db.String(255), nullable=True)
 
     # Relationships to users and members
     users: Mapped[List["User"]] = relationship("User", back_populates="institution")
@@ -91,6 +103,29 @@ class Institution(Base):
         secondary=member_institution,
         back_populates="institutions"
     )
+
+    invitations: Mapped[List["Invitation"]] = relationship(
+        "Invitation",
+        back_populates="institution",
+        cascade="all, delete-orphan"
+    )
+
+class Invitation(Base):
+    __tablename__ = 'invitations'
+    
+    id: Mapped[int] = mapped_column(primary_key=True)
+    email: Mapped[str] = mapped_column(db.String(150), nullable=False)
+    token: Mapped[str] = mapped_column(db.String(255), nullable=False, unique=True)
+    institution_id: Mapped[int] = mapped_column(db.ForeignKey('institutions.id'), nullable=False)
+    invited_by: Mapped[int] = mapped_column(db.ForeignKey('users.id'), nullable=False)
+    expires_at: Mapped[datetime] = mapped_column(db.DateTime, nullable=False)
+    used: Mapped[bool] = mapped_column(db.Boolean, default=False, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(db.DateTime, default=datetime.utcnow, nullable=False)
+    
+    # Relationships
+    institution: Mapped["Institution"] = relationship("Institution", back_populates="invitations")
+    inviter: Mapped["User"] = relationship("User", foreign_keys=[invited_by])
+
 
 class AlertType(PyEnum):
     SCHEDULED = "scheduled"

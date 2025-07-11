@@ -1,7 +1,7 @@
 from . import cameras_bp
 from backend.application.blueprints.camera.cameraSchemas import camera_schema, cameras_schema
 from flask import request, jsonify, Response
-from backend.application.models import db, Camera
+from backend.application.models import db, Camera, User
 from marshmallow import ValidationError
 from sqlalchemy import select, delete
 from backend.application.extensions import limiter, cache
@@ -21,6 +21,14 @@ def add_camera(current_user_id):
 
     # Set the user_id (since it's not coming from the client)
     camera_data.user_id = current_user_id
+
+    # Fetch the current user to retrieve the institution_id
+    current_user = db.session.get(User, current_user_id)
+    if not current_user or not current_user.institution_id:
+        return jsonify({"error": "User institution not found"}), 400
+
+    # Set the institution_id from the user's record
+    camera_data.institution_id = current_user.institution_id
 
     db.session.add(camera_data)
     db.session.commit()

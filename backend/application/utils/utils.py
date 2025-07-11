@@ -8,6 +8,9 @@ import boto3
 import json
 from urllib.request import urlopen
 from backend.application.models import db, User, Member, Camera
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 
 SECRET_KEY = os.environ.get('SECRET_KEY') or "super secret secrets"
@@ -92,6 +95,90 @@ def notify_institution_on_alert(camera_id, alert_id):
 
     for member in members:
         print(f"Notify member {member.email} about alert {alert_id} from camera {camera.name}")
+
+def send_invitation_email(to_email, institution_name, invite_link):
+    """
+    Send an invitation email to a user to join an institution.
+    
+    Args:
+        to_email (str): Recipient's email address
+        institution_name (str): Name of the institution
+        invite_link (str): The invitation acceptance link
+    
+    Returns:
+        bool: True if email sent successfully, False otherwise
+    """
+    try:
+        # Email configuration (set these in your environment variables)
+        smtp_server = os.environ.get('SMTP_SERVER', 'smtp.gmail.com')
+        smtp_port = int(os.environ.get('SMTP_PORT', 587))
+        sender_email = os.environ.get('SENDER_EMAIL')
+        sender_password = os.environ.get('SENDER_PASSWORD')
+        
+        if not sender_email or not sender_password:
+            print("Email credentials not configured")
+            return False
+        
+        # Create email content
+        subject = f"Invitation to join {institution_name} on Hawkeye"
+        
+        # HTML email body
+        html_body = f"""
+        <html>
+            <body>
+                <h2>You're Invited!</h2>
+                <p>You have been invited to join <strong>{institution_name}</strong> on Hawkeye.</p>
+                <p>Click the button below to accept the invitation:</p>
+                <a href="{invite_link}" style="background-color: #4CAF50; color: white; padding: 14px 20px; text-decoration: none; border-radius: 4px;">Accept Invitation</a>
+                <p>Or copy and paste this link into your browser:</p>
+                <p><a href="{invite_link}">{invite_link}</a></p>
+                <p><strong>Note:</strong> This invitation expires in 48 hours.</p>
+                <hr>
+                <p><small>This email was sent from Hawkeye Security System.</small></p>
+            </body>
+        </html>
+        """
+        
+        # Plain text fallback
+        text_body = f"""
+        You're Invited!
+        
+        You have been invited to join {institution_name} on Hawkeye.
+        
+        Click the link below to accept the invitation:
+        {invite_link}
+        
+        Note: This invitation expires in 48 hours.
+        
+        This email was sent from Hawkeye Security System.
+        """
+        
+        # Create message
+        msg = MIMEMultipart('alternative')
+        msg['From'] = sender_email
+        msg['To'] = to_email
+        msg['Subject'] = subject
+        
+        # Attach text and HTML versions
+        text_part = MIMEText(text_body, 'plain')
+        html_part = MIMEText(html_body, 'html')
+        
+        msg.attach(text_part)
+        msg.attach(html_part)
+        
+        # Send email
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls()
+        server.login(sender_email, sender_password)
+        server.send_message(msg)
+        server.quit()
+        
+        print(f"Invitation email sent successfully to {to_email}")
+        return True
+        
+    except Exception as e:
+        print(f"Failed to send invitation email: {e}")
+        return False
 
 
 
