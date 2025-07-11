@@ -16,7 +16,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"Test@test.com\",\r\n    \"name\": \"Sam Testington\",\r\n    \"password\": \"abc123\",\r\n    \"phone\": \"123-123-1234\"\r\n}",
+					"raw": "{\r\n    \"email\": \"CTest@test.com\",\r\n    \"name\": \"C Testington\",\r\n    \"password\": \"Abc12322!\",\r\n    \"phone\": \"444-123-1234\",\r\n    \"role\": \"Admin\",\r\n    \"institution_id\": 3\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -50,7 +50,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": " {\r\n    \"email\": \"Test@test.com\",\r\n    \"password\": \"abc123\"\r\n }",
+					"raw": " {\r\n    \"email\": \"CTest@test.com\",\r\n    \"password\": \"Abc12322!\"\r\n }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -195,7 +195,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAyNjYxODksImlhdCI6MTc1MDIyMjk4OSwic3ViIjoiMSJ9.9KWkUslG7-xtKnpnDRV_GzAO90wterxzH4VOuhIYdec",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTIzMTMwOTAsImlhdCI6MTc1MjI2OTg5MCwic3ViIjoiMyJ9.Q5k9OsX3InsOVnVupwPUF1nAUpRQMxus88NP1fOb_ew",
 							"type": "string"
 						}
 					]
@@ -204,7 +204,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"location\": \"Enterance\",\r\n    \"name\": \"Camera1\",\r\n    \"snapshot_url\": \"testing.com\"\r\n   \r\n}",
+					"raw": "{\r\n    \"location\": \"RsideyYard\",\r\n    \"name\": \"Camera4\"\r\n  \r\n   \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -400,7 +400,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTAyNjYxODksImlhdCI6MTc1MDIyMjk4OSwic3ViIjoiMSJ9.9KWkUslG7-xtKnpnDRV_GzAO90wterxzH4VOuhIYdec",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE0NDcyNzcsImlhdCI6MTc1MTQwNDA3Nywic3ViIjoiMSJ9.HIX_f8spquyNFF89BGSFVpeOrD-EimZ6HA5-f0RoNVY",
 							"type": "string"
 						}
 					]
@@ -409,7 +409,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"EM Testing\",\r\n  \"email\": \"cba@testing.com\"\r\n\r\n}",
+					"raw": "{\r\n  \"name\": \"EM Testing\",\r\n  \"email\": \"cba@testing.com\",\r\n  \"role\": \"Teacher\"\r\n\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -774,6 +774,239 @@
 					"path": [
 						"members",
 						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Institution with AUTH token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTIzMTIwNzcsImlhdCI6MTc1MjI2ODg3Nywic3ViIjoiMyJ9.Q90Mq_8xadIJeAe4GFOu3VgfhqlXkn4z4keypHTPK3w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"B School\",\r\n    \"is_school\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/institutions",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"institutions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get institution by user AUTH token",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTIzMTQxNDIsImlhdCI6MTc1MjI3MDk0Miwic3ViIjoiMyJ9.Od6ykxkCTjkJoQrdrMTutNdpWETaFztjDC6FKtTS8_Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/institutions/users",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"institutions",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get members with USER AUTH token",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEzODMyOTYsImlhdCI6MTc1MTM0MDA5Niwic3ViIjoiMiJ9.hILfxajbv3EpVdmrlsG1VxOJ28Hmlisx2FBQsmYpEzg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"CBA School\",\r\n    \"is_school\": true\r\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/institutions/members",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"institutions",
+						"members"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Institutions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE0NDcyNzcsImlhdCI6MTc1MTQwNDA3Nywic3ViIjoiMSJ9.HIX_f8spquyNFF89BGSFVpeOrD-EimZ6HA5-f0RoNVY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"is_school\": true,\r\n \"name\": \"BBB School\"   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/institutions/4",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"institutions",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Institution with AUTH token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEzODMyOTYsImlhdCI6MTc1MTM0MDA5Niwic3ViIjoiMiJ9.hILfxajbv3EpVdmrlsG1VxOJ28Hmlisx2FBQsmYpEzg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"is_school\": false,\r\n \"name\": \"BBB School\"   \r\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/institutions/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"institutions",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get USER associated with INSTITUTION AUTH required",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTE0NDcyNzcsImlhdCI6MTc1MTQwNDA3Nywic3ViIjoiMSJ9.HIX_f8spquyNFF89BGSFVpeOrD-EimZ6HA5-f0RoNVY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/institutions/users",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"institutions",
+						"users"
 					]
 				}
 			},
