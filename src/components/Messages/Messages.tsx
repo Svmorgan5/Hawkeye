@@ -194,14 +194,26 @@ const Messages: React.FC = () => {
                                             <img className='tam-contact-image' src={member}></img>
                                         </div>
                                         <div className='tam-info-container'>
-                                            <div className='tam-contact-name'>
-                                                Jane  Doe
+                                            <div className='tam-info-header'>
+                                                <div className='tam-contact-name'>
+                                                    Jane  Doe
+                                                </div>
+                                                <div className='tam-contact-title'>
+                                                    Teacher
+                                                </div>
                                             </div>
                                             <div className='tam-status'>
                                                <div className='circle'>{'\u{1F7E2}'}</div> <div>Online</div>
                                             </div>
                                         </div> 
+                                    </div>
 
+
+                                    <div className='incoming-message'>
+                                        Hello. How are you, so nice to see you today. I was wondering what time the alert will be happening.
+                                    </div>
+                                    <div className='outgoing-message'>
+                                        Yes! It was so good to see you. I was also wondering that, and it is also here for them.
                                     </div>
                                 </div>
         </div>
