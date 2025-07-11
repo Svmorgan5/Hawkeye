@@ -243,7 +243,9 @@ border-radius: 16px 16px 16px 0px;
 /* Auto layout */
 display: flex;
 flex-direction: row;
-align-items: flex-end;
+align-self: flex-end;
+margin-right: 20px;
+margin-top:20px;
 padding: 16px;
 gap: 10px;
 
@@ -254,4 +256,8 @@ background: rgba(19, 194, 194, 0.45);
 border-radius: 16px 16px 0px 16px;
 
 
+}
+.message-body-container{
+    display:flex;
+    flex-direction: column;
 }

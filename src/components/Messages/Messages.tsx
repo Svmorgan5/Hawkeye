@@ -208,12 +208,15 @@ const Messages: React.FC = () => {
                                         </div> 
                                     </div>
 
-
-                                    <div className='incoming-message'>
-                                        Hello. How are you, so nice to see you today. I was wondering what time the alert will be happening.
-                                    </div>
-                                    <div className='outgoing-message'>
-                                        Yes! It was so good to see you. I was also wondering that, and it is also here for them.
+                                    <div className='message-body-container'>
+                                        <div className='incoming-message'>
+                                            Hello. How are you, so nice to see you today. I was wondering what time the alert will be happening.
+                                        </div>
+                                        <div className='outgoing-message'>
+                                            <div>
+                                            Yes! It was so good to see you. I was also wondering that, and it is also here for them.
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
         </div>
