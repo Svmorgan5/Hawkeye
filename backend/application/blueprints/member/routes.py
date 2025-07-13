@@ -1,5 +1,5 @@
 import os
-from flask import request, jsonify, current_app
+from flask import request, jsonify, current_app, url_for
 from backend.application.models import db, Member, User
 from backend.application.blueprints.member import members_bp
 from backend.application.blueprints.member.memberSchemas import member_schema, members_schema
@@ -9,6 +9,12 @@ import io
 from werkzeug.utils import secure_filename
 from backend.application.utils.utils import encode_token, token_required
 
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+def _allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# Now you can use _allowed_file() in your routes
 
 # Create a member (single)
 @members_bp.route('/', methods=['POST'])
@@ -18,43 +24,69 @@ def create_member(current_user_id):
     if not user:
         return jsonify({"error": "User not found"}), 404
     try:
-        member_data = member_schema.load(request.json)
+        member_data = member_schema.load(request.json, session=db.session)
     except ValidationError as e:
         return jsonify(e.messages), 400
     
-    # Copy institution info from user to member
-    member_data['institution_id'] = user.institution_id
-    member_data['institution'] = user.institution
-    member_data['created_by_user_id'] = user.id
+    # Set institution info from user to member
+    member_data.institution_id = user.institution_id
+    member_data.institution = user.institution
+    member_data.created_by_user_id = user.id
 
-    new_member = Member(**member_data)
-    db.session.add(new_member)
+    db.session.add(member_data)
     db.session.commit()
-    return member_schema.jsonify(new_member), 201
+    return member_schema.jsonify(member_data), 201
 
 
 
 @members_bp.route('/<int:member_id>/upload_image', methods=['POST'])
 @token_required
-def upload_member_image(member_id):
+def upload_member_image(current_user_id, member_id):
+    """
+    Upload image for a member
+    """
+    # Get the member
     member = db.session.get(Member, member_id)
     if not member:
         return jsonify({"error": "Member not found"}), 404
+    
+    # Check authorization (current user should be able to upload for this member)
+    current_user = db.session.get(User, current_user_id)
+    if not current_user or current_user.institution_id != member.institution_id:
+        return jsonify({"error": "Not authorized"}), 403
 
-    if 'image' not in request.files:
-        return jsonify({"error": "No image file provided"}), 400
+    field = request.form.get('field_name') or request.json.get('field_name')
+    if field not in ('profile_image', 'id_card_image'):  # adjust field names as needed
+        return jsonify({"error": "Invalid field_name"}), 400
 
-    file = request.files['image']
-    filename = secure_filename(file.filename)
-    # Save to backend/application/static/uploads/
-    upload_folder = os.path.join(current_app.root_path, 'static', 'uploads')
-    os.makedirs(upload_folder, exist_ok=True)
-    upload_path = os.path.join(upload_folder, filename)
-    file.save(upload_path)
+    # Handle URL case
+    if request.is_json and (url := request.json.get('url')):
+        setattr(member, field, url)
+        db.session.commit()
+        return jsonify({field: url}), 200
 
-    member.image = f'/static/uploads/{filename}'
+    # Handle file upload case
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part"}), 400
+    
+    f = request.files['file']
+    if f.filename == '' or not _allowed_file(f.filename):
+        return jsonify({"error": "Invalid or missing file"}), 400
+
+    filename = secure_filename(f.filename)
+    
+    # Save file locally
+    save_dir = current_app.config.get('UPLOAD_FOLDER', 'static/uploads')
+    os.makedirs(save_dir, exist_ok=True)
+    path = os.path.join(save_dir, filename)
+    f.save(path)
+    public_path = url_for('static', filename=f'uploads/{filename}', _external=True)
+
+    # Update member with image URL
+    setattr(member, field, public_path)
     db.session.commit()
-    return jsonify({"message": "Image uploaded", "image_url": member.image}), 200
+
+    return jsonify({field: public_path}), 200
 
 # Get all members or search members by name
 @members_bp.route('/', methods=['GET'])
