@@ -52,22 +52,24 @@ def upload_member_image(current_user_id, member_id):
     if not member:
         return jsonify({"error": "Member not found"}), 404
     
-    # Check authorization (current user should be able to upload for this member)
+    # Check authorization
     current_user = db.session.get(User, current_user_id)
     if not current_user or current_user.institution_id != member.institution_id:
         return jsonify({"error": "Not authorized"}), 403
 
-    field = request.form.get('field_name') or request.json.get('field_name')
-    if field not in ('profile_image', 'id_card_image'):  # adjust field names as needed
-        return jsonify({"error": "Invalid field_name"}), 400
+    # Handle both form data and JSON
+    field = request.form.get('field_name') or request.json.get('field_name') if request.is_json else request.form.get('field_name')
+    if not field or field not in ('profile_image', 'image'):  # adjust field names as needed
+        return jsonify({"error": "Invalid or missing field_name"}), 400
 
-    # Handle URL case
-    if request.is_json and (url := request.json.get('url')):
+    # Handle URL case (JSON)
+    if request.is_json and request.json.get('url'):
+        url = request.json.get('url')
         setattr(member, field, url)
         db.session.commit()
         return jsonify({field: url}), 200
 
-    # Handle file upload case
+    # Handle file upload case (multipart/form-data)
     if 'file' not in request.files:
         return jsonify({"error": "No file part"}), 400
     
