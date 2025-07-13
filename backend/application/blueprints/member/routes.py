@@ -164,25 +164,35 @@ def delete_member(current_user_id,member_id):
 # Bulk create members from CSV or RTF
 @members_bp.route('/upload', methods=['POST'])
 @token_required
-def upload_members():
+def upload_members(current_user_id):  # ← ADD current_user_id parameter
+    # Get the current user to set institution info
+    user = db.session.get(User, current_user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
     if 'file' not in request.files:
         return jsonify({"error": "No file uploaded"}), 400
+    
     file = request.files['file']
     filename = file.filename.lower()
     members_created = []
+    
     if filename.endswith('.csv'):
         stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
         reader = csv.DictReader(stream)
         for row in reader:
             try:
-                member_data = member_schema.load(row)
-                new_member = Member(**member_data)
-                db.session.add(new_member)
-                members_created.append(member_schema.dump(new_member))
+                member_data = member_schema.load(row, session=db.session)
+                # Set institution info from current user
+                member_data.institution_id = user.institution_id
+                member_data.created_by_user_id = user.id
+                db.session.add(member_data)
+                members_created.append(member_schema.dump(member_data))
             except ValidationError:
                 continue
         db.session.commit()
         return jsonify({"created": members_created}), 201
+        
     elif filename.endswith('.rtf'):
         content = file.stream.read().decode("UTF8")
         lines = [line.strip() for line in content.splitlines() if ',' in line]
@@ -191,10 +201,12 @@ def upload_members():
             if len(parts) >= 2:
                 member_data = {"name": parts[0], "email": parts[1]}
                 try:
-                    member_data = member_schema.load(member_data)
-                    new_member = Member(**member_data)
-                    db.session.add(new_member)
-                    members_created.append(member_schema.dump(new_member))
+                    member_data = member_schema.load(member_data, session=db.session)
+                    # Set institution info from current user
+                    member_data.institution_id = user.institution_id
+                    member_data.created_by_user_id = user.id
+                    db.session.add(member_data)
+                    members_created.append(member_schema.dump(member_data))
                 except ValidationError:
                     continue
         db.session.commit()
