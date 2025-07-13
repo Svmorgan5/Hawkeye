@@ -24,73 +24,41 @@ def create_member(current_user_id):
     if not user:
         return jsonify({"error": "User not found"}), 404
     
+    # Handle both JSON and multipart/form-data
+    if request.content_type and request.content_type.startswith('multipart/form-data'):
+        # Extract member data from form
+        member_data = {}
+        for field in ['name', 'email', 'role', 'groups']:
+            if field in request.form:
+                member_data[field] = request.form[field]
+        
+        # Handle image upload
+        if 'image' in request.files:
+            file = request.files['image']
+            if file and _allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                save_dir = current_app.config.get('UPLOAD_FOLDER', 'static/uploads')
+                os.makedirs(save_dir, exist_ok=True)
+                path = os.path.join(save_dir, filename)
+                file.save(path)
+                member_data['image'] = url_for('static', filename=f'uploads/{filename}', _external=True)
+    else:
+        # Handle JSON data
+        member_data = request.json
+    
     try:
-        member_data = member_schema.load(request.json, session=db.session)
+        member_instance = member_schema.load(member_data, session=db.session)
     except ValidationError as e:
         return jsonify(e.messages), 400
     
     # Auto-assign fields from current user
-    member_data.institution_id = user.institution_id
-    member_data.created_by_user_id = user.id
+    member_instance.institution_id = user.institution_id
+    member_instance.created_by_user_id = user.id
 
-    db.session.add(member_data)
+    db.session.add(member_instance)
     db.session.commit()
     
-    # Use schema.dump() with Flask's jsonify()
-    return jsonify(member_schema.dump(member_data)), 201
-
-
-
-@members_bp.route('/<int:member_id>/upload_image', methods=['POST'])
-@token_required
-def upload_member_image(current_user_id, member_id):
-    """
-    Upload image for a member
-    """
-    # Get the member
-    member = db.session.get(Member, member_id)
-    if not member:
-        return jsonify({"error": "Member not found"}), 404
-    
-    # Check authorization
-    current_user = db.session.get(User, current_user_id)
-    if not current_user or current_user.institution_id != member.institution_id:
-        return jsonify({"error": "Not authorized"}), 403
-
-    # Handle both form data and JSON
-    field = request.form.get('field_name') or request.json.get('field_name') if request.is_json else request.form.get('field_name')
-    if not field or field not in ('profile_image', 'image'):  # adjust field names as needed
-        return jsonify({"error": "Invalid or missing field_name"}), 400
-
-    # Handle URL case (JSON)
-    if request.is_json and request.json.get('url'):
-        url = request.json.get('url')
-        setattr(member, field, url)
-        db.session.commit()
-        return jsonify({field: url}), 200
-
-    # Handle file upload case (multipart/form-data)
-    if 'file' not in request.files:
-        return jsonify({"error": "No file part"}), 400
-    
-    f = request.files['file']
-    if f.filename == '' or not _allowed_file(f.filename):
-        return jsonify({"error": "Invalid or missing file"}), 400
-
-    filename = secure_filename(f.filename)
-    
-    # Save file locally
-    save_dir = current_app.config.get('UPLOAD_FOLDER', 'static/uploads')
-    os.makedirs(save_dir, exist_ok=True)
-    path = os.path.join(save_dir, filename)
-    f.save(path)
-    public_path = url_for('static', filename=f'uploads/{filename}', _external=True)
-
-    # Update member with image URL
-    setattr(member, field, public_path)
-    db.session.commit()
-
-    return jsonify({field: public_path}), 200
+    return jsonify(member_schema.dump(member_instance)), 201
 
 # Get all members or search members by name
 @members_bp.route('/', methods=['GET'])
@@ -123,32 +91,41 @@ def update_member(current_user_id, member_id):
     if not member:
         return jsonify({"error": "Member not found"}), 404
 
-    # Check if the request is multipart (for image upload)
+    # Check authorization (optional)
+    current_user = db.session.get(User, current_user_id)
+    if not current_user or current_user.institution_id != member.institution_id:
+        return jsonify({"error": "Not authorized"}), 403
+
+    # Handle multipart/form-data (with potential image upload)
     if request.content_type and request.content_type.startswith('multipart/form-data'):
         # Handle image upload if present
         if 'image' in request.files:
             file = request.files['image']
-            filename = secure_filename(file.filename)
-            upload_folder = os.path.join(current_app.root_path, 'static', 'uploads')
-            os.makedirs(upload_folder, exist_ok=True)
-            upload_path = os.path.join(upload_folder, filename)
-            file.save(upload_path)
-            member.image = f'/static/uploads/{filename}'
+            if file and _allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                save_dir = current_app.config.get('UPLOAD_FOLDER', 'static/uploads')
+                os.makedirs(save_dir, exist_ok=True)
+                path = os.path.join(save_dir, filename)
+                file.save(path)
+                member.image = url_for('static', filename=f'uploads/{filename}', _external=True)
+        
         # Handle other fields from form data
         for field in ['name', 'email', 'role', 'groups']:
             if field in request.form:
                 setattr(member, field, request.form[field])
     else:
-        # Handle JSON update as before
+        # Handle JSON update
         try:
-            member_data = member_schema.load(request.json, partial=True)
+            member_data = member_schema.load(request.json, partial=True, session=db.session)
         except ValidationError as e:
             return jsonify(e.messages), 400
-        for field, value in member_data.items():
-            setattr(member, field, value)
+        
+        for field, value in member_schema.dump(member_data).items():
+            if value is not None:  # Only update non-null values
+                setattr(member, field, value)
 
     db.session.commit()
-    return member_schema.jsonify(member), 200
+    return jsonify(member_schema.dump(member)), 200
 
 # Delete a member
 @members_bp.route('/<int:member_id>', methods=['DELETE'])
