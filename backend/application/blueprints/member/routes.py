@@ -23,19 +23,21 @@ def create_member(current_user_id):
     user = db.session.get(User, current_user_id)
     if not user:
         return jsonify({"error": "User not found"}), 404
+    
     try:
         member_data = member_schema.load(request.json, session=db.session)
     except ValidationError as e:
         return jsonify(e.messages), 400
     
-    # Set institution info from user to member
+    # Auto-assign fields from current user
     member_data.institution_id = user.institution_id
-    member_data.institution = user.institution
     member_data.created_by_user_id = user.id
 
     db.session.add(member_data)
     db.session.commit()
-    return member_schema.jsonify(member_data), 201
+    
+    # Use schema.dump() with Flask's jsonify()
+    return jsonify(member_schema.dump(member_data)), 201
 
 
 
