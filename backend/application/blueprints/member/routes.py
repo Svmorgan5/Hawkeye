@@ -72,7 +72,7 @@ def get_members(current_user_id):
     # Order results alphabetically by name
     query = query.order_by(Member.name.asc())
     members = query.all()
-    return members_schema.jsonify(members), 200
+    return jsonify(members_schema.dump(members, many=True)), 200
 
 # Get a single member
 @members_bp.route('/<int:member_id>', methods=['GET'])
@@ -81,7 +81,7 @@ def get_member(current_user_id, member_id):
     member = db.session.get(Member, member_id)
     if not member:
         return jsonify({"error": "Member not found"}), 404
-    return member_schema.jsonify(member), 200
+    return jsonify(member_schema.dump(member)), 200
 
 # Update a member
 @members_bp.route('/<int:member_id>', methods=['PUT'])
