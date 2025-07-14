@@ -63,25 +63,58 @@ def create_member(current_user_id):
 # Get all members or search members by name
 @members_bp.route('/', methods=['GET'])
 @token_required
-def get_members(current_user_id):  
+def get_members(current_user_id):
     search = request.args.get('search')
-    query = db.session.query(Member)
+    query  = db.session.query(Member)
     if search:
-        # flexible search for member names not case sensitive
         query = query.filter(Member.name.ilike(f"%{search}%"))
-    # Order results alphabetically by name
-    query = query.order_by(Member.name.asc())
-    members = query.all()
-    return jsonify(members_schema.dump(members, many=True)), 200
+    members = query.order_by(Member.name.asc()).all()
 
-# Get a single member
+    raw = members_schema.dump(members, many=True)
+    out = []
+
+    for m in raw:
+        img = m.get('image')
+        if img:
+            # if it’s already a full URL, leave it
+            if img.startswith('http://') or img.startswith('https://'):
+                m['image'] = img
+            else:
+                # else build it from the filename
+                m['image'] = url_for(
+                    'static',
+                    filename=f"uploads/{img}",
+                    _external=True
+                )
+        else:
+            m['image'] = None
+        out.append(m)
+
+    return jsonify(out), 200
+
+
 @members_bp.route('/<int:member_id>', methods=['GET'])
 @token_required
 def get_member(current_user_id, member_id):
     member = db.session.get(Member, member_id)
     if not member:
         return jsonify({"error": "Member not found"}), 404
-    return jsonify(member_schema.dump(member)), 200
+
+    data = member_schema.dump(member)
+    img  = data.get('image')
+    if img:
+        if img.startswith('http://') or img.startswith('https://'):
+            data['image'] = img
+        else:
+            data['image'] = url_for(
+                'static',
+                filename=f"uploads/{img}",
+                _external=True
+            )
+    else:
+        data['image'] = None
+
+    return jsonify(data), 200
 
 # Update a member
 @members_bp.route('/<int:member_id>', methods=['PUT'])

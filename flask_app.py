@@ -1,14 +1,18 @@
+# flask_app.py
+
 from backend.application import create_app, socketio
 from backend.application.models import db
 
-app = create_app('DevelopmentConfig')  # Change to 'TestingConfig' or 'ProductionConfig' as needed
+# ← now picks up UPLOAD_FOLDER from config
+app = create_app('DevelopmentConfig')
 
 with app.app_context():
-    #db.drop_all()  # Drop all tables if they exist & need be
+    # create tables
     db.create_all()
 
-from backend.application.scheduler import start_scheduler  
+from backend.application.scheduler import start_scheduler
 scheduler = start_scheduler(app)
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True)
+    # use the config’s DEBUG flag
+    socketio.run(app, debug=app.config.get('DEBUG', False))
