@@ -7,7 +7,7 @@ from backend.application.models import db
 app = create_app('DevelopmentConfig')
 
 with app.app_context():
-    # create tables
+    #db.drop_all()
     db.create_all()
 
 from backend.application.scheduler import start_scheduler
