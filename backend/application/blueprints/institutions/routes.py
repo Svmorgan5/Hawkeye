@@ -4,22 +4,19 @@ import csv
 import io
 import secrets
 from datetime import datetime, timezone, timedelta
-
 from flask import request, jsonify, current_app, render_template, redirect, url_for, flash
 from werkzeug.security import generate_password_hash
 from werkzeug.utils import secure_filename
 import boto3  # if you prefer S3
-
 from sqlalchemy.exc import IntegrityError
 from marshmallow import ValidationError
-
 from backend.application.models import db, Member, User, Institution, Camera, Invitation
 from backend.application.blueprints.institutions import institutions_bp
 from backend.application.blueprints.institutions.institutionsSchemas import institution_schema, institutions_schema
 from backend.application.blueprints.user.userSchemas import users_schema, public_user_schema
 from backend.application.blueprints.member.memberSchemas import member_schema, members_schema
 from backend.application.blueprints.camera.cameraSchemas import cameras_schema
-from backend.application.utils.utils import encode_token, token_required, send_invitation_email
+from backend.application.utils.utils import encode_token, token_required, send_invitation_email, mock_send_invitation_email
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
@@ -115,21 +112,53 @@ def add_user_to_institution(current_user_id, institution_id):
     if not user or not institution:
         return jsonify({"error": "User or Institution not found"}), 404
 
-    # Get the user_id to add from the request
+    # Get the identifier from the request (email or name)
     data = request.get_json()
-    user_id_to_add = data.get('user_id')
-    if not user_id_to_add:
-        return jsonify({"error": "No user_id provided"}), 400
+    email_to_add = data.get('email')
+    name_to_add = data.get('name')
+    
+    # Validate that at least one identifier is provided
+    if not email_to_add and not name_to_add:
+        return jsonify({"error": "Either email or name must be provided"}), 400
 
-    user_to_add = db.session.get(User, user_id_to_add)
+    # Find user by email or name
+    user_to_add = None
+    search_criteria = []
+    
+    if email_to_add:
+        user_to_add = db.session.query(User).filter_by(email=email_to_add).first()
+        search_criteria.append(f"email '{email_to_add}'")
+    
+    if not user_to_add and name_to_add:
+        user_to_add = db.session.query(User).filter_by(name=name_to_add).first()
+        search_criteria.append(f"name '{name_to_add}'")
+    
+    # If still not found, try searching with both criteria if both provided
+    if not user_to_add and email_to_add and name_to_add:
+        user_to_add = db.session.query(User).filter(
+            (User.email == email_to_add) | (User.name == name_to_add)
+        ).first()
+    
     if not user_to_add:
-        return jsonify({"error": "User to add not found"}), 404
+        search_terms = " or ".join(search_criteria)
+        return jsonify({"error": f"User with {search_terms} not found"}), 404
+
+    # Check if user already belongs to an institution
+    if user_to_add.institution_id:
+        return jsonify({"error": f"User '{user_to_add.name}' ({user_to_add.email}) already belongs to an institution"}), 400
 
     # Assign the institution to the user
     user_to_add.institution_id = institution.id
     db.session.commit()
 
-    return jsonify({"message": f"User {user_to_add.id} added to institution {institution.id}."}), 200
+    return jsonify({
+        "message": f"User '{user_to_add.name}' ({user_to_add.email}) added to institution {institution.name}.",
+        "user_id": user_to_add.id,
+        "user_name": user_to_add.name,
+        "user_email": user_to_add.email,
+        "institution_id": institution.id,
+        "institution_name": institution.name
+    }), 200
 
 #Get all cameras for the current users institution
 @institutions_bp.route('/cameras', methods=['GET'])
@@ -154,26 +183,31 @@ def accept_invitation(token):
         .first()
     )
     if not inv or inv.expires_at < datetime.utcnow():
-        # invalid, expired, or already used
-        return render_template('invite_invalid.html'), 400
+        return jsonify({"error": "Invalid, expired, or already used invitation"}), 400
 
     if request.method == 'GET':
-        # show minimal acceptance form (email pre-filled)
-        return render_template('accept_invitation.html', email=inv.email)
+        # Return invitation details for frontend to display form
+        return jsonify({
+            "email": inv.email,
+            "institution_name": db.session.get(Institution, inv.institution_id).name,
+            "expires_at": inv.expires_at.isoformat(),
+            "message": "Please provide name and password to accept invitation"
+        }), 200
 
-    # 2) POST: process the submitted form
-    form = request.form
-    name = form.get('name')
-    password = form.get('password')
-    phone = form.get('phone', '')  # Optional
+    # 2) POST: process the submitted JSON data
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "JSON data required"}), 400
+        
+    name = data.get('name')
+    password = data.get('password')
+    phone = data.get('phone', '')  # Optional
     
     # Validation
     if not name or not password:
-        return render_template('accept_invitation.html', 
-                             email=inv.email, 
-                             error="Name and password are required"), 400
+        return jsonify({"error": "Name and password are required"}), 400
 
-    # Password strength validation (reuse your existing logic)
+    # Password strength validation
     errors = []
     if len(password) < 8:
         errors.append("Password must be at least 8 characters long.")
@@ -187,41 +221,41 @@ def accept_invitation(token):
         errors.append("Password must contain at least one special character.")
 
     if errors:
-        return render_template('accept_invitation.html', 
-                             email=inv.email, 
-                             error=" ".join(errors)), 400
+        return jsonify({"error": " ".join(errors)}), 400
 
     try:
-        with db.session.begin():
-            # look up existing user by email
-            user = db.session.query(User).filter_by(email=inv.email).first()
-            if not user:
-                # create a new member user
-                user = User(
-                    email=inv.email,
-                    name=name,
-                    password=generate_password_hash(password),
-                    phone=phone,
-                    role='Member',  # default role
-                    institution_id=inv.institution_id
-                )
-                db.session.add(user)
-            else:
-                # link an existing user to this institution
-                user.institution_id = inv.institution_id
+        # Check if user already exists
+        user = db.session.query(User).filter_by(email=inv.email).first()
+        if not user:
+            # Create new user
+            user = User(
+                email=inv.email,
+                name=name,
+                password=generate_password_hash(password),
+                phone=phone,
+                role='Member',  # default role
+                institution_id=inv.institution_id
+            )
+            db.session.add(user)
+        else:
+            # Link existing user to institution
+            user.institution_id = inv.institution_id
 
-            # mark invitation as used
-            inv.used = True
+        # Mark invitation as used
+        inv.used = True
+        db.session.commit()
+
+        return jsonify({
+            "message": "Account created successfully! You can now log in.",
+            "user_id": user.id,
+            "email": user.email,
+            "name": user.name,
+            "institution_id": user.institution_id
+        }), 201
 
     except IntegrityError as e:
         db.session.rollback()
-        return render_template('accept_invitation.html', 
-                             email=inv.email, 
-                             error="Could not accept invitation. Please try again."), 500
-
-    # 3) redirect to login with success message
-    flash("Account created successfully! Please log in.", "success")
-    return redirect(url_for('users_bp.login'))  # Adjust to your actual login route name
+        return jsonify({"error": "Could not accept invitation. Please try again."}), 500
 
 @institutions_bp.route('/<int:institution_id>/invite_user', methods=['POST'])
 @token_required
@@ -264,7 +298,7 @@ def invite_user_to_institution(current_user_id, institution_id):
     # Generate the invitation link
     invite_link = f"{request.host_url}institutions/invite/accept/{invitation_token}"
     
-    # Send email with the invite link
+    # 🔥 
     email_sent = send_invitation_email(email, institution.name, invite_link)
     
     if not email_sent:
@@ -273,7 +307,6 @@ def invite_user_to_institution(current_user_id, institution_id):
     return jsonify({
         "message": f"Invitation sent to {email}",
         "expires_at": expiry_time.isoformat()
-        # "invite_link": invite_link  # Remove this in production
     }), 200
 
 @institutions_bp.route('/<int:institution_id>/upload-image', methods=['POST'])

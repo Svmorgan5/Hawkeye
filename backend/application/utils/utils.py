@@ -188,5 +188,14 @@ def send_invitation_email(to_email, institution_name, invite_link):
         print(f"Failed to send invitation email: {e}")
         return False
 
+def mock_send_invitation_email(email, institution_name, invite_link):
+    """Mock email for testing purposes"""
+    print(f"📧 MOCK EMAIL SENT!")
+    print(f"📧 To: {email}")
+    print(f"📧 Institution: {institution_name}")
+    print(f"📧 Invitation Link: {invite_link}")
+    print(f"📧 (In production, this would be sent via SMTP)")
+    return True  # Always return success
+
 
 

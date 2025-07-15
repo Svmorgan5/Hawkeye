@@ -51,7 +51,7 @@ class User(Base):
     name: Mapped[str] = mapped_column(db.String(150), nullable=False)
     phone: Mapped[str] = mapped_column(db.String(25), nullable=True, unique=True)
     email: Mapped[str] = mapped_column(db.String(150), nullable=False, unique=True)
-    password: Mapped[str] = mapped_column(db.String(150), nullable=False)
+    password: Mapped[str] = mapped_column(db.String(225), nullable=False)
     image: Mapped[str] = mapped_column(db.String(255), nullable=True)
     role: Mapped[str] = mapped_column(db.String(50), nullable=False)
 

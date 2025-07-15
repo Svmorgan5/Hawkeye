@@ -4,11 +4,9 @@ import os
 from flask import Flask
 from flask_cors import CORS
 from flask_socketio import SocketIO
-
 from backend.application.models import db
 from backend.application.extensions import ma, limiter, cache
 from flask_swagger_ui import get_swaggerui_blueprint
-
 from backend.application.blueprints.user import users_bp
 from backend.application.blueprints.camera import cameras_bp
 from backend.application.blueprints.member import members_bp
