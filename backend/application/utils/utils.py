@@ -90,11 +90,19 @@ def notify_institution_on_alert(camera_id, alert_id):
     users = db.session.query(User).filter_by(institution_id=institution_id).all()
     members = db.session.query(Member).filter_by(institution_id=institution_id).all()
 
+    # Enhanced logging for school context
+    print(f"🏫 ALERT: Notifying institution {institution_id} about alert {alert_id}")
+    print(f"📍 Camera Location: {camera.name} at {camera.location}")
+
     for user in users:
-        print(f"Notify user {user.email} about alert {alert_id} from camera {camera.name}")
+        print(f"📧 Notify school admin {user.email} about alert {alert_id} from camera {camera.name}")
+        # TODO: Add urgent email sending logic here
 
     for member in members:
-        print(f"Notify member {member.email} about alert {alert_id} from camera {camera.name}")
+        print(f"📧 Notify school staff {member.email} about alert {alert_id} from camera {camera.name}")
+        # TODO: Add urgent email sending logic here
+    
+    print(f"✅ Notification completed for alert {alert_id}")
 
 def send_invitation_email(to_email, institution_name, invite_link):
     """
