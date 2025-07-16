@@ -2,7 +2,7 @@ import os
 import re
 from . import users_bp
 from backend.application.blueprints.user.userSchemas import user_schema, users_schema, login_schema
-from flask import request, jsonify, current_app
+from flask import request, jsonify, current_app, url_for
 from backend.application.models import db, User
 from marshmallow import ValidationError
 from sqlalchemy import select, delete
@@ -11,6 +11,11 @@ from backend.application.utils.utils import encode_token, token_required
 from werkzeug.utils import secure_filename
 
 
+# Add this to the top of your users/routes.py
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+def _allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @users_bp.route('/login', methods=['POST'])
 def login():
@@ -78,26 +83,43 @@ def add_user():
    db.session.commit()
    return user_schema.jsonify(new_user), 200
 
-@users_bp.route('/<int:user_id>/upload_image', methods=['POST'])
-def upload_user_image(user_id):
-    user = db.session.get(User, user_id)
-    if not user:
+@users_bp.route('/<int:user_id>/upload-image', methods=['POST'])
+@token_required
+def upload_user_image(current_user_id, user_id):
+    """Upload image for a user - must be self or admin"""
+    current_user = db.session.get(User, current_user_id)
+    if not current_user:
         return jsonify({"error": "User not found"}), 404
+    
+    # Authorization: user can upload their own image, or admin can upload any
+    target_user = db.session.get(User, user_id)
+    if not target_user:
+        return jsonify({"error": "Target user not found"}), 404
+    
+    # Check if user is uploading their own image OR is admin
+    if current_user.id != user_id and current_user.role != 'Admin':
+        return jsonify({"error": "Not authorized"}), 403
 
-    if 'image' not in request.files:
-        return jsonify({"error": "No image file provided"}), 400
+    # Handle file upload (matching institution logic)
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part"}), 400
+    
+    file = request.files['file']
+    if file.filename == '' or not _allowed_file(file.filename):
+        return jsonify({"error": "Invalid or missing file"}), 400
 
-    file = request.files['image']
     filename = secure_filename(file.filename)
-    # Save to backend/application/static/uploads/
-    upload_folder = os.path.join(current_app.root_path, 'static', 'uploads')
-    os.makedirs(upload_folder, exist_ok=True)
-    upload_path = os.path.join(upload_folder, filename)
-    file.save(upload_path)
-
-    user.image = f'/static/uploads/{filename}'
+    save_dir = current_app.config.get('UPLOAD_FOLDER', 'static/uploads')
+    os.makedirs(save_dir, exist_ok=True)
+    path = os.path.join(save_dir, filename)
+    file.save(path)
+    
+    # Store full URL (matching institution logic)
+    public_path = url_for('static', filename=f'uploads/{filename}', _external=True)
+    target_user.image = public_path
     db.session.commit()
-    return jsonify({"message": "Image uploaded", "image_url": user.image}), 200
+
+    return jsonify({"image": public_path}), 200
 
 #token required to get all users for instituion by instituion
 @users_bp.route('/', methods=['GET'])
