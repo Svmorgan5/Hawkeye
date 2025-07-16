@@ -66,8 +66,30 @@ def get_institution_info(current_user_id):
     user = db.session.get(User, current_user_id)
     if not user or not user.institution_id:
         return jsonify({"error": "User or institution not found"}), 404
+    
     institution = db.session.get(Institution, user.institution_id)
-    return institution_schema.jsonify(institution), 200
+    if not institution:
+        return jsonify({"error": "Institution not found"}), 404
+    
+    # Use same image handling logic as members
+    data = institution_schema.dump(institution)
+    
+    # Handle multiple image fields for institutions
+    for img_field in ['logo', 'image1', 'image2']:
+        img = data.get(img_field)
+        if img:
+            if img.startswith('http://') or img.startswith('https://'):
+                data[img_field] = img  # Already full URL
+            else:
+                data[img_field] = url_for(
+                    'static',
+                    filename=f"uploads/{img}",
+                    _external=True
+                )
+        else:
+            data[img_field] = None
+    
+    return jsonify(data), 200
 
 # Get all members for the current members institution
 @institutions_bp.route('/members', methods=['GET'])
