@@ -19,26 +19,45 @@ def _allowed_file(filename):
 
 @users_bp.route('/login', methods=['POST'])
 def login():
-   try:
-      credentials = login_schema.load(request.json)
-      email = credentials.email
-      password = credentials.password  
-   except ValidationError as e:
-      return jsonify(e.messages), 400
+    try:
+        credentials = login_schema.load(request.json)
+        email = credentials.email
+        password = credentials.password  
+    except ValidationError as e:
+        return jsonify(e.messages), 400
    
-   query = select(User).where(User.email == email)
-   user = db.session.execute(query).scalars().first()
+    query = select(User).where(User.email == email)
+    user = db.session.execute(query).scalars().first()
 
-   if user and user.password == password:
-      token = encode_token(user.id)
-      response = {
-         "status": "success",
-         "message": "Login successful",
-         "token": token
-      }
-      return jsonify(response), 200
-   else:
-      return jsonify({"message": "Invalid email or password!"}), 401
+    if user and user.password == password:
+        token = encode_token(user.id)
+        
+        # Handle user image URL 
+        user_image = user.image
+        if user_image:
+            if user_image.startswith('http://') or user_image.startswith('https://'):
+                user_image_url = user_image  # Already full URL
+            else:
+                user_image_url = url_for(
+                    'static',
+                    filename=f"uploads/{user_image}",
+                    _external=True
+                )
+        else:
+            user_image_url = None
+        
+        response = {
+            "status": "success",
+            "message": "Login successful",
+            "token": token,
+            "user_id": user.id,
+            "user_institution": user.institution_id,
+            "user_name": user.name,
+            "user_image": user_image_url
+        }
+        return jsonify(response), 200
+    else:
+        return jsonify({"message": "Invalid email or password!"}), 401
 
 
 @users_bp.route('/', methods=['POST'])
