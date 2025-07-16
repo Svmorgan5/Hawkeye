@@ -60,6 +60,15 @@ def get_institution_users(current_user_id):
         "users": public_user_schema.dump(users, many=True)  
     }), 200
 
+@institutions_bp.route('/', methods=['GET'])
+@token_required
+def get_institution_info(current_user_id):
+    user = db.session.get(User, current_user_id)
+    if not user or not user.institution_id:
+        return jsonify({"error": "User or institution not found"}), 404
+    institution = db.session.get(Institution, user.institution_id)
+    return institution_schema.jsonify(institution), 200
+
 # Get all members for the current members institution
 @institutions_bp.route('/members', methods=['GET'])
 @token_required
@@ -311,53 +320,36 @@ def invite_user_to_institution(current_user_id, institution_id):
 
 @institutions_bp.route('/<int:institution_id>/upload-image', methods=['POST'])
 @token_required
-def upload_institution_image(current_user, institution_id):
-    """
-    Accepts either:
-    - multipart/form-data with fields:
-        * file (the FileStorage)
-        * field_name (one of "logo", "image1", "image2")
-    - application/json with:
-        * url  (a publicly accessible image URL)
-        * field_name
-    """
+def upload_institution_image(current_user_id, institution_id):
+    current_user = db.session.get(User, current_user_id)
+    if not current_user:
+        return jsonify({"error": "User not found"}), 404
+    
     inst = db.session.get(Institution, institution_id)
     if not inst or inst.id != current_user.institution_id:
         return jsonify({"error": "Not authorized"}), 403
 
-    field = request.form.get('field_name') or request.json.get('field_name')
+    # Get field name from form or JSON
+    field = request.form.get('field_name') or (request.json and request.json.get('field_name'))
     if field not in ('logo', 'image1', 'image2'):
-        return jsonify({"error": "Invalid field_name"}), 400
+        field = 'logo'  # Default to logo
 
-    # 1) URL case
-    if request.is_json and (url := request.json.get('url')):
-        setattr(inst, field, url)
-        db.session.commit()
-        return jsonify({field: url}), 200
-
-    # 2) File-upload case
+    # Handle file upload (like members)
     if 'file' not in request.files:
         return jsonify({"error": "No file part"}), 400
-    f = request.files['file']
-    if f.filename == '' or not _allowed_file(f.filename):
+    
+    file = request.files['file']
+    if file.filename == '' or not _allowed_file(file.filename):
         return jsonify({"error": "Invalid or missing file"}), 400
 
-    filename = secure_filename(f.filename)
-    # --- LOCAL SAVE EXAMPLE --- 
+    filename = secure_filename(file.filename)
     save_dir = current_app.config.get('UPLOAD_FOLDER', 'static/uploads')
     os.makedirs(save_dir, exist_ok=True)
     path = os.path.join(save_dir, filename)
-    f.save(path)
+    file.save(path)
     public_path = url_for('static', filename=f'uploads/{filename}', _external=True)
 
-    # --- S3 UPLOAD EXAMPLE (uncomment if using S3) ---
-    # s3 = boto3.client('s3')
-    # bucket = current_app.config['S3_BUCKET']
-    # key = f"institutions/{institution_id}/{field}/{filename}"
-    # s3.upload_fileobj(f, bucket, key, ExtraArgs={'ACL':'public-read'})
-    # public_path = f"https://{bucket}.s3.amazonaws.com/{key}"
-
-    # Persist the URL
+    # Set the field on institution
     setattr(inst, field, public_path)
     db.session.commit()
 
