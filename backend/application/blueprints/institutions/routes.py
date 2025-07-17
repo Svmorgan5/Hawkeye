@@ -5,7 +5,7 @@ import io
 import secrets
 from datetime import datetime, timezone, timedelta
 from flask import request, jsonify, current_app, render_template, redirect, url_for, flash
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 import boto3  # if you prefer S3
 from sqlalchemy.exc import IntegrityError

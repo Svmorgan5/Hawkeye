@@ -9,6 +9,7 @@ from sqlalchemy import select, delete
 from backend.application.extensions import limiter, cache
 from backend.application.utils.utils import encode_token, token_required
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 # Add this to the top of your users/routes.py
@@ -29,7 +30,7 @@ def login():
     query = select(User).where(User.email == email)
     user = db.session.execute(query).scalars().first()
 
-    if user and user.password == password:
+    if user and check_password_hash(user.password, password):
         token = encode_token(user.id)
         
         # Handle user image URL 
