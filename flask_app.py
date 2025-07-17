@@ -3,7 +3,6 @@
 # 🔥 
 from dotenv import load_dotenv
 load_dotenv()  # Load environment variables from .env file
-
 from backend.application import create_app, socketio
 from backend.application.models import db
 

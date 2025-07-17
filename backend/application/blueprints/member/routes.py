@@ -167,8 +167,11 @@ def update_member(current_user_id, member_id):
         except ValidationError as e:
             return jsonify(e.messages), 400
         
-        for field, value in member_schema.dump(member_data).items():
-            if value is not None:  # Only update non-null values
+
+
+        # FIX: Only update fields present in request.json
+        for field, value in request.json.items():
+            if value is not None and hasattr(member, field):
                 setattr(member, field, value)
 
     db.session.commit()

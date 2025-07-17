@@ -95,7 +95,7 @@ def add_user():
       name=user_data.name,
       email=user_data.email,
       phone=user_data.phone,
-      password=user_data.password,
+      password=generate_password_hash(user_data.password),
       role=user_data.role,
    )
 
