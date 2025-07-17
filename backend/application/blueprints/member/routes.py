@@ -64,23 +64,37 @@ def create_member(current_user_id):
 @members_bp.route('/', methods=['GET'])
 @token_required
 def get_members(current_user_id):
+    # Get the current user to access their institution
+    user = db.session.get(User, current_user_id)
+    if not user or not user.institution_id:
+        return jsonify({"error": "User or institution not found"}), 404
+    
     search = request.args.get('search')
-    query  = db.session.query(Member)
+    
+    # ✅ Filter by user's institution FIRST
+    query = db.session.query(Member).filter_by(institution_id=user.institution_id)
+    
     if search:
-        query = query.filter(Member.name.ilike(f"%{search}%"))
+        # Enhanced search: name, email, and ID
+        search_filter = db.or_(
+            Member.name.ilike(f"%{search}%"),
+            Member.email.ilike(f"%{search}%"),
+            Member.id == int(search) if search.isdigit() else False
+        )
+        query = query.filter(search_filter)
+    
     members = query.order_by(Member.name.asc()).all()
 
+    # Process images
     raw = members_schema.dump(members, many=True)
     out = []
 
     for m in raw:
         img = m.get('image')
         if img:
-            # if it’s already a full URL, leave it
             if img.startswith('http://') or img.startswith('https://'):
                 m['image'] = img
             else:
-                # else build it from the filename
                 m['image'] = url_for(
                     'static',
                     filename=f"uploads/{img}",

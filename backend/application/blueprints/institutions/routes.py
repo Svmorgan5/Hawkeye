@@ -92,14 +92,49 @@ def get_institution_info(current_user_id):
     return jsonify(data), 200
 
 # Get all members for the current members institution
-@institutions_bp.route('/members', methods=['GET'])
+@institutions_bp.route('/members', methods=['GET', 'OPTIONS'])
 @token_required
 def get_institution_members(current_user_id):
+    # Handle CORS preflight
+    if request.method == 'OPTIONS':
+        return '', 200
+        
     user = db.session.get(User, current_user_id)
     if not user or not user.institution_id:
         return jsonify({"error": "User or institution not found"}), 404
-    members = db.session.query(Member).filter_by(institution_id=user.institution_id).all()
-    return members_schema.jsonify(members), 200
+    
+    search = request.args.get('search')
+    query = db.session.query(Member).filter_by(institution_id=user.institution_id)
+    
+    if search:
+        search_filter = db.or_(
+            Member.name.ilike(f"%{search}%"),
+            Member.email.ilike(f"%{search}%"),
+            Member.id == int(search) if search.isdigit() else False
+        )
+        query = query.filter(search_filter)
+    
+    members = query.order_by(Member.name.asc()).all()
+
+    # Process images (same as your other routes)
+    raw = members_schema.dump(members, many=True)
+    out = []
+    for m in raw:
+        img = m.get('image')
+        if img:
+            if img.startswith('http://') or img.startswith('https://'):
+                m['image'] = img
+            else:
+                m['image'] = url_for(
+                    'static',
+                    filename=f"uploads/{img}",
+                    _external=True
+                )
+        else:
+            m['image'] = None
+        out.append(m)
+
+    return jsonify(out), 200
 
 # Update an institution (only by the user who created/owns it)
 @institutions_bp.route('/<int:institution_id>', methods=['PUT'])
