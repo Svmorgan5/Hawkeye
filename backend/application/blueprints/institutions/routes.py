@@ -92,13 +92,9 @@ def get_institution_info(current_user_id):
     return jsonify(data), 200
 
 # Get all members for the current members institution
-@institutions_bp.route('/members', methods=['GET', 'OPTIONS'])
+@institutions_bp.route('/members', methods=['GET'])
 @token_required
 def get_institution_members(current_user_id):
-    # Handle CORS preflight
-    if request.method == 'OPTIONS':
-        return '', 200
-        
     user = db.session.get(User, current_user_id)
     if not user or not user.institution_id:
         return jsonify({"error": "User or institution not found"}), 404
