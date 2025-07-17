@@ -14,21 +14,62 @@ import Avatar4 from '../../assets/Avatar4.png'
 import Avatar from '../../assets/Avatar.png'
 import Avatar5 from '../../assets/Avatar5.png'
 import { useNavigate } from 'react-router-dom';
+import { useTokenContext } from '../../Context/Context';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { useInstitutionContext } from '../../Context/InstitutionContext';
+
 
 
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const {token, user_id, user_name, user_institution_id, user_image, dispatch:tokenDispatch} = useTokenContext();
+  const {instId,instName,instType,instAddress,instPhone,instLogo,instImage1,instImage2,dispatch:institutionDispatch} = useInstitutionContext();
+  useEffect(()=>{
+      
+        const getInstitution = async() =>
+        {
+          if(instId)
+            return;
+            try {
+              const response = await axios.get("http://127.0.0.1:5000/institutions/", {
+              headers: {
+              'Authorization': `Bearer ${token}`
+                      }
+                })
+        
+        institutionDispatch({type:"SET_INST_ID",payload:response.data.id});
+        institutionDispatch({type:"SET_INST_NAME",payload:response.data.name})
+        institutionDispatch({type:"SET_IS_SCHOOL",payload:response.data.is_school})
+        institutionDispatch({type:"SET_INST_ADDRESS",payload:response.data.address})
+        institutionDispatch({type:"SET_INST_PHONE",payload:response.data.phone})
+        institutionDispatch({type:"SET_INST_LOGO",payload:response.data.logo})
+        institutionDispatch({type:"SET_INST_IMAGE1",payload:response.data.image1})
+        institutionDispatch({type:"SET_INST_IMAGE2",payload:response.data.image2})
+       
+      
+        } catch (error: any) {
+        console.error('Error message:', error.message);
+        }
+
+    
+       
+    }
+      getInstitution();
+    },[]);
+  
   const navigateToCameras = () => {
     console.log('test cameras')
     navigate('/cameras')
   }
+   console.log('user name:',user_name)
   return (
 
     <>
     <p className='breadcrumb'>Dashboard</p>
      <p className='dashboard-head' > 
-        Welcome, Principal Roberts! </p>
+        Welcome, {user_name}</p>
     <div className="card-container">
         <DashCard heading='Alerts' message='Lorem ipsum odor amet, consectetuer adipiscing elit.' picture={Alert} link='/alerts' />
         <DashCard heading='Reports' message='Lorem ipsum odor amet, consectetuer adipiscing elit. ' picture={bars} link='/reports'/>

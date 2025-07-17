@@ -1,6 +1,7 @@
 // LiveStreamPlayer.js
-import React, { useEffect, useRef } from 'react';
-import Hls from 'hls.js';
+import {useEffect, useRef } from 'react'
+import Hls from 'hls.js'
+import './LiveStreamPlayer.css'
 
 type LiveProps = {
   URL:string
@@ -9,47 +10,52 @@ type LiveProps = {
   name:string
 }
 
-const LiveStreamPlayer = (liveProps:LiveProps) => {
-  const videoRef = useRef(null);
-  const streamUrl = `${liveProps.URL}`; // Replace with your live HLS URL
 
-  
-console.log('HLS supported:', Hls.isSupported());
-  useEffect(() => {
-    const video = videoRef.current;
-
-    if (Hls.isSupported()) {
-      const hls = new Hls();
-      hls.loadSource(streamUrl);
-      hls.attachMedia(video);
-
-      hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        video.play();
-      });
-
-      return () => {
-        hls.destroy();
-      };
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = streamUrl;
+const LiveStreamPlayer = ({URL, status,location,name}:LiveProps) => {
+ 
+ 
+  const videoRef= useRef<HTMLVideoElement|null>(null);
+  useEffect(()=>{
+     
+    const video= videoRef.current;
+    const hls= new Hls();
+    if(!video || !URL )
+      return;
+    if(video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src=URL;
       video.addEventListener('loadedmetadata', () => {
         video.play();
-      });
-    } else {
-      console.error('This browser does not support HLS');
+      })
+    } else if(Hls.isSupported()){
+      
+      hls.loadSource(URL);
+      hls.attachMedia(video)
+      hls.on(Hls.Events.MANIFEST_PARSED,()=>{
+         video.play();
+      })
+     
     }
-  }, [streamUrl]);
+
+    return () =>{
+      if (hls) {
+        hls.destroy();
+      }
+    }
+  },[URL]);
 
   return (
-    <div>
-      <video
-        ref={videoRef}
-        controls
-        muted
-        style={{ width:'100%', maxWidth:'370px', minHeight: '197px', paddingTop: '0px',marginTop:'0px', backgroundColor:'black', textAlign:'center' }}
-      />
-    </div>
-  );
-};
-
+    <video
+      ref={videoRef}
+      controls
+      muted
+      autoPlay
+      className='video-player'
+      
+    />
+      
+  )
+}
+ 
 export default LiveStreamPlayer;
+
+

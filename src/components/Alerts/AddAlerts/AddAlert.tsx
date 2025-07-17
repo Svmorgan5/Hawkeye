@@ -36,7 +36,7 @@ const token = sessionStorage.getItem('jwtToken_key')
     e.preventDefault();  
        
     try {
-      await axios.post("http://127.0.0.1:5000/alerts/", {
+      await axios.post("http://127.0.0.1:5000/alerts", {
           code:`${code}`,
           location:`${location}`,
           timestamp: `${time}`,

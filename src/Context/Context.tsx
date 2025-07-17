@@ -4,17 +4,32 @@ import type { ReactNode } from 'react'
 
 //Define action types
 type TokenAction =
-| {type:"SET_TOKEN"; payload: string};
+| {type:"SET_TOKEN"; payload: string}
+| {type:"SET_USER_ID"; payload: number}
+| {type:"SET_USER_NAME"; payload:string}
+| {type:"SET_USER_INSTITUTION";payload:number}
+| {type:"SET_USER_IMAGE";payload:string};
 
 
 interface TokenState {
     token: string;
+    user_id:number;
+    user_name:string;
+    user_institution_id:number;
+    user_image:string;
+
+
+
 
 }
 
 //initial state
 const initialState: TokenState = {
     token: '', 
+    user_id:0,
+    user_name:'',
+    user_institution_id:0,
+    user_image:'',
 }
 
 //Reducer function
@@ -26,7 +41,14 @@ const tokenReducer = (
     switch (action.type) {
         case 'SET_TOKEN':
             return {...state, token:action.payload};
-
+        case 'SET_USER_ID':
+            return {...state, user_id:action.payload};
+        case 'SET_USER_NAME':
+            return {...state, user_name:action.payload};
+        case 'SET_USER_INSTITUTION':
+            return {...state, user_institution_id:action.payload};
+        case 'SET_USER_IMAGE':
+            return {...state, user_image:action.payload};
         default:
             throw new Error (`Unhandled action type`)
     }

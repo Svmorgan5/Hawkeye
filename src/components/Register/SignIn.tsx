@@ -10,21 +10,33 @@ import '../../App.css'
 import { useTokenContext } from '../../Context/Context';
 import SignUp from '../SignUp';
 import TheSignUp from '../../pages/TheSignUp/TheSignUp';
+import { useInstitutionContext } from '../../Context/InstitutionContext';
 
 // import User from './User';
 
+        
 
-
-const SignIn:React.FC = () =>{
+const SignIn = () =>{
     
   
 
   // State variables to store user credentials
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const {token, userName, dispatch} = useTokenContext();
+  // const [busId,setBusId] = useState<number>(0)
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+ 
+  // const [busName,setBusName] = useState<string>('')
+  // const [address,setAddress] = useState<string>('')
+  // const [phone,setPhone] = useState<string>('')
+  //temp - should be deleted
+  // const [logoFile, setLogoFile] = useState<File|null>(null)
+  // const [mapOneFile, setMapOneFile] = useState<File|null>(null)
+  // const [mapTwoFile, setMapTwoFile] = useState<File|null>(null)
+  // const [isSchool,setIsSchool] = useState<boolean>(true)
+  const {token, user_id, user_name, user_institution_id, user_image, dispatch} = useTokenContext();
   
   const navigate = useNavigate();
+  
   
   
   // Function to handle form submission and obtain JWT token from reqres.in
@@ -45,7 +57,12 @@ const SignIn:React.FC = () =>{
       const jwtToken = response.data.token;
       sessionStorage.setItem('jwtToken_key', jwtToken);
       dispatch({type:'SET_TOKEN',payload:jwtToken})
-      // dispatch({type:'SET_USER_NAME',payload:jwtToken})
+      dispatch({type:'SET_USER_NAME',payload:response.data.user_name})
+      dispatch({type:'SET_USER_ID',payload:response.data.user_id})
+      dispatch({type:'SET_USER_INSTITUTION',payload:response.data.user_institution})
+      dispatch({type:'SET_USER_IMAGE',payload:response.data.user_image})
+      
+      
       
       navigate('/')
       
@@ -66,8 +83,8 @@ const SignIn:React.FC = () =>{
       console.error('Login failed:', error);
       alert(`Error, was not able to log you in. ${error}`)
     }
-  };
-
+  
+  }
 
 //   const logoutUser = () => {
 //     // Clear JWT from session storage

@@ -20,7 +20,7 @@ import AddMembers from './components/Members/AddMember/AddMember';
 import Drills from './components/Drills/Drills'
 import Integration from './components/Intergration/Integration';
 import Billing from './components/Billing/Billing';
-import Profile from './components/SchoolProfile/SchoolProfile';
+import Profile from './components/SchoolProfile/AddProfile/SchoolProfile';
 import EditMembers from './components/Members/Edit Members/EditMembers';
 import { useParams,useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -33,8 +33,10 @@ import LandingPage from './components/Register/LandingPage/LandingPage';
 import { TokenProvider, useTokenContext } from './Context/Context';
 import AddBus from './components/Register/AddBus';
 import Messages from './components/Messages/Messages';
-
-
+import UploadImage from './components/Members/UpoloadImage/UploadImage';
+import DisplayProfile from './components/SchoolProfile/DisplayProfile/DisplayProfile';
+import AddNewUsers from './components/SchoolProfile/AddNewUsers/AddNewUsers';
+import AcceptInvite from './components/Register/AcceptInvite/AcceptInvite';
 
 
 const EditMemberWrapper =() => {
@@ -101,6 +103,7 @@ function App() {
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/register" element={<Register />} />
                  <Route path='/addbus' element={<AddBus />} />
+                 <Route path='/invite/accept/:token' element={<AcceptInvite />}/>
               </Routes>
         </div>
           </>
@@ -136,6 +139,11 @@ function App() {
                 <Route path='/cameras' element={<Cameras />} />
                 <Route path='/newCamera' element={<NewCameraBlank />} />
                 <Route path='/messages' element={<Messages />}/>
+                <Route path='/uploadimages/:memberId' element={<UploadImage />} />
+                <Route path='/displayprofile' element={<DisplayProfile />}/>
+                <Route path='/addnewusers' element={<AddNewUsers />}/>
+                <Route path='/invite/accept/:token' element={<AcceptInvite />}/>
+              
               </Routes>
             </div>
           </div>
