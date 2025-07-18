@@ -29,20 +29,20 @@ const [location,setLocation] = useState<string>('')
 const [time,setTime] = useState<string|null>('')
 const [alert_type,setAlert_type] = useState<string>('scheduled')
 const [message,setMessage] = useState<string>('')
-const [camera,setCamera] = useState<number|null>(null)
+const [camera,setCamera] = useState<string|null>(null)
 const token = sessionStorage.getItem('jwtToken_key')
   
  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();  
        
     try {
-      await axios.post("http://127.0.0.1:5000/alerts", {
+      await axios.post("http://127.0.0.1:5000/alerts/", {
           code:`${code}`,
           location:`${location}`,
           timestamp: `${time}`,
           alert_type:`${alert_type}`,
           message:`${message}`,
-          // camera?:`${camera}`
+          camera:parseInt(`${camera}`)
         
       },{
         headers:{
@@ -121,6 +121,11 @@ const token = sessionStorage.getItem('jwtToken_key')
                 <input className='body-text time-box-addalerts' type='datetime-local' value={time} onChange={(e)=>setTime(e.target.value)}></input>
                 </div>
                 <div className='label-wrapper'>
+                   <div className='label-wrapper'>
+                Camera
+                <input className='body-text time-box-addalerts' type='text' value={camera} onChange={(e)=>setCamera(e.target.value)}></input>
+                </div>
+                <div className='label-wrapper'></div>
                   
                 </div>
             <div className='form-footer'>

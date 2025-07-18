@@ -27,6 +27,9 @@ const Dashboard = () => {
   const {token, user_id, user_name, user_institution_id, user_image, dispatch:tokenDispatch} = useTokenContext();
   const {instId,instName,instType,instAddress,instPhone,instLogo,instImage1,instImage2,dispatch:institutionDispatch} = useInstitutionContext();
   useEffect(()=>{
+    {!token &&(navigate('/'))}
+  },[token])
+  useEffect(()=>{
       
         const getInstitution = async() =>
         {
@@ -48,6 +51,7 @@ const Dashboard = () => {
         institutionDispatch({type:"SET_INST_IMAGE1",payload:response.data.image1})
         institutionDispatch({type:"SET_INST_IMAGE2",payload:response.data.image2})
        
+        //tokenDispatch({type:"SET_USER_NAME"})
       
         } catch (error: any) {
         console.error('Error message:', error.message);

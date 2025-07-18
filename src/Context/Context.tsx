@@ -8,7 +8,8 @@ type TokenAction =
 | {type:"SET_USER_ID"; payload: number}
 | {type:"SET_USER_NAME"; payload:string}
 | {type:"SET_USER_INSTITUTION";payload:number}
-| {type:"SET_USER_IMAGE";payload:string};
+| {type:"SET_USER_IMAGE";payload:string}
+| {type:"CLEAR_USER"}
 
 
 interface TokenState {
@@ -49,6 +50,8 @@ const tokenReducer = (
             return {...state, user_institution_id:action.payload};
         case 'SET_USER_IMAGE':
             return {...state, user_image:action.payload};
+        case 'CLEAR_USER':
+            return initialState;
         default:
             throw new Error (`Unhandled action type`)
     }

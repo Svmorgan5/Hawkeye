@@ -22,7 +22,7 @@ const Cameras = () => {
   useEffect(()=> {
     const getCameras = async() =>{
     try {
-      const response = await axios.get("http://127.0.0.1:5000/cameras/", {
+      const response = await axios.get("http://127.0.0.1:5000/institutions/cameras", {
         headers:{
           'Authorization': `Bearer ${token}`
         }

@@ -79,6 +79,9 @@ function App() {
      
       
     }
+    else{
+      setLogin(false)
+    }
     
     
   },[token])

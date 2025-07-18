@@ -141,7 +141,7 @@ const Members = () => {
         name: `${member.name}`,
         role: `${member.role}`,
         groups: `${member.groups}`,
-        active: `${!member.active}`,
+        active: !member.active,
       }, {
         headers: {
           'Authorization': `Bearer ${token}`

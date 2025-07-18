@@ -12,6 +12,7 @@ type InstitutionAction =
 | {type:"SET_INST_LOGO";payload:string}
 | {type:"SET_INST_IMAGE1";payload:string}
 | {type:"SET_INST_IMAGE2";payload:string}
+| {type:"CLEAR_INSTITUTION"}
 
 
 interface InstitutionState {
@@ -62,6 +63,8 @@ const institutionReducer = (
             return {...state, instImage1:action.payload};
         case 'SET_INST_IMAGE2':
             return {...state, instImage2:action.payload};
+        case 'CLEAR_INSTITUTION':
+            return initialState;
         default:
             throw new Error (`Unhandled action type`)
     }

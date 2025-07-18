@@ -12,6 +12,9 @@ type Member = {
     role: string,
     groups:string,
     active:string
+    created_by_user_id:number,
+    institution_id:number,
+  
 
 }
 
@@ -27,6 +30,9 @@ const EditMembers: React.FC<Props> = ({id}) => {
     const [role,setRole] = useState<string>('')
     const [groups,setGroup] = useState<string>('')
     const [active,setActive] = useState<boolean>(true)
+    const [createdBy, setCreatedBy] = useState<number>(0)
+    const [instId,setInstId] = useState<number>(0)
+
     const navigate = useNavigate();
     const token = sessionStorage.getItem('jwtToken_key')
   useEffect(()=> {
@@ -47,6 +53,8 @@ const EditMembers: React.FC<Props> = ({id}) => {
           setRole(myMember.role);
           setGroup(myMember.groups);
           setActive(myMember.active);
+          setCreatedBy(myMember.created_by_user);
+          setInstId(myMember.institution_id);
         }
     
       
@@ -74,10 +82,11 @@ const EditMembers: React.FC<Props> = ({id}) => {
       await axios.put(`http://127.0.0.1:5000/members/${id}`, {
         id:`${id}`,
         email: `${email}`,
-         name: `${name}`,
+        name: `${name}`,
         role: `${role}`,
-        groups: `${groups}`,
-        active:`${active}`,
+        groups: groups,
+        active:active,
+        
         
       },{
         headers:{
@@ -91,17 +100,33 @@ const EditMembers: React.FC<Props> = ({id}) => {
         setRole('Teacher');
         setActive(true);
         setGroup('');
+        setCreatedBy(0);
+        setInstId(0);
         navigate('/members');
-    } catch (error:any){
-        alert(`Could not add Edit Member. ${error.message}`)
-      console.error('Error message:', error.response.data);
-      console.error('Error message:', error.message);
-     
+        
+    } catch (error: any) {
+    // Detailed error handling:
+    if (error.response) {
+      // Server responded with status outside 2xx
+      console.error('Error response data:', error.response.data);
+      console.error('Error response status:', error.response.status);
+      console.error('Error response headers:', error.response.headers);
+    
+    } else if (error.request) {
+      // Request was made but no response received
+      console.error('No response received:', error.request);
+      alert('Edit failed. No response received from server.');
+    } else {
+      // Something else caused an error
+      console.error('Error setting up request:', error.message);
+      alert(`Edit failed. Error: ${error.message}`);
     }
+  }
+};
 
  
     
-  };
+  
  
   
   
