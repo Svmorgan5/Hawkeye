@@ -85,7 +85,8 @@ def update_camera(current_user_id, camera_id):
         return jsonify(e.messages), 400
 
 
-    for field, value in user_data.items():
+    for field in request.json:
+        value = getattr(user_data, field, None)
         if value is not None:
             setattr(camera, field, value)
 
