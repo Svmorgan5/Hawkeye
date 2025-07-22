@@ -2,6 +2,7 @@
 import addImage from '../../../assets/addimage.png'
 import {useState, type ReactEventHandler} from 'react'
 import { useInstitutionContext } from '../../../Context/InstitutionContext'
+import {toast} from 'react-toastify'
 
 import axios from 'axios'
 import { useTokenContext } from '../../../Context/Context';
@@ -84,7 +85,7 @@ const [role,setRole] = useState<string>('')
         }
        
       });
-        alert('New Institution Added');
+        toast.success('New Institution Added');
         setName('');
         setPhone('');
         setEmail('');
@@ -97,15 +98,15 @@ const [role,setRole] = useState<string>('')
         console.error('Error Status Text:', error.response.statusText);
         console.error('Error Data:', error.response.data);
 
-        alert(`Could not add new Institution: ${JSON.stringify(error.response.data)}`);
+        toast.warning(`Could not add new Institution: ${JSON.stringify(error.response.data)}`);
       } else if (error.request) {
         // Request was made but no response received
         console.error('No response received:', error.request);
-        alert('Could not reach server. Please try again.');
+        toast.warning('Could not reach server. Please try again.');
       } else {
         // Other errors (e.g., setup issues)
         console.error('Error setting up request:', error.message);
-        alert(`Unexpected error: ${error.message}`);
+        toast.warning(`Unexpected error: ${error.message}`);
       }
     }
         

@@ -11,6 +11,7 @@ import { useTokenContext } from '../../Context/Context';
 import SignUp from '../SignUp';
 import TheSignUp from '../../pages/TheSignUp/TheSignUp';
 import { useInstitutionContext } from '../../Context/InstitutionContext';
+import {toast} from 'react-toastify'
 
 // import User from './User';
 
@@ -81,7 +82,7 @@ const SignIn = () =>{
     
     } catch (error) {
       console.error('Login failed:', error);
-      alert(`Error, was not able to log you in. ${error}`)
+      toast.warning(`Error, was not able to log you in. ${error}`)
     }
   
   }

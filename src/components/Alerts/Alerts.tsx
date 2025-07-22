@@ -1,10 +1,10 @@
 import '../../components/Dashboard/Dashboard.css'
 import './Alerts.css'
-import DashCard from '../Dashboard/DashCard';
 import Alert from '../../assets/Alert.png'
-import Bars from '../../assets/bars.png'
 import axios from 'axios'
 import { useEffect, useState } from 'react';
+import { useTokenContext } from '../../Context/Context';
+
 
 type Alert = {
     id:any,
@@ -21,7 +21,9 @@ const Alerts = () => {
   const [alerts,setAlerts] = useState<Alert[]>()
   const [search,setSearch] = useState<string>('')
   const [alertState, setAlertState] = useState<string>('all')
-  const token = sessionStorage.getItem('jwtToken_key')
+  const {token} = useTokenContext();
+ 
+ 
 
   const getAlerts =  async() =>{
     try {
@@ -46,30 +48,6 @@ const Alerts = () => {
     
   };
 
-    
-    useEffect(()=> {
-    const getAlerts = async() =>{
-    try {
-      const response = await axios.get("http://127.0.0.1:5000/institutions/alerts/", {
-        headers:{
-          'Authorization': `Bearer ${token}`
-
-        }
-      });
-      setAlerts(response.data)
-      console.log(response.data)
-    
-      
-    } catch (error:any){
-    
-      console.error('Error message:', error.message);
-    }
-    // Log and extract JWT token from response
-    
-  };
-
-  getAlerts()
-  },[]);
 
   useEffect(()=>{
       getAlerts()
@@ -96,26 +74,29 @@ const Alerts = () => {
     <div>
        <div className ='alert-header'>
           <div className='alert-header-top'>
-            <div className='breadcrumb'>Alert</div>
+            <div className='breadcrumb'>
+              Alert
+
+            </div>
             
               
            
           
           </div>
+        </div>
+      
     <div className = 'alerts-body'>
-    <div className="alert-cards">
-     {/* <div><DashCard  heading='Shared Alerts' message='View all shared alerts. ' picture={Alert} link='/alerts' sizing='double'/></div>
-      <div> <DashCard  heading='Alerts' message='View all recent alerts.' picture={Bars} link='/alerts'/></div>
-        */}
-
-
-
-    </div>
-    <div className='member-header-bottom'>
-            <div className='alert-types-and-search'>
-              <div>
-              <table className="alerts-type-table">
-                <tr >
+                {/* <div className="alert-cards">
+                {/* <div><DashCard  heading='Shared Alerts' message='View all shared alerts. ' picture={Alert} link='/alerts' sizing='double'/></div>
+                  <div> <DashCard  heading='Alerts' message='View all recent alerts.' picture={Bars} link='/alerts'/></div>
+                    */}
+                {/* </div>  */}
+      {/* <div className='alert-header-bottom'> */}
+        <div className='alert-types-and-search'>
+          <div>
+            <table className="alerts-type-table">
+              <tbody>
+                  <tr >
                   {/* {activeState? */}
                   {/* (
                     <> */}
@@ -136,18 +117,19 @@ const Alerts = () => {
                   </td> 
                  
                   
-                </tr>
+                  </tr>
+                </tbody>
               </table>
-              </div>
-             
-              <div className='alert-search-table-cell'>
+          </div>
+        {/* </div>   */}
+        <div className='alert-search-table-cell'>
              
                 
-                <input type='text' placeholder='Search alerts' className='alert-search' onChange={(e)=>setSearch(e.target.value)} value={search}></input>
-                <button onClick={clearSearch} className='alert-search-cancel'>Clear Search</button>
-                
-                   <a href="/addalert"><input type='button' className='alert-add' value='+ Add Alert' ></input></a>
-                </div>
+          <input type='text' placeholder='Search alerts' className='alert-search' onChange={(e)=>setSearch(e.target.value)} value={search}></input>
+          <button onClick={clearSearch} className='alert-search-cancel'>Clear Search</button>
+          
+              <a href="/addalert"><input type='button' className='alert-add' value='+ Add Alert' ></input></a>
+        </div>
           
                
                     
@@ -157,11 +139,11 @@ const Alerts = () => {
         
               
        
-            </div>
-          </div>
+      </div>
+    
 
-    <table className='table'>
-      <thead className='thead'>
+    <table className='alert-info-table'>
+      <thead>
         <tr className='th'>
        
         <th > Code </th>
@@ -175,28 +157,24 @@ const Alerts = () => {
       </table>
       
       <div className="tbody-alerts">
-        <table className='table-in-table'>
+        <table className='alerts-table-in-table'> 
+ 
         <tbody>
 
     
       {alerts?.map(alert=> {
-          
-              return(
-              <>
-              {(alertState==='all'||alertState===alert.alert_type)&&
+            if(alertState==='all'||alertState===alert.alert_type){  
+            return(
             <tr key={alert.id} className='tr'>
               <td >{alert.code}</td>
               <td>{(alert.timestamp).split('T')[0]}</td>
               <td>{(alert.timestamp).split('T')[1]}</td>
               <td>{alert.location}</td>
               <td>{alert.message}</td>
-             
-              
-             
             </tr>
-             }
-            </>
-            )
+           )}
+            
+           return null;
             
             
           })}
@@ -205,7 +183,6 @@ const Alerts = () => {
     </div>
     </div>
     </div>
-   </div>
     
   );
 };

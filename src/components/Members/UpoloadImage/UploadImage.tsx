@@ -4,7 +4,7 @@
 import { useState } from 'react'
 import { useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios'
-
+import {toast} from 'react-toastify'
 
 
 
@@ -43,13 +43,13 @@ const handleUpload = async () => {
    
     const data = await response.json();  // parse JSON body
     console.log('Upload response:', data);
-    alert('New Images Succefully Added!')
+    toast.success('New Images Succefully Added!')
     navigate('/members');
         // const data = await result.json();
         // console.log(data);
     } catch(error){
         console.log(error);
-        alert(`Unable To Upload Files. ${error}`)
+        toast.warning(`Unable To Upload Files. ${error}`)
     }
     }
 }

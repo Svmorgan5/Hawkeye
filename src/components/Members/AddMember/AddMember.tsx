@@ -2,6 +2,7 @@
 import axios from 'axios'
 import '../../../assets/member.png'
 import './AddMembers.css'
+import {toast} from 'react-toastify'
 
 import { useEffect, useState} from 'react'
 
@@ -46,14 +47,14 @@ const token = sessionStorage.getItem('jwtToken_key')
         }
        
       });
-       alert('New Member Added');
+       toast.success('New Member Added');
         setEmail('');
         setName('');
         setRole('Teacher');
         setLast('');
         setGroup('Employee');
     } catch (error:any){
-        alert(`Could not add new Member. ${error.response.data}`)
+        toast.warning(`Could not add new Member. Please check that all data was inputted correctly. ${error.response.data}`)
       console.error('Error message:', error.message);
     }
     // Log and extract JWT token from response

@@ -1,0 +1,123 @@
+.inst_display_page_logo{
+    width:60px;
+    height:auto;
+    
+}
+.inst_display_page_name{
+/* Whitewater High School */
+
+width: 409px;
+height: 46px;
+
+/* Semibold/38px | 46px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 38px;
+line-height: 46px;
+/* identical to box height, or 121% */
+display: flex;
+align-items: center;
+
+/* Gray / gray-9 */
+color: #262626
+
+
+}
+.map1-display{
+    
+    height:50vh;
+    width:auto;
+}
+.display-inst-map1{
+    width:100%;
+    height: 100%;
+    object-fit: contain;
+}
+.display-inst-map2{
+    width:100%;
+    height: 100%;
+    object-fit: contain;
+}
+.display-inst-map2-container{
+    width:225px;
+    height:225px;
+}
+.display-profile-logo{
+    width:40px;
+    height:40px;
+}
+.display-profile-logo-image{
+      width:100%;
+    height: 100%;
+    object-fit: contain;
+}
+.display-inst-body{
+    display:flex;
+    flex-direction: column;
+    margin-left:40px;
+}
+.display-inst-top{
+   display:flex;
+   flex-direction: row;
+}
+.display-inst-top-schoolname{
+    /* Whitewater High School */
+
+width: 409px;
+height: 46px;
+
+/* Semibold/38px | 46px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 38px;
+line-height: 46px;
+/* identical to box height, or 121% */
+display: flex;
+align-items: center;
+
+/* Gray / gray-9 */
+color: #262626;
+
+
+
+}
+.display-inst-middle{
+    display:flex;
+    flex-direction:row;
+    margin-top:20px;
+}
+.display-inst-body-middle-left{
+   width:700px;
+   height:375px;
+   background-color: rgb(245, 245, 245);
+   border-radius: 2px;
+   border:solid;
+   border-width: 1px;
+   border-color: rgb(236, 238, 238);
+   margin-right:30px;
+   margin-left:5px;
+}
+.display-inst-body-middle-right{
+    
+}
+.display-inst-body-bottom{
+
+}
+.display-inst-body-bottom-title{
+    /* Administrators : */
+/* Semibold / 20px | 28px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 20px;
+line-height: 28px;
+/* identical to box height, or 140% */
+display: flex;
+align-items: center;
+
+/* Gray / gray-9 */
+color: #262626;
+
+}

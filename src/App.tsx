@@ -37,6 +37,12 @@ import UploadImage from './components/Members/UpoloadImage/UploadImage';
 import DisplayProfile from './components/SchoolProfile/DisplayProfile/DisplayProfile';
 import AddNewUsers from './components/SchoolProfile/AddNewUsers/AddNewUsers';
 import AcceptInvite from './components/Register/AcceptInvite/AcceptInvite';
+import { Socket } from 'socket.io-client';
+import { toast, ToastContainer } from 'react-toastify';
+import JoinSocket from './components/Socket/JoinSocket';
+import LoadAllContext from './Context/LoadAllContext';
+import UploadPhoto from './components/SchoolProfile/UploadPhoto/UploadPhoto';
+
 
 
 const EditMemberWrapper =() => {
@@ -63,8 +69,8 @@ const EditMemberWrapper =() => {
 function App() {
  
   const navigate = useNavigate();
-  const [login,setLogin] = useState<boolean|null>(false)
-  const {token, dispatch} = useTokenContext();
+  
+  const {token, login, dispatch} = useTokenContext();
   
 
   useEffect(() =>{
@@ -75,12 +81,12 @@ function App() {
   },[])
   useEffect(()=>{
     if(token){
-      setLogin(true)
+      dispatch({type:'SET_LOGIN',payload:true})
      
       
     }
     else{
-      setLogin(false)
+      dispatch({type:'SET_LOGIN',payload:false})
     }
     
     
@@ -92,7 +98,22 @@ function App() {
 
   return (
     <>
-    
+    <JoinSocket />
+    <LoadAllContext />
+    <ToastContainer
+        position="top-center"
+        // autoClose={5000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        
+      />
+   
     {!login?
    
     
@@ -146,6 +167,7 @@ function App() {
                 <Route path='/displayprofile' element={<DisplayProfile />}/>
                 <Route path='/addnewusers' element={<AddNewUsers />}/>
                 <Route path='/invite/accept/:token' element={<AcceptInvite />}/>
+                <Route path='/uploadphoto' element={<UploadPhoto />}/>
               
               </Routes>
             </div>

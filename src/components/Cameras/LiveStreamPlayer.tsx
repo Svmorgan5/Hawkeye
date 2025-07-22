@@ -1,7 +1,8 @@
 // LiveStreamPlayer.js
-import {useEffect, useRef } from 'react'
+import React, {useEffect, useRef } from 'react'
 import Hls from 'hls.js'
 import './LiveStreamPlayer.css'
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 
 type LiveProps = {
   URL:string
@@ -44,14 +45,33 @@ const LiveStreamPlayer = ({URL, status,location,name}:LiveProps) => {
   },[URL]);
 
   return (
-    <video
-      ref={videoRef}
-      controls
-      muted
-      autoPlay
-      className='video-player'
-      
-    />
+    // Basic PTZ capability for when we have cameras to test
+    // <TransformWrapper
+    //   initialScale={1}
+    //   initialPositionX={200}
+    //   initialPositionY={100}>
+    //   {({zoomIn,zoomOut,resetTransform,...reset})=> (
+    //     <React.Fragment>
+    //       <div className='tools'>
+    //         <button onClick={()=>zoomIn}>+</button>
+    //         <button onClick={()=>zoomOut}>+</button>
+    //         <button onClick={()=>resetTransform}>Reset</button>
+    //       </div>
+        
+    //      <TransformComponent>
+          <video
+            ref={videoRef}
+            controls
+            muted
+            autoPlay
+            className='video-player'
+          />
+    //   </TransformComponent>
+    //   </React.Fragment>
+
+    //   )}
+     
+    // </TransformWrapper>
       
   )
 }

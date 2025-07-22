@@ -1,0 +1,293 @@
+.body-add-camera{
+    padding-left:300px;
+    padding-top:100px;
+    height:100%;
+    width:100%;
+    min-height: 92.5vh;
+    background-color: rgb(233, 231, 231);
+}
+
+.new-camera-form{
+ 
+
+    /* Modal / Basic */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+
+height:257px;
+width:450px;
+
+
+/* Gray / gray-1 */
+background: #FFFFFF;
+/* Elevation */
+box-shadow: 0px 16px 13.3px 4px rgba(0, 0, 0, 0.25), 0px 6px 16px rgba(0, 0, 0, 0.08), 0px 3px 6px -4px rgba(0, 0, 0, 0.12);
+border-radius: 2px;
+
+}
+
+.camera-label-wrapper{
+   display:flex;
+    justify-content: space-between;
+    width:400px;
+    padding-top:3px;
+}
+
+
+.camera-form-footer{
+    box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: right;
+padding: 10px 22px;
+padding-bottom: -15px;
+gap: 10px;
+
+width: 450px;
+height: 5px;
+
+/* Gray / gray-5
+
+Border
+*/
+border-top: 1px solid #D9D9D9;
+
+}
+
+.camera-form-header{
+    
+    /* Head */
+
+box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 16px 24px;
+gap: 10px;
+
+width: 520px;
+height: 56px;
+
+/* Gray / gray-5
+
+Border
+*/
+border-bottom: 1px solid #D9D9D9;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+.header-text{
+    /* Edit Member */
+
+width: 448px;
+height: 24px;
+
+/* Semibold/16px | 24px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height, or 150% */
+
+/* Gray / gray-9 */
+color: #262626;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 1;
+
+}
+.div-body{
+    /* First Name : */
+
+
+
+/* Regular/14px | 22px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 22px;
+/* identical to box height, or 157% */
+padding:10px;
+
+/* Gray / gray-9 */
+color: #262626;
+
+
+/* Inside auto layout */
+
+
+}
+
+.bottom-label{
+    padding-bottom:10px;
+}
+.save-button{
+    /* Button */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+vertical-align: center;
+
+border:none;
+
+width: 67px;
+height: 40px;
+margin-top:7px;
+background: #13C2C2;
+border-radius: 2px;
+
+/* Button */
+
+/* Regular/16px | 24px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+
+/* identical to box height, or 150% */
+
+/* Gray / gray-1 */
+color: #FFFFFF;
+
+
+
+}
+.upload-button{
+    /* Button */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+vertical-align: center;
+
+border:none;
+
+width: 67px;
+height: 40px;
+margin-top:7px;
+background: #13C2C2;
+border-radius: 2px;
+
+/* Button */
+
+/* Regular/16px | 24px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+
+color: #FFFFFF;
+
+
+
+}
+.cancel-button{
+    /* Button */
+
+box-sizing: border-box;
+margin-top:7px;
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 8px 16px;
+gap: 8px;
+
+width: 81px;
+height: 40px;
+
+/* Gray / gray-1 */
+background: #FFFFFF;
+/* Gray / gray-5
+
+Border
+*/
+border: 1px solid #D9D9D9;
+border-radius: 2px;
+/* Regular/16px | 24px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+
+/* identical to box height, or 150% */
+
+/* Gray / gray-1 */
+
+
+}
+.cancel-button:hover{
+    background-color: rgb(86, 88, 88);
+    color: #FFFFFF;
+}
+.save-button:hover{
+    background-color:#094646;
+    color: #FFFFFF;
+}
+.body-text{
+    /* Option */
+box-sizing: border-box;
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: flex-end;
+align-items: center;
+padding: 12px 12px 12px 16px;
+gap: 10px;
+width: 285px;
+height: 31px;
+/* Neutrals/White */
+background: #FFFFFF;
+/* Neutrals/400 ⦿ */
+border: 2px solid #CBD2E0;
+border-radius: 6px;
+}
+.body-select{
+    /* Option */
+box-sizing: border-box;
+/* Auto layout */
+display: block;
+flex-direction: row;
+justify-content: flex-end;
+align-items: center;
+padding-left: 8px;
+color:  #64676d;
+width: 285px;
+height: 30px;
+/* Neutrals/White */
+background: #FFFFFF;
+/* Neutrals/400 ⦿ */
+border: 2px solid #CBD2E0;
+border-radius: 6px;
+font-weight: 400;
+}
+
+
+
+

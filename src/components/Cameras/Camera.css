@@ -3,7 +3,12 @@
     overflow-y: scroll;
 
 }
-
+.body-add-camara{
+    padding-left:300px;
+    padding-top:100px;
+    height:800px;
+    width:1400px;
+}
 .video-blocked{
     background-color: rgb(170, 162, 162);
     height:196px;
@@ -33,6 +38,8 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap:10px;
+  
+  
     
 
     
@@ -44,7 +51,7 @@
 
     display: flex;
     flex-direction: column;
-    width:30% ;
+    width:32% ;
     flex-shrink: 1;
     /* max-width: 370px; */
 }
@@ -64,7 +71,7 @@
 }
 
 
-@media screen and (max-width:900px) {
+@media screen and (max-width:700px) {
   
 .camera-cards-element{
 
@@ -78,3 +85,7 @@
 
     
 }
+
+
+    
+

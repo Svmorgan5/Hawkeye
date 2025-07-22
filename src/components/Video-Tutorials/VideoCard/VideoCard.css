@@ -1,0 +1,90 @@
+
+
+
+
+
+.video-card-image{
+   
+   width: 140px;
+   height:180px;
+   
+
+
+}
+
+
+
+
+
+
+
+.video-card-button{
+    /* Button */
+text-align: right;
+    justify-content: right;
+width: 30%;
+height: 22px;
+
+/* Regular/14px | 22px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 22px;
+/* identical to box height, or 157% */
+
+/* Cyan / cyan-7 */
+color: #08979C;
+
+}
+.video-card-body{
+    margin-right:25px;
+    
+    justify-content: center;
+    text-align: center;
+    padding: 0px;
+    color: #262626;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+   border: solid;
+   border-width: 1px;
+   border-color: rgb(234, 234, 234);
+}
+
+
+
+.video-card-body-title{
+    /* Card title */
+
+
+
+/* Semibold/16px | 24px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 700;
+font-size: 16px;
+line-height: 24px;
+text-align: center;
+justify-content: center;
+/* identical to box height, or 150% */
+  width:220px;
+/* Gray / gray-9 */
+color: #262626;
+
+
+
+
+}
+
+.video-card-text{
+    font-family: 'Roboto';
+    font-weight: 500;
+    padding:10px;
+    font-size: 14px;
+   text-align: center;
+    width:220px;
+
+    
+}

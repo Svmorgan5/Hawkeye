@@ -131,3 +131,21 @@ background: #032B3A;
 
 
 }
+.header-name-display{
+    /* Jack Smith */
+
+width: 100px;
+height: 28px;
+/* Regular/20px | 28px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 28px;
+/* identical to box height, or 140% */
+/* Gray/gray-1 */
+color: #FFFFFF;
+
+
+
+}

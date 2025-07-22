@@ -1,6 +1,7 @@
 
 import axios from 'axios'
 import './EditMembers.css'
+import {toast} from 'react-toastify'
 
 import { useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -94,7 +95,7 @@ const EditMembers: React.FC<Props> = ({id}) => {
         }
        
       });
-       alert('Edit Successful');
+       toast.success('Edit Successful');
         setEmail('');
         setName('');
         setRole('Teacher');
@@ -115,11 +116,11 @@ const EditMembers: React.FC<Props> = ({id}) => {
     } else if (error.request) {
       // Request was made but no response received
       console.error('No response received:', error.request);
-      alert('Edit failed. No response received from server.');
+      toast.warning('Edit failed. No response received from server.');
     } else {
       // Something else caused an error
       console.error('Error setting up request:', error.message);
-      alert(`Edit failed. Error: ${error.message}`);
+      toast.warning(`Edit failed. Error: ${error.message}`);
     }
   }
 };

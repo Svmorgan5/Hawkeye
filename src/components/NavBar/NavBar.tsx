@@ -6,6 +6,9 @@ const NavBar:React.FC = () =>{
     const [training, setTraining] = useState<boolean>(false)
     const [settings, setSettings] = useState<boolean>(false)
     const [myURL,setMyURL] = useState<string>('')
+   
+    
+  
 
     return(
         <div className='menu'>
@@ -125,12 +128,7 @@ const NavBar:React.FC = () =>{
         </svg>
         TEMP!!! Add New Users
         </NavLink>
-        <NavLink  className={({ isActive }) => "menu-item" + (isActive ? " active" : "")} onClick={()=>setMyURL('/logout')} to='/logout'>
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M13.4286 12.6545H13V6.47273C13 3.90727 11.1375 1.78727 8.71429 1.43455V0.727273C8.71429 0.325455 8.39464 0 8 0C7.60536 0 7.28571 0.325455 7.28571 0.727273V1.43455C4.8625 1.78727 3 3.90727 3 6.47273V12.6545H2.57143C2.25536 12.6545 2 12.9145 2 13.2364V13.8182C2 13.8982 2.06429 13.9636 2.14286 13.9636H6C6 15.0873 6.89643 16 8 16C9.10357 16 10 15.0873 10 13.9636H13.8571C13.9357 13.9636 14 13.8982 14 13.8182V13.2364C14 12.9145 13.7446 12.6545 13.4286 12.6545ZM8 14.8364C7.52679 14.8364 7.14286 14.4455 7.14286 13.9636H8.85714C8.85714 14.4455 8.47321 14.8364 8 14.8364ZM4.28571 12.6545V6.47273C4.28571 5.46182 4.67143 4.51273 5.37321 3.79818C6.075 3.08364 7.00714 2.69091 8 2.69091C8.99286 2.69091 9.925 3.08364 10.6268 3.79818C11.3286 4.51273 11.7143 5.46182 11.7143 6.47273V12.6545H4.28571Z" fill="white"/>
-        </svg>
-        TEMP!!! LOGOUT
-        </NavLink>
+        
         </div>
 
     );

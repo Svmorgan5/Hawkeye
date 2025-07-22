@@ -3,6 +3,7 @@ import axios from 'axios'
 import '../../../assets/member.png'
 import './AddCamera.css'
 
+import {toast} from 'react-toastify'
 import { useEffect, useState} from 'react'
 
 
@@ -44,16 +45,16 @@ const [name,setName] = useState<string>('')
         }
        
       });
-       alert('New Camera Added');
+       toast.success('New Camera Added');
        
         setURL('');
         setLocation('');
        
     } catch (error: any) {
             if (error.response?.data?.errors) {
-                alert(`Could not add new camera: ${JSON.stringify(error.response.data.errors)}`);
+                toast.warning(`Could not add new camera. Please check that all information was inputted correctly: ${JSON.stringify(error.response.data.errors)}`);
             } else {
-                alert(`Could not add new camera: ${error.message}`);
+                toast.warning(`Could not add new camera. Please check that all information was inputted correctly: ${error.message}`);
             }
             console.error('Error details:', error.response?.data || error.message);
             
@@ -68,29 +69,29 @@ const [name,setName] = useState<string>('')
   
   return (
     
-    <div className='body-addmembers'>
+    <div className='body-add-camera'>
       
       
-        <form className='new-member-form' onSubmit={handleSubmit}>
-            <label className='form-header' ><div className='header-text'>Add Camera</div></label>
+        <form className='new-camera-form' onSubmit={handleSubmit}>
+            <label className='camera-form-header' ><div className='header-text'>Add Camera</div></label>
             <div className='div-body'>   
               
-                <div className='label-wrapper '>
+                <div className='camera-label-wrapper '>
               
                     Name
                     <input type='text'  className='body-text message-box-addalerts'value={name} onChange={(e)=>setName(e.target.value)}></input>
                 </div>
-               <div className='label-wrapper '>
+               <div className='camera-label-wrapper '>
               
                     URL
                     <input type='text'  className='body-text message-box-addalerts'value={URL} onChange={(e)=>setURL(e.target.value)}></input>
                 </div>
-                <div className='label-wrapper '>
+                <div className='camera-label-wrapper '>
                 Location:
                 <input type='text' className='body-text location-box-addalerts' value={location} onChange={(e)=>setLocation(e.target.value)}></input>
                 </div>
             </div>
-            <div className='form-footer'>
+            <div className='camera-form-footer'>
                 <a href='/cameras'>
                 <input
                     type="button"

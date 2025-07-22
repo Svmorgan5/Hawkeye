@@ -21,9 +21,9 @@ interface InstitutionState {
     instType:boolean;
     instAddress:string;
     instPhone:string;
-    instLogo:string;
-    instImage1:string;
-    instImage2:string;
+    instLogo:string|null;
+    instImage1:string|null;
+    instImage2:string|null;
     
 
 }
@@ -35,9 +35,9 @@ const initialState: InstitutionState = {
     instType:true,
     instAddress:'',
     instPhone:'',
-    instLogo:'',
-    instImage1:'',
-    instImage2:'',
+    instLogo:null,
+    instImage1:null,
+    instImage2:null,
 }
 
 //Reducer function

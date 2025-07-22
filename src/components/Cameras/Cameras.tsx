@@ -53,20 +53,19 @@ const Cameras = () => {
     (<div className="main-camera-page">
       <div className='camera-header-top'>
             <div className='breadcrumb'>Cameras</div>
-   <div className='camera-search-table-cell'>
-                <input type='text' placeholder='Search cameras' className='camera-search'  value={search} onChange={(e)=>setSearch(e.target.value)}></input>
-                <button className='camera-search-cancel' onClick={()=>setSearch('')}>Clear Search</button>
-                
-                   <a href="/addcamera"><input type='button' className='camera-add' value='+ Add Camera' ></input></a>
-          </div>
+            <div className='camera-search-table-cell'>
+            <input type='text' placeholder='Search cameras' className='camera-search'  value={search} onChange={(e)=>setSearch(e.target.value)}></input>
+            <button className='camera-search-cancel' onClick={()=>setSearch('')}>Clear Search</button>
+            <a href="/addcamera"><input type='button' className='camera-add' value='+ Add Camera' ></input></a>
+            </div>
         
-          </div>
-    <div className='camera-cards-page'>
-               <div className='camera-cards-holder'>
+        </div>
+      <div className='camera-cards-page'>
+            <div className='camera-cards-holder'>
       {cameras.map((camera)=>
          
               
-            <div className='camera-cards-element'> <CameraCard URL={camera.stream_url} location={camera.location} status={false} name={camera.location} /></div>
+            <div key={camera.name} className='camera-cards-element'> <CameraCard URL={camera.stream_url} location={camera.location} status={false} name={camera.location} /></div>
           
              
       )

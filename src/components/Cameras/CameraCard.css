@@ -1,7 +1,7 @@
 .camera-card-holder{
     display: flex;
     flex-direction: column;
-    max-width:800px;
+
     gap:10px;
     border-color:rgb(174, 174, 174);
     border:solid;
@@ -84,6 +84,9 @@ color: #8C8C8C;
     height:196px;
     /* border-bottom:solid; */
     border-width: 1px;
+    justify-content: center;
+    align-content: center;
+    background-color: black;
 }
 .camera-search{
     width:220px;

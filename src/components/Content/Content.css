@@ -1,0 +1,111 @@
+.content-page {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  color: #333;
+}
+
+.breadcrumb {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #888;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.back-button {
+  font-size: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 0;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.actions input[type="text"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-button,
+.add-button,
+.manage-button {
+  background-color: #16b8e0;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.manage-button {
+  background-color: #13a4c5;
+}
+
+.video-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+.video-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex: 1 1 calc(25% - 20px);
+  min-width: 220px;
+  max-width: 300px;
+  box-sizing: border-box;
+}
+
+.video-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 1px solid #ddd;
+}
+
+.video-content {
+  padding: 12px;
+}
+
+.video-content h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.video-content p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Responsive layout */
+@media screen and (max-width: 768px) {
+  .video-card {
+    flex: 1 1 calc(50% - 20px);
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .video-card {
+    flex: 1 1 100%;
+  }
+}

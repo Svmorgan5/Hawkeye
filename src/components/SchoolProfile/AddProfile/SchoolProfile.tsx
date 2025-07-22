@@ -1,7 +1,9 @@
 import './SchoolProfile.css'
+import '../../../components/Members/Edit Members/EditMembers.css'
 import addImage from '../../../assets/addimage.png'
 import {useState, type ReactEventHandler} from 'react'
 import { useInstitutionContext } from '../../../Context/InstitutionContext'
+import {toast} from 'react-toastify'
 
 import axios from 'axios'
 import { useTokenContext } from '../../../Context/Context';
@@ -56,13 +58,13 @@ const Profile = () => {
    
     const data = await response.json();  // parse JSON body
     console.log('Upload response:', data);
-    alert('New Images Succefully Added!')
+    toast.success('New Images Succefully Added!')
    
         // const data = await result.json();
         // console.log(data);
     } catch(error){
         console.log(error);
-        alert(`Unable To Upload Files. ${error}`)
+        toast.warning(`Unable To Upload Files. ${error}`)
     }
     }
 }
@@ -85,7 +87,7 @@ const Profile = () => {
         }
        
       });
-        alert('New Institution Added');
+        toast.success('New Institution Added');
         setBusName('');
         setIsSchool(false);
         setAddress('');
@@ -98,15 +100,15 @@ const Profile = () => {
         console.error('Error Status Text:', error.response.statusText);
         console.error('Error Data:', error.response.data);
 
-        alert(`Could not add new Institution: ${JSON.stringify(error.response.data)}`);
+        toast.warning(`Could not add new Institution: ${JSON.stringify(error.response.data)}`);
       } else if (error.request) {
         // Request was made but no response received
         console.error('No response received:', error.request);
-        alert('Could not reach server. Please try again.');
+        toast.warning('Could not reach server. Please try again.');
       } else {
         // Other errors (e.g., setup issues)
         console.error('Error setting up request:', error.message);
-        alert(`Unexpected error: ${error.message}`);
+        toast.warning(`Unexpected error: ${error.message}`);
       }
     }
         
@@ -116,42 +118,93 @@ const Profile = () => {
 
 
   return (
-    <div>
-    <form onSubmit={handleSubmit}>
- 
-   Name of school
-   <input 
-    type="text"
-    value={busName}
-    onChange={(e)=>setBusName(e.target.value)}/><br></br>
-   address
-   <input 
-    type="text"
-    value={address}
-    onChange={(e)=>setAddress(e.target.value)}/><br></br>
-   phone number
-   <input 
-    type="text"
-    value={phone}
-    onChange={(e)=>setPhone(e.target.value)}/><br></br>
-    <input
-    type='submit'
-    value='submit'
-    />
-     </form>
-   logo
-   <div><input type='file'  accept="image/*"  className='file' onChange={e=>handleFileChange(e,'logoFile')}></input></div>
-  <button  onClick={()=>handleUpload('logo',logoFile)}>Upload Logo</button>
-  <br></br>
-   map/image1
-   <div><input type='file'  accept="image/*"  className='file' onChange={e=>handleFileChange(e,'mapOneFile')}></input></div><br></br>
-    <button  onClick={()=>handleUpload('image1',mapOneFile)}>Upload Map 1</button>
-   map/images2
-   <div><input type='file'  accept="image/*"  className='file' onChange={e=>handleFileChange(e,'mapTwoFile')}></input></div><br></br>
-   <button  onClick={()=>handleUpload('image2',mapTwoFile)}>Upload Map 2</button>
+    <div className='body-add-inst'>
+      
+      
+        <form className='add-inst-form' onSubmit={handleSubmit}>
+            <label className='add-profile-form-header' ><div className='header-text'>Create New Institution:</div></label>
+            <div className='div-body'>   
+                <div className='inst-label-wrapper'>
+                <div>Name of school:</div>
+                <div className='text-wrapper'>
+                <input 
+                className='body-text name-box-editmembers'
+                  type="text"
+                  value={busName}
+                  onChange={(e)=>setBusName(e.target.value)}/>
+                  </div>
+                </div>
+                
+                <div className='inst-label-wrapper'>
+                <div>Address:</div>
+                  <div className='text-wrapper'>
+                    <input 
+                    className='body-text name-box-editmembers'
+                      type="text"
+                      value={address}
+                      onChange={(e)=>setAddress(e.target.value)}/>
+                  </div>
+                </div>
+                <div className='inst-label-wrapper'>
+               
+                Phone number
 
+                  <input 
+                  className='body-text name-box-editmembers'
+                    type="text"
+                    value={phone}
+                    onChange={(e)=>setPhone(e.target.value)}/>
+
+                </div>
+              
+                 
+                <div className='inst-label-wrapper bottom-label'>
+               
+            </div>
+            <div className='add-profile-form-footer'>
+                <a href='/members'>
+                <input
+                    type="button"
+                    className='cancel-button'
+                    value="Cancel">
+                    </input>
+                </a>
+                <input
+                    type="submit"
+                    className='save-button'
+                    onClick={()=>handleSubmit}
+                    value="Save">
+
+                    </input>
+
+            </div>
+            </div>
+        </form>
+    
     </div>
+    
   );
 };
 
 export default Profile;
+
+
+ 
+   
+  
+
+  
+  
+   
+  //  logo
+  //  <div><input type='file'  accept="image/*"  className='file' onChange={e=>handleFileChange(e,'logoFile')}></input></div>
+  // <button  onClick={()=>handleUpload('logo',logoFile)}>Upload Logo</button>
+  // <br></br>
+  //  map/image1
+  //  <div><input type='file'  accept="image/*"  className='file' onChange={e=>handleFileChange(e,'mapOneFile')}></input></div><br></br>
+  //   <button  onClick={()=>handleUpload('image1',mapOneFile)}>Upload Map 1</button>
+  //  map/images2
+  //  <div><input type='file'  accept="image/*"  className='file' onChange={e=>handleFileChange(e,'mapTwoFile')}></input></div><br></br>
+  //  <button  onClick={()=>handleUpload('image2',mapTwoFile)}>Upload Map 2</button>
+
+  //   </div>

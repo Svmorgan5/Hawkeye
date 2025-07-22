@@ -10,14 +10,17 @@ type TokenAction =
 | {type:"SET_USER_INSTITUTION";payload:number}
 | {type:"SET_USER_IMAGE";payload:string}
 | {type:"CLEAR_USER"}
+| {type:"SET_LOGIN";payload:boolean}
+
 
 
 interface TokenState {
-    token: string;
-    user_id:number;
-    user_name:string;
-    user_institution_id:number;
-    user_image:string;
+    token: string|null;
+    login: boolean|null;
+    user_id:number|null;
+    user_name:string|null;
+    user_institution_id:number|null;
+    user_image:string|null;
 
 
 
@@ -26,11 +29,12 @@ interface TokenState {
 
 //initial state
 const initialState: TokenState = {
-    token: '', 
+    token: localStorage.getItem('token')||null, 
+    login:false,
     user_id:0,
     user_name:'',
     user_institution_id:0,
-    user_image:'',
+    user_image:null,
 }
 
 //Reducer function
@@ -41,19 +45,34 @@ const tokenReducer = (
 ): TokenState => {
     switch (action.type) {
         case 'SET_TOKEN':
+            localStorage.setItem('token',action.payload)
             return {...state, token:action.payload};
         case 'SET_USER_ID':
+            // localStorage.setItem('user_id',`${action.payload}`)
             return {...state, user_id:action.payload};
         case 'SET_USER_NAME':
+            localStorage.setItem('user_name',action.payload)
             return {...state, user_name:action.payload};
         case 'SET_USER_INSTITUTION':
+            // localStorage.setItem('user_institution_id',`${action.payload}`)
             return {...state, user_institution_id:action.payload};
         case 'SET_USER_IMAGE':
+            // localStorage.setItem('user_image',action.payload)
             return {...state, user_image:action.payload};
+        case 'SET_LOGIN':
+            return {...state, login:action.payload};
         case 'CLEAR_USER':
-            return initialState;
+            localStorage.clear();
+            return {
+                token: null,
+                user_id: null,
+                login:false,
+                user_name: null,
+                user_institution_id: null,
+                user_image: null
+            };
         default:
-            throw new Error (`Unhandled action type`)
+            return state;
     }
 }
 

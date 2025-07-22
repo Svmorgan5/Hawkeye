@@ -5,6 +5,7 @@ import '../../../assets/member.png'
 import { useNavigate } from 'react-router-dom'
 import addimage from '../../../assets/addimage.png'
 import UploadImage from '../UpoloadImage/UploadImage'
+import {toast} from 'react-toastify'
 
 import { useEffect, useState } from 'react'
 // import EditMembers from './Edit Members/EditMembers'
@@ -78,26 +79,8 @@ const Members = () => {
       // )
       setMembers(filteredMembers)
     } catch (error: any) {
-    if (error.response) {
-      // The request was made and the server responded with a status code outside 2xx
-      console.error('🛑 Server responded with error:', {
-        status: error.response.status,
-        data: error.response.data,
-        headers: error.response.headers,
-        url: error.config?.url
-      });
-      alert(`Error ${error.response.status}: ${error.response.data?.message || 'Server error occurred'}`);
-    } else if (error.request) {
-      // The request was made but no response was received
-      console.error('❌ No response received from server:', error.request);
-      alert('No response received. Is the backend running at the correct URL?');
-    } else {
-      // Something happened in setting up the request
-      console.error('⚠️ Error setting up request:', error.message);
-      alert(`Request setup error: ${error.message}`);
+      console.log(error)
     }
-  }
-
   }
 
   useEffect(() => {
@@ -121,7 +104,7 @@ const Members = () => {
             'Authorization': `Bearer ${token}`
           }
         })
-        alert('Member has been successfully deleted.')
+        toast.success('Member has been successfully deleted.')
         toggleIsVisible(id)
       } catch (error: any) {
         console.error('Error message:', error.message)
@@ -149,7 +132,7 @@ const Members = () => {
       })
       toggleIsActive(member.id)
     } catch (error: any) {
-      alert(`Could not edit member. ${error.message}`)
+      toast.warning(`Could not change member. ${error.message}`)
       console.error('Error message:', error.response?.data)
     }
   }

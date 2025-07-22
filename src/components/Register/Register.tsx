@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TheSignUp from '../../pages/TheSignUp/TheSignUp';
+import {toast} from 'react-toastify'
 
    
 const Register:React.FC = () =>{
@@ -30,32 +31,32 @@ type User = {
         
 
         if(password!=passwordConfirm){
-            alert('Passwords do not match');
+            toast.warning('Passwords do not match');
             setSubmitData(false);
         }
         else if(firstName===''){
-            alert('First Name Missing');
+            toast.warning('First Name Missing');
             setSubmitData(false);
             console.log(`firstName:${firstName}`)
         }
         else if(lastName==='')
             {
-            alert('Last Name Missing');
+            toast.warning('Last Name Missing');
             setSubmitData(false);
         }
         else if(email==='')
             {
-            alert('Email Missing');
+            toast.warning('Email Missing');
             setSubmitData(false);
         }
         else if(role==='')
             {
-            alert('Role Missing');
+            toast.warning('Role Missing');
             setSubmitData(false);
         }
         else if(password==='')
             {
-            alert('Password Missing');
+            toast.warning('Password Missing');
             setSubmitData(false);
         }
         else
@@ -78,7 +79,7 @@ type User = {
                     'Content-Type': 'application/json'
                     }
                 });
-                alert('New User has been created! You are now being redirected to login page to log in');
+                toast.success('New User has been created! You are now being redirected to login page to log in');
                 setFirstName('');
                 setLastName('');
                 setPassword('');
@@ -92,17 +93,17 @@ type User = {
                     // Most likely a backend response error
                     if (error.response) {
                         console.error("Backend responded with an error:", error.response.data);
-                        alert(`Error: ${error.response.data.message || JSON.stringify(error.response.data)}`);
+                        toast.warning(`Error: ${error.response.data.message || JSON.stringify(error.response.data)}`);
                     } else if (error.request) {
                         console.error("Request made but no response received:", error.request);
-                        alert("No response from the server. Please try again later.");
+                        toast.warning("No response from the server. Please try again later.");
                     } else {
                         console.error("Error in setting up the request:", error.message);
-                        alert(`Request error: ${error.message}`);
+                        toast.warning(`Request error: ${error.message}`);
                     }
                 } else {
                     console.error("Unexpected error:", error);
-                    alert("An unexpected error occurred.");
+                    toast.warning("An unexpected error occurred.");
                 }
             }
         }

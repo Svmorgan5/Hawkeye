@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import {toast} from 'react-toastify'
 
 const AcceptInvite: React.FC = () => {
 
@@ -37,15 +38,15 @@ const AcceptInvite: React.FC = () => {
     if (error.response) {
       // Server responded with a status code outside 2xx
       console.error("Response Error:", error.response.data);
-      alert(`Error: ${error.response.data.error || "Something went wrong."}`);
+      toast.warning(`Error: ${error.response.data.error || "Something went wrong."}`);
     } else if (error.request) {
       // Request was made but no response received
       console.error("No Response:", error.request);
-      alert("No response from server. Check if the backend is running.");
+      toast.warning("No response from server. Check if the backend is running.");
     } else {
       // Something else went wrong
       console.error("Axios Error:", error.message);
-      alert(`Error: ${error.message}`);
+      toast.warning(`Error: ${error.message}`);
     }
   }
     }
