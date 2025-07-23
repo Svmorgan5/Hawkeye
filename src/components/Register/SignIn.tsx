@@ -135,7 +135,7 @@ const SignIn = () =>{
         
         
         <div className='button-container'></div>
-         <button className='submit-register' type='submit' style={{marginLeft:'145px'}}>
+         <button className='submit-register' type='submit' onClick={handleLogin} style={{marginLeft:'145px'}}>
             Submit
         </button>
         <p className='already-signed'>Not a user yet? Click here to <a href="/register" className='a-login'>Register</a></p> 

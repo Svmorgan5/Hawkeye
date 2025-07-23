@@ -170,7 +170,7 @@ type User = {
         </div>
         
         
-         <button className='submit' type='submit'>
+         <button className='submit' type='submit' onClick={handleSubmit}>
             Submit
         </button>
         
