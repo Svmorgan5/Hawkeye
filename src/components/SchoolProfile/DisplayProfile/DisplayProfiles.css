@@ -141,4 +141,24 @@ margin-left:40px;
 .admin-thead{
 background-color: rgb(240, 240, 240);
 
+
+}
+.add-new-user{
+    background-color: rgb(2, 194, 224);
+    color:white;
+    cursor:pointer;
+    font-family: 'Roboto';
+    padding:10px;
+    border:.5px;
+    border-radius: 4px;
+    font-size:15px;
+    margin-left:20px;
+
+}
+.add-new-user:hover{
+    background-color: white;
+    color:rgb(2, 194, 224);
+    border:solid;
+    border-color:rgb(2, 194, 224);
+    border-width:1px;
 }

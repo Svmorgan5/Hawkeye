@@ -104,7 +104,11 @@ const DisplayProfile:React.FC = () =>{
 
             </div>
  <div className='display-inst-body-bottom'>
-                   <p className='display-inst-body-bottom-title'>Administrators</p> 
+                   <p className='display-inst-body-bottom-title'>Administrators  <input
+                        type='button'
+                        className='add-new-user'
+                        value='Invite New User' /></p> 
+                  
                    <table className='admin-table'>
                     <thead className='admin-thead'>
                         <th>Name</th>

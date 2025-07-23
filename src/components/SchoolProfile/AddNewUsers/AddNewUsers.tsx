@@ -116,14 +116,19 @@ const [role,setRole] = useState<string>('')
 
 
   return (
-    <div>
-        <form onSubmit={handleSubmit}>
-        Add administrator information:
+    <div className='body-addusers'>
+      
+      
+        <form className='new-users-form' onSubmit={handleSubmit}>
+            <label className='form-header' ><div className='header-text'>Add Administrator Information:</div></label>
+            <div className='div-body'>   
+                <div className='label-wrapper'>
+                Name: 
+                <input type='text' value={name} onChange={(e)=>setName(e.target.value)}></input><br></br>
+                </div>
 
-     Name:
-     <input type='text' value={name} onChange={(e)=>setName(e.target.value)}></input><br></br>
-
-    Role:
+                <div className='label-wrapper'>
+                Role:
                 <select className='body-select role-box-addmembers' value={role} onChange={(e)=>setRole(e.target.value)}>
                 <option value='Teacher' >Admin Primary</option>
                 <option value='Principal'>Admin</option>
@@ -132,20 +137,55 @@ const [role,setRole] = useState<string>('')
                 <option value='Kitchen Staff'>Employee</option>
                 <option value='Kitchen Staff'>Security Gaurd</option>
                 <option value='Kitchen Staff'>SRO</option>
-                </select><br></br>
+                </select>
 
-   phone number:
-   <input type='text' value={phone} onChange={(e)=>setPhone(e.target.value)}></input><br></br>
-   email:
-   <input type='email' value={email} onChange={(e)=>setEmail(e.target.value)}></input><br></br>
-   <input type='submit' value='submit'></input>
-   </form>
+                </div>
+
+
+                <div className='label-wrapper'>
+                Email Address:
+                <input type='email'  className='body-text email-box'value={email} onChange={(e)=>setEmail(e.target.value)}></input>
+                </div>
+                Phone Number:
+               <input type='text' value={phone} onChange={(e)=>setPhone(e.target.value)}></input><br></br>
+                <div className='label-wrapper bottom-label'>
+              
+                </div>
+            <div className='form-footer'>
+                <a href='/members'>
+                <input
+                    type="button"
+                    className='cancel-button'
+                    value="Cancel">
+                    </input>
+                </a>
+                <input
+                    type="submit"
+                    className='save-button'
+                    value="Save">
+                    </input>
+
+            </div>
+            </div>
+        </form>
+    
     </div>
+   
   );
 };
 
 export default AddNewUsers; 
 
+
+    
+      
+
+ 
+
+   
+
+  
+ 
 
 
 
