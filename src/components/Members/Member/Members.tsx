@@ -65,19 +65,19 @@ const Members = () => {
 
   const getMembers = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:5000/institutions/members", {
+      const response = await axios.get(`http://127.0.0.1:5000/institutions/members`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       })
       const filteredMembers = response.data;
-      // .filter((myMember: Member) =>
-      //   myMember.name.toLowerCase().includes(search.toLowerCase()) ||
-      //   myMember.email.toLowerCase().includes(search.toLowerCase()) ||
-      //   myMember.groups.toLowerCase().includes(search.toLowerCase()) ||
-      //   myMember.role.toLowerCase().includes(search.toLowerCase())
-      // )
-      setMembers(filteredMembers)
+      const newMembers=filteredMembers.filter((myMember: Member) =>
+         myMember.name.toLowerCase().includes(search.toLowerCase()) ||
+         myMember.email.toLowerCase().includes(search.toLowerCase()) ||
+         myMember.groups.toLowerCase().includes(search.toLowerCase()) ||
+         myMember.role.toLowerCase().includes(search.toLowerCase())
+      )
+      setMembers(newMembers)
     } catch (error: any) {
       console.log(error)
     }
@@ -88,7 +88,9 @@ const Members = () => {
   }, [])
 
   useEffect(() => {
-    getMembers()
+    getMembers(),
+    console.log(search)
+    console.log('members:',{members})
   }, [search])
 
   const clearSearch = () => {
@@ -148,7 +150,7 @@ const Members = () => {
                 type='text'
                 placeholder='Search members'
                 className='member-search'
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) =>{setSearch(e.target.value)}}
                 value={search}
               />
               <button onClick={clearSearch} className='member-search-cancel'>X</button>

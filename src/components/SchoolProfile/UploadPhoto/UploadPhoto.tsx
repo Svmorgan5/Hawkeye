@@ -58,15 +58,21 @@ const UploadPhoto = () => {
     
         );
         if (!response.ok){
+              console.log('FormData contents:');
+        for (let pair of formData.entries()) {
+        console.log(`${pair[0]}:`, pair[1]);
             throw new Error(`HTTP error! status: ${response.status}`)
+                  
+        }
         }
 
 
-   
+      
     const data = await response.json();  // parse JSON body
     console.log('Upload response:', data);
-    if (fileType === 'logo') {
-    institutionDispatch({ type: 'SET_INST_LOGO', payload: data.logoFile }); // replace with actual key
+    if (fileType === 'logoFile') {
+     
+    institutionDispatch({ type: 'SET_INST_LOGO', payload: data.logo }); // replace with actual key
     }
     if (fileType === 'image1') {
     institutionDispatch({ type: 'SET_INST_IMAGE1', payload: data.image1 });
@@ -99,7 +105,7 @@ const UploadPhoto = () => {
             <div className='div-body'>   
                 <div className='inst-label-wrapper'>
                             <div>Upload Logo:</div>
-                            <div><input type='file'  accept="image/*"  className='file' onChange={e=>handleFileChange(e,'logo')}></input></div>
+                            <div><input type='file'  accept="image/*"  className='file' onChange={e=>handleFileChange(e,'logoFile')}></input></div>
                             <button  onClick={(e)=>{e.preventDefault(),handleUpload(`logo`,logoFile)}}>Upload Logo</button>
                 </div>
                 <div className='inst-label-wrapper'>
