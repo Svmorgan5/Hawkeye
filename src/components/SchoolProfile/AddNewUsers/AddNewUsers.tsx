@@ -3,9 +3,10 @@ import addImage from '../../../assets/addimage.png'
 import {useState, type ReactEventHandler} from 'react'
 import { useInstitutionContext } from '../../../Context/InstitutionContext'
 import {toast} from 'react-toastify'
-
+import './AddNewUsers.css'
 import axios from 'axios'
 import { useTokenContext } from '../../../Context/Context';
+import { useNavigate } from 'react-router-dom'
 const AddNewUsers = () => {
   
   //temp - should be deleted
@@ -13,7 +14,7 @@ const [name,setName] =useState<string>('')
 const [phone,setPhone] = useState<string>('')
 const [email,setEmail] = useState<string>('')
 const [role,setRole] = useState<string>('')
-   
+const navigate = useNavigate()
   
   const {token, user_institution_id, user_id} = useTokenContext()
   const {instId,instName,instType,instAddress,instPhone,instLogo,instImage1,instImage2,dispatch:institutionDispatch} = useInstitutionContext();
@@ -90,6 +91,7 @@ const [role,setRole] = useState<string>('')
         setPhone('');
         setEmail('');
         setRole('');
+        navigate('/displayprofile')
        
     } catch (error: any) {
          if (error.response) {
@@ -97,16 +99,18 @@ const [role,setRole] = useState<string>('')
         console.error('Error Status:', error.response.status);
         console.error('Error Status Text:', error.response.statusText);
         console.error('Error Data:', error.response.data);
-
+navigate('/displayprofile')
         toast.warning(`Could not add new Institution: ${JSON.stringify(error.response.data)}`);
       } else if (error.request) {
         // Request was made but no response received
         console.error('No response received:', error.request);
         toast.warning('Could not reach server. Please try again.');
+        navigate('/displayprofile')
       } else {
         // Other errors (e.g., setup issues)
         console.error('Error setting up request:', error.message);
         toast.warning(`Unexpected error: ${error.message}`);
+        navigate('/displayprofile')
       }
     }
         
@@ -122,14 +126,15 @@ const [role,setRole] = useState<string>('')
         <form className='new-users-form' onSubmit={handleSubmit}>
             <label className='form-header' ><div className='header-text'>Add Administrator Information:</div></label>
             <div className='div-body'>   
-                <div className='label-wrapper'>
-                Name: 
-                <input type='text' value={name} onChange={(e)=>setName(e.target.value)}></input><br></br>
+                <div className='label-wrapper-newuser'>
+                <div>Name:</div> 
+                <div><input className='body-text ' type='text' value={name} onChange={(e)=>setName(e.target.value)}></input>
+                </div>
                 </div>
 
-                <div className='label-wrapper'>
+                <div className='label-wrapper-newuser'>
                 Role:
-                <select className='body-select role-box-addmembers' value={role} onChange={(e)=>setRole(e.target.value)}>
+                <select className='body-select ' value={role} onChange={(e)=>setRole(e.target.value)}>
                 <option value='Teacher' >Admin Primary</option>
                 <option value='Principal'>Admin</option>
                 <option value='Office Staff'>Account Payable</option>
@@ -142,13 +147,14 @@ const [role,setRole] = useState<string>('')
                 </div>
 
 
-                <div className='label-wrapper'>
-                Email Address:
-                <input type='email'  className='body-text email-box'value={email} onChange={(e)=>setEmail(e.target.value)}></input>
+                <div className='label-wrapper-newuser'>
+                <div>Email Address:</div>
+                <div><input type='email'  className='body-text 'value={email} onChange={(e)=>setEmail(e.target.value)}></input></div>
                 </div>
-                Phone Number:
-               <input type='text' value={phone} onChange={(e)=>setPhone(e.target.value)}></input><br></br>
-                <div className='label-wrapper bottom-label'>
+  <div className='label-wrapper-newuser'>
+                <div>Phone Number:</div>
+              <div><input className='body-select ' type='text' value={phone} onChange={(e)=>setPhone(e.target.value)}></input><br></br></div> 
+              
               
                 </div>
             <div className='form-footer'>

@@ -107,7 +107,8 @@ const DisplayProfile:React.FC = () =>{
                    <p className='display-inst-body-bottom-title'>Administrators  <input
                         type='button'
                         className='add-new-user'
-                        value='Invite New User' /></p> 
+                        value='Invite New User' 
+                        onClick={()=>navigate('/addnewusers')}/></p> 
                   
                    <table className='admin-table'>
                     <thead className='admin-thead'>

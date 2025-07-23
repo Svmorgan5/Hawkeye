@@ -19,6 +19,7 @@ const Cameras = () => {
   const [cameras, setCameras] = useState<Camera[]>([])
   const token=sessionStorage.getItem('jwtToken_key')
   const [search,setSearch] = useState<string>('')
+  const [cameraTrue,setCameraTrue] = useState<boolean>(false)
   useEffect(()=> {
     const getCameras = async() =>{
     try {
@@ -31,7 +32,8 @@ const Cameras = () => {
       const filteredCameras:Camera[]= response.data.filter((myCamera:Camera)=>
         myCamera.location.toLowerCase().includes(search.toLowerCase()))
    
-   
+      if(response.data.length>0)
+        setCameraTrue(true)
       setCameras(filteredCameras)
       
     
@@ -49,7 +51,7 @@ const Cameras = () => {
 
   return (
     <>
-    {(cameras.length!=0)?
+    {(cameras.length!=0||cameraTrue===true)?
     (<div className="main-camera-page">
       <div className='camera-header-top'>
             <div className='breadcrumb'>Cameras</div>
