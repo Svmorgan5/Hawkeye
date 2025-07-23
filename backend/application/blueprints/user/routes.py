@@ -101,7 +101,7 @@ def add_user():
 
    db.session.add(new_user)
    db.session.commit()
-   return user_schema.jsonify(new_user), 200
+   return user_schema.jsonify(new_user), 201
 
 @users_bp.route('/<int:user_id>/upload-image', methods=['POST'])
 @token_required

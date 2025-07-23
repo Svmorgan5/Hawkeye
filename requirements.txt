@@ -30,6 +30,7 @@ greenlet==3.2.2
 h11==0.16.0
 http_ece==1.2.1
 idna==3.10
+iniconfig==2.1.0
 isodate==0.7.2
 itsdangerous==2.2.0
 Jinja2==3.1.6
@@ -49,11 +50,13 @@ onvif_zeep==0.2.12
 ordered-set==4.1.0
 packaging==25.0
 platformdirs==4.3.8
+pluggy==1.6.0
 propcache==0.3.2
 py-vapid==1.9.2
 pyasn1==0.6.1
 pycparser==2.22
 Pygments==2.19.1
+pytest==8.4.1
 python-dateutil==2.9.0.post0
 python-dotenv==1.1.1
 python-engineio==4.12.2

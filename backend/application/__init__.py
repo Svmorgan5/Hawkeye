@@ -42,6 +42,9 @@ def create_app(config_name):
     limiter.init_app(app)
     cache.init_app(app)
 
+
+    from backend.application import socketio_events
+
     app.register_blueprint(users_bp,        url_prefix='/users')
     app.register_blueprint(members_bp,      url_prefix='/members')
     app.register_blueprint(cameras_bp,      url_prefix='/cameras')
