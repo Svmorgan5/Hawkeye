@@ -1,5 +1,5 @@
 import '../../Members/PreAddMember/PreAddMember.css'
-import image from '../../../assets/memberman.png'
+import image from '../../../assets/Addinst.png'
 
 const NewInstBlank = () => {
   return (
