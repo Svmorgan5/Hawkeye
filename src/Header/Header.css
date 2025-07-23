@@ -77,7 +77,7 @@ background: #032B3A;
     border: 1px solid #D9D9D9;
     border-radius: 2px 0px 0px 2px;
 }
-.search-button{
+.search-button-header{
     width:30px;
     height:32px;
     cursor:pointer;

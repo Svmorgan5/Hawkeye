@@ -4,6 +4,7 @@ import Alert from '../../assets/Alert.png'
 import axios from 'axios'
 import { useEffect, useState } from 'react';
 import { useTokenContext } from '../../Context/Context';
+import { useInstitutionContext } from '../../Context/InstitutionContext';
 
 
 type Alert = {
@@ -12,7 +13,8 @@ type Alert = {
     location:string,
     timestamp: string,
     alert_type:string,
-    message:string
+    message:string,
+    institution:any,
 
 }
 
@@ -21,7 +23,9 @@ const Alerts = () => {
   const [alerts,setAlerts] = useState<Alert[]>()
   const [search,setSearch] = useState<string>('')
   const [alertState, setAlertState] = useState<string>('all')
-  const {token} = useTokenContext();
+
+ const {token, user_id, user_name, user_institution_id, user_image, dispatch:tokenDispatch} = useTokenContext();
+   const {instId,instName,instType,instAddress,instPhone,instLogo,instImage1,instImage2,dispatch:institutionDispatch} = useInstitutionContext(); 
  
  
 
@@ -40,7 +44,7 @@ const Alerts = () => {
       ||myAlert.timestamp.toLowerCase().includes(search.toLowerCase()));
       setAlerts(filteredAlerts)
     
-      
+      console.log(response.data)
     } catch (error:any){
     
       console.error('Error message:', error.message);
@@ -163,15 +167,17 @@ const Alerts = () => {
 
     
       {alerts?.map(alert=> {
-            if(alertState==='all'||alertState===alert.alert_type){  
+            if((alertState==='all'||alertState===alert.alert_type)&&alert.institution.id===instId){  
             return(
             <tr key={alert.id} className='tr'>
+            
               <td >{alert.code}</td>
               <td>{(alert.timestamp).split('T')[0]}</td>
               <td>{(alert.timestamp).split('T')[1]}</td>
               <td>{alert.location}</td>
               <td>{alert.message}</td>
             </tr>
+              
            )}
             
            return null;

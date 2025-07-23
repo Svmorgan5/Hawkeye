@@ -1,3 +1,6 @@
+.breadcrumb-inst{
+    width:300px;
+}
 .inst_display_page_logo{
     width:60px;
     height:auto;
@@ -44,8 +47,8 @@ color: #262626
     height:225px;
 }
 .display-profile-logo{
-    width:40px;
-    height:40px;
+    width:50px;
+    height:50px;
 }
 .display-profile-logo-image{
       width:100%;
@@ -56,6 +59,9 @@ color: #262626
     display:flex;
     flex-direction: column;
     margin-left:40px;
+
+    border-radius:8px;
+    padding:20px;
 }
 .display-inst-top{
    display:flex;
@@ -63,15 +69,17 @@ color: #262626
 }
 .display-inst-top-schoolname{
     /* Whitewater High School */
-
+padding-left:20px;
 width: 409px;
+
+word-spacing: 3px;
 height: 46px;
 
 /* Semibold/38px | 46px */
 font-family: 'Roboto';
 font-style: normal;
 font-weight: 600;
-font-size: 38px;
+font-size: 30px;
 line-height: 46px;
 /* identical to box height, or 121% */
 display: flex;
@@ -119,5 +127,18 @@ align-items: center;
 
 /* Gray / gray-9 */
 color: #262626;
+padding-top: 10px;
+padding-bottom:10px;
+margin-left:40px;
+
+}
+.admin-table{
+width:700px;
+border-collapse: collapse;
+border-bottom: solid rgb(212, 211, 211) 1px;
+margin-left:40px;
+}
+.admin-thead{
+background-color: rgb(240, 240, 240);
 
 }

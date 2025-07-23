@@ -53,7 +53,7 @@ const DisplayProfile:React.FC = () =>{
  {(instId!>0)?
     (<div className="main-camera-page">
       <div className='camera-header-top'>
-            <div className='breadcrumb'>Cameras</div>
+            <div className='breadcrumb breadcrumb-inst'>Settings / Business Profile</div>
             {/* <div className='camera-search-table-cell'>
             <input type='text' placeholder='Search cameras' className='camera-search'  onChange={(e)=>setSearch(e.target.value)}></input>
             <button className='camera-search-cancel' >Clear Search</button>
@@ -92,36 +92,37 @@ const DisplayProfile:React.FC = () =>{
                         }
                         
                         </div>
-                       <p>Address:</p>
-                       <p>{instAddress} </p>
+                       <p style={{fontWeight:'bold'}}>Address:</p>
+                       <p>{instAddress} </p><br></br>
+                       <p style={{fontWeight:'bold'}}>Phone Number:</p>
+                       <p>{instPhone} </p>
                     </div>
                 </div>
-                <div className='display-inst-body-bottom'>
-                   <p className='display-inst-body-bottom-title'>Administrators:</p> 
-                   <table>
-                    <thead>
+                
+
+
+
+            </div>
+ <div className='display-inst-body-bottom'>
+                   <p className='display-inst-body-bottom-title'>Administrators</p> 
+                   <table className='admin-table'>
+                    <thead className='admin-thead'>
                         <th>Name</th>
-                        <th>Phone Number</th>
-                        <th>Email</th>
+                        <th>Role</th>
+                       
                     </thead>
                     <tbody>
                       {users.map((user:any)=>{
                         return(
                         <tr key={user.id}>
                             <td>{user.name}</td>
-                            <td>{user.phone}</td>
-                            <td>{user.email}</td>
+                            <td>{user.role}</td>
                         </tr>
                         )
                       })}  
                     </tbody>
                    </table>
                 </div>
-
-
-
-            </div>
- 
     </div>):
     (<NewInstBlank />)
     }
