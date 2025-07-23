@@ -1,12 +1,13 @@
 import './SchoolProfile.css'
 import '../../../components/Members/Edit Members/EditMembers.css'
 import addImage from '../../../assets/addimage.png'
-import {useState, type ReactEventHandler} from 'react'
+import {useState, useEffect, type ReactEventHandler} from 'react'
 import { useInstitutionContext } from '../../../Context/InstitutionContext'
-import {toast} from 'react-toastify'
+import {toast} from 'react-toastify';
 
-import axios from 'axios'
+import axios from 'axios';
 import { useTokenContext } from '../../../Context/Context';
+import { useNavigate } from 'react-router-dom'
 const Profile = () => {
   const [busName,setBusName] = useState<string>('')
   const [address,setAddress] = useState<string>('')
@@ -19,55 +20,14 @@ const Profile = () => {
   const [isSchool,setIsSchool] = useState<boolean>(true)
   const {token, user_institution_id, user_id} = useTokenContext()
   const {instId,instName,instType,instAddress,instPhone,instLogo,instImage1,instImage2,dispatch:institutionDispatch} = useInstitutionContext();
-  
+  const navigate = useNavigate();
 
+  useEffect(()=>{
+    if(instId)
+      navigate('/uploadphoto')
+  },[instId])
 
-
-  const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>,fileType:string) =>{
-  if(e.target.files){
-    if(fileType==='logoFile')  
-      setLogoFile(e.target.files[0])
-    if(fileType==='mapOneFile')  
-      setMapOneFile(e.target.files[0])
-    if(fileType==='mapTwoFile')  
-      setMapTwoFile(e.target.files[0])
-  }
-  }
-  const handleUpload = async (fileType:string,file:File|null) => {
-    
-    if(file){
-        console.log('Uploading file...');
-
-        const formData =new FormData();
-        formData.append('file',file);
-        formData.append('field_name',fileType)
-       
-
-        try{
-            const response = await fetch(`http://localhost:5000/institutions/${instId}/upload-image`,{
-                method:'POST',
-                body:formData,
-                 headers:{
-                    'Authorization':  `Bearer ${token}`
-                  
-                },  
-        });
-        if (!response.ok){
-            throw new Error(`HTTP error! status: ${response.status}`)
-        }
-   
-    const data = await response.json();  // parse JSON body
-    console.log('Upload response:', data);
-    toast.success('New Images Succefully Added!')
-   
-        // const data = await result.json();
-        // console.log(data);
-    } catch(error){
-        console.log(error);
-        toast.warning(`Unable To Upload Files. ${error}`)
-    }
-    }
-}
+ 
   const handleSubmit = async(e:React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
  
@@ -92,6 +52,7 @@ const Profile = () => {
         setIsSchool(false);
         setAddress('');
         setPhone('');
+        
        
     } catch (error: any) {
          if (error.response) {
@@ -162,7 +123,7 @@ const Profile = () => {
                
             </div>
             <div className='add-profile-form-footer'>
-                <a href='/members'>
+                <a href='/newinstprofile'>
                 <input
                     type="button"
                     className='cancel-button'

@@ -42,6 +42,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import JoinSocket from './components/Socket/JoinSocket';
 import LoadAllContext from './Context/LoadAllContext';
 import UploadPhoto from './components/SchoolProfile/UploadPhoto/UploadPhoto';
+import NewInstBlank from './components/SchoolProfile/NewInstBlank/NewInstBlank';
 
 
 
@@ -168,7 +169,7 @@ function App() {
                 <Route path='/addnewusers' element={<AddNewUsers />}/>
                 <Route path='/invite/accept/:token' element={<AcceptInvite />}/>
                 <Route path='/uploadphoto' element={<UploadPhoto />}/>
-              
+                <Route path='/newinstprofile' element={<NewInstBlank/>}/>              
               </Routes>
             </div>
           </div>

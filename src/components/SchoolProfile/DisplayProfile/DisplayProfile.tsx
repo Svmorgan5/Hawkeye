@@ -24,26 +24,22 @@ const DisplayProfile:React.FC = () =>{
     const token = sessionStorage.getItem('jwtToken_key')
     const navigate= useNavigate();
     const [users,setUsers] = useState<any>([])
-
-    const getUsers = async () => {
-    try {
-      const response = await axios.get("http://127.0.0.1:5000/institutions/users", {
-        headers: {
-          'Authorization': `Bearer ${token}`
+        useEffect(()=>{
+            const getUsers = async () => {
+            try {
+            const response = await axios.get("http://127.0.0.1:5000/institutions/users", {
+                headers: {
+                'Authorization': `Bearer ${token}`
+                }
+            })
+        console.log("Fetched users response:", response.data);
+            setUsers(response.data.users)
+            } catch (error: any) {
+            console.log(error)
+            }
         }
-      })
-    
-      // .filter((myMember: Member) =>
-      //   myMember.name.toLowerCase().includes(search.toLowerCase()) ||
-      //   myMember.email.toLowerCase().includes(search.toLowerCase()) ||
-      //   myMember.groups.toLowerCase().includes(search.toLowerCase()) ||
-      //   myMember.role.toLowerCase().includes(search.toLowerCase())
-      // )
-      setUsers(response.data)
-    } catch (error: any) {
-      console.log(error)
-    }
-  }
+        getUsers();
+        },[])
 
     const uploadPhoto =(type:string)=>{
         console.log('testlogo')
@@ -58,13 +54,13 @@ const DisplayProfile:React.FC = () =>{
     (<div className="main-camera-page">
       <div className='camera-header-top'>
             <div className='breadcrumb'>Cameras</div>
-            <div className='camera-search-table-cell'>
+            {/* <div className='camera-search-table-cell'>
             <input type='text' placeholder='Search cameras' className='camera-search'  onChange={(e)=>setSearch(e.target.value)}></input>
             <button className='camera-search-cancel' >Clear Search</button>
             <a href="/addcamera"><input type='button' className='camera-add' value='+ Add Camera' ></input></a>
             </div>
             
-           
+            */}
         
         </div>
       
@@ -110,11 +106,13 @@ const DisplayProfile:React.FC = () =>{
                     </thead>
                     <tbody>
                       {users.map((user:any)=>{
-                        <tr>
+                        return(
+                        <tr key={user.id}>
                             <td>{user.name}</td>
                             <td>{user.phone}</td>
                             <td>{user.email}</td>
                         </tr>
+                        )
                       })}  
                     </tbody>
                    </table>
