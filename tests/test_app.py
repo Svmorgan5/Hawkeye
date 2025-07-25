@@ -24,7 +24,7 @@ def aws_env_vars():
     os.environ["AWS_BUCKET_NAME"]       = TEST_BUCKET
     yield
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def s3_stub():
     """Start/stop moto’s AWS stub and create the test bucket."""
     with mock_s3():
@@ -34,8 +34,6 @@ def s3_stub():
             aws_secret_access_key=AWS_TEST_SEC,
             region_name=AWS_TEST_REG,
         )
-
-        # us‑east‑1 needs no LocationConstraint; every other region does
         if AWS_TEST_REG == "us-east-1":
             s3.create_bucket(Bucket=TEST_BUCKET)
         else:
@@ -43,7 +41,6 @@ def s3_stub():
                 Bucket=TEST_BUCKET,
                 CreateBucketConfiguration={"LocationConstraint": AWS_TEST_REG},
             )
-
         yield s3
 
 

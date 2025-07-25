@@ -18,7 +18,7 @@ AWS_REGION    = "us-east-2"
 BUCKET_NAME   = "tech-res-project-hawkeye"
 
 # ─── Fixture: reusable S3 client with Moto ─────────────────────
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def s3_client():
     with mock_s3():
         s3 = boto3.client(
