@@ -12,28 +12,26 @@ import time
 import boto3
 import pytest
 import requests
-from dotenv import load_dotenv
-from botocore.exceptions import ClientError
+from moto import mock_s3
 
-# ─── Load secrets from .env ────────────────────────────────────
-load_dotenv()
+AWS_REGION    = "us-east-2"
+BUCKET_NAME   = "tech-res-project-hawkeye"
 
-AWS_ACCESS_KEY_ID     = os.getenv("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-AWS_REGION            = os.getenv("AWS_REGION", "us-east-2")          # your bucket’s region
-BUCKET_NAME           = os.getenv("AWS_BUCKET_NAME", "tech-res-project-hawkeye")
-
-# ─── Fixture: reusable S3 client ───────────────────────────────
+# ─── Fixture: reusable S3 client with Moto ─────────────────────
 @pytest.fixture(scope="session")
 def s3_client():
-    assert AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY, \
-        "AWS secrets not found – add them to .env or your shell"
-    return boto3.client(
-        "s3",
-        aws_access_key_id=AWS_ACCESS_KEY_ID,
-        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-        region_name=AWS_REGION,
-    )
+    with mock_s3():
+        s3 = boto3.client(
+            "s3",
+            aws_access_key_id="dummy",
+            aws_secret_access_key="dummy",
+            region_name=AWS_REGION,
+        )
+        s3.create_bucket(
+            Bucket=BUCKET_NAME,
+            CreateBucketConfiguration={"LocationConstraint": AWS_REGION}
+        )
+        yield s3
 
 # ─── Tests ─────────────────────────────────────────────────────
 def test_bucket_visible(s3_client):

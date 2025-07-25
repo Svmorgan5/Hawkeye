@@ -1,6 +1,6 @@
 import io, json, os
 import pytest
-from moto import mock_aws as moto_mock_aws             
+from moto import mock_s3
 import boto3
 from backend.application import create_app
 from backend.application.models import db, Institution, User, Camera
@@ -27,7 +27,7 @@ def aws_env_vars():
 @pytest.fixture(scope="session")
 def s3_stub():
     """Start/stop moto’s AWS stub and create the test bucket."""
-    with moto_mock_aws():
+    with mock_s3():
         s3 = boto3.client(
             "s3",
             aws_access_key_id=AWS_TEST_KEY,
@@ -93,10 +93,8 @@ def test_get_members_unauthorized(client):
     resp = client.get("/members/")
     assert resp.status_code in (400, 404)
 
-# ─── New: upload image for user (tests S3 logic) ─────────────
 def test_upload_user_image_s3(client):
     token = _create_and_login(client, "imguser@example.com")
-    # dummy PNG bytes
     img = io.BytesIO(b"\x89PNG\r\n\x1a\n" + b"\x00"*50)
     img.name = "dummy.png"
     resp = client.post("/users/1/upload-image",
@@ -107,20 +105,16 @@ def test_upload_user_image_s3(client):
     s3_url = resp.get_json()["image"]
     assert s3_url.startswith(f"https://{TEST_BUCKET}.s3.amazonaws.com/users/1/")
 
-# ─── Existing member creation test kept as‑is ────────────────
 def test_create_member_with_auth(client):
-    # create institution
     with client.application.app_context():
         inst = Institution(name="Test Inst", is_school=True)
         db.session.add(inst); db.session.commit()
         inst_id = inst.id
     token = _create_and_login(client, "memberadmin@example.com")
-    # give the user an institution
     with client.application.app_context():
         user = db.session.get(User, 1)
         user.institution_id = inst_id
         db.session.commit()
-    # create member
     member_payload = {
         "name": "Test Member",
         "email": "member@example.com",
@@ -138,32 +132,18 @@ def test_get_nonexistent_member(client):
     assert resp.status_code in (400, 404)
 
 def test_camera_snapshot_archives_to_s3(client, monkeypatch):
-    """
-    1. Create a user + camera with dummy snapshot_url.
-    2. Mock requests.get to return fake JPEG bytes.
-    3. Call /cameras/<id>/snapshot and:
-       • Assert 200
-       • Body matches dummy bytes
-       • Header X‑S3‑URL present and in our moto bucket
-    """
-    # 1️⃣  Create user and log in
     token = _create_and_login(client, "camuser@example.com")
-
-        # 2️⃣  Add an institution and camera with the required fields
     with client.application.app_context():
-        inst = Institution(name="Snap Inst", is_school=True)
+        inst = Institution(name="Snap Inst", is_school=True)
         db.session.add(inst); db.session.commit()
-
-        # give the user an institution so auth passes
         user = db.session.get(User, 1)
         user.institution_id = inst.id
         db.session.commit()
-
         cam = Camera(
             user_id=user.id,
             institution_id=inst.id,
             name="TestCam",
-            location="Lab 1",                       # required non‑null
+            location="Lab 1",
             snapshot_url="http://dummy.cam/img.jpg",
             stream_url=None,
         )
@@ -171,21 +151,16 @@ def test_camera_snapshot_archives_to_s3(client, monkeypatch):
         db.session.commit()
         cam_id = cam.id
 
-
-    # 3️⃣  Monkey‑patch requests.get to avoid real HTTP
-    dummy_bytes = b"\xff\xd8\xff\xee" + b"\x00" * 100    # minimal JPEG header
+    dummy_bytes = b"\xff\xd8\xff\xee" + b"\x00" * 100
     def _fake_get(url, timeout=5):
         assert url == "http://dummy.cam/img.jpg"
         return SimpleNamespace(status_code=200, content=dummy_bytes)
     monkeypatch.setattr(requests, "get", _fake_get)
 
-    # 4️⃣  Hit the snapshot route
     resp = client.get(
         f"/cameras/{cam_id}/snapshot",
         headers={"Authorization": f"Bearer {token}"},
     )
-
-    # 5️⃣  Assertions
     assert resp.status_code == 200
     assert resp.data == dummy_bytes
     s3_url = resp.headers.get("X-S3-URL")
