@@ -1,4 +1,4 @@
-name: Python CI
+name: Hawkeye CI/CD
 
 on:
   push:
@@ -6,26 +6,64 @@ on:
   pull_request:
     branches: [ main, dev ]
 
+env:
+  AWS_REGION: us-east-2
+  S3_BUCKET: tech-res-project-hawkeye
+
 jobs:
-  build-and-test:
+  test:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install pytest pytest-cov
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov moto[s3] requests
 
-    - name: Run tests
-      env:
-        PYTHONPATH: ${{ github.workspace }}
-      run: |
-        pytest --cov=backend --cov-report=term-missing
+      - name: Run tests (Moto uses dummy AWS creds)
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+          AWS_ACCESS_KEY_ID: dummy
+          AWS_SECRET_ACCESS_KEY: dummy
+          AWS_REGION: ${{ env.AWS_REGION }}
+          AWS_BUCKET_NAME: ${{ env.S3_BUCKET }}
+        run: |
+          pytest --cov=backend --cov-report=term-missing
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build artifacts (placeholder)
+        run: echo "No Docker build—add wheels/migrations/etc. if needed"
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id:     dummy
+          aws-secret-access-key: dummy
+          aws-region:            ${{ env.AWS_REGION }}
+
+      - name: Upload front‑end to S3
+        run: |
+          if [ -d frontend/build ]; then
+            aws s3 sync frontend/build s3://${{ env.S3_BUCKET }}/front-end/ --delete
+          fi
+
+      - name: Deploy application
+        run: echo "Add your deployment commands here (e.g., EB CLI, SSH, Render CLI)"

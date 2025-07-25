@@ -8,6 +8,8 @@ from backend.application.extensions import limiter, cache
 from backend.application.utils.utils import encode_token, token_required
 import requests
 import re
+import io, time
+from backend.application.utils.utils import upload_file_to_s3, build_s3_public_url
 
 
 @cameras_bp.route('/', methods=['POST'])
@@ -69,7 +71,21 @@ def get_camera_snapshot(current_user_id, camera_id):
     except requests.RequestException as e:
         return jsonify({"error": f"Snapshot fetch failed: {str(e)}"}), 502
 
-    return Response(resp.content, mimetype='image/jpeg')
+    # ─── Archive snapshot to S3 (silently ignore failures) ────
+    s3_url = None
+    try:
+        timestamp = int(time.time())
+        s3_key    = f"snapshots/{camera_id}/{timestamp}.jpg"
+        upload_file_to_s3(io.BytesIO(resp.content), s3_key)
+        s3_url    = build_s3_public_url(s3_key)
+    except Exception:
+        pass  # don't break the endpoint if S3 is unreachable
+
+    # Return the JPEG stream to the client
+    response = Response(resp.content, mimetype='image/jpeg')
+    if s3_url:
+        response.headers['X-S3-URL'] = s3_url  # optional header for logging/debugging
+    return response
 
 @cameras_bp.route('/<int:camera_id>', methods=['PUT'])
 @token_required

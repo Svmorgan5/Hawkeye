@@ -8,6 +8,7 @@ import csv
 import io
 from werkzeug.utils import secure_filename
 from backend.application.utils.utils import encode_token, token_required
+from backend.application.utils.utils import upload_file_to_s3, build_s3_public_url
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
@@ -31,17 +32,28 @@ def create_member(current_user_id):
         for field in ['name', 'email', 'role', 'groups']:
             if field in request.form:
                 member_data[field] = request.form[field]
-        
-        # Handle image upload
+
+
+            # Handle image upload → S3
         if 'image' in request.files:
             file = request.files['image']
             if file and _allowed_file(file.filename):
                 filename = secure_filename(file.filename)
-                save_dir = current_app.config.get('UPLOAD_FOLDER', 'static/uploads')
-                os.makedirs(save_dir, exist_ok=True)
-                path = os.path.join(save_dir, filename)
-                file.save(path)
-                member_data['image'] = url_for('static', filename=f'uploads/{filename}', _external=True)
+                s3_key   = f"members/{user.id}/{filename}"
+                upload_file_to_s3(file, s3_key)
+                member_data['image'] = build_s3_public_url(s3_key)
+
+        
+        # Handle image upload statically
+        #if 'image' in request.files:
+        #    file = request.files['image']
+        #    if file and _allowed_file(file.filename):
+        #        filename = secure_filename(file.filename)
+        #        save_dir = current_app.config.get('UPLOAD_FOLDER', 'static/uploads')
+        #        os.makedirs(save_dir, exist_ok=True)
+        #        path = os.path.join(save_dir, filename)
+        #        file.save(path)
+        #        member_data['image'] = url_for('static', filename=f'uploads/{filename}', _external=True)
     else:
         # Handle JSON data
         member_data = request.json
@@ -92,9 +104,11 @@ def get_members(current_user_id):
     for m in raw:
         img = m.get('image')
         if img:
-            if img.startswith('http://') or img.startswith('https://'):
-                m['image'] = img
-            else:
+            if img.startswith(('http://', 'https://')):
+                m['image'] = img                       # already full URL
+            elif '/' in img:                           # looks like an S3 object key
+                m['image'] = build_s3_public_url(img)
+            else:                                      # legacy local filename
                 m['image'] = url_for(
                     'static',
                     filename=f"uploads/{img}",
@@ -117,9 +131,11 @@ def get_member(current_user_id, member_id):
     data = member_schema.dump(member)
     img  = data.get('image')
     if img:
-        if img.startswith('http://') or img.startswith('https://'):
-            data['image'] = img
-        else:
+        if img.startswith(('http://', 'https://')):
+            data['image'] = img                       # already full URL
+        elif '/' in img:                              # looks like an S3 object key
+            data['image'] = build_s3_public_url(img)
+        else:                                         # legacy local filename
             data['image'] = url_for(
                 'static',
                 filename=f"uploads/{img}",
@@ -127,6 +143,17 @@ def get_member(current_user_id, member_id):
             )
     else:
         data['image'] = None
+   # if img:
+   #     if img.startswith('http://') or img.startswith('https://'):
+   #         data['image'] = img
+   #     else:
+   #         data['image'] = url_for(
+   #             'static',
+   #             filename=f"uploads/{img}",
+   #             _external=True
+   #         )
+   # else:
+   #     data['image'] = None
 
     return jsonify(data), 200
 
@@ -145,16 +172,27 @@ def update_member(current_user_id, member_id):
 
     # Handle multipart/form-data (with potential image upload)
     if request.content_type and request.content_type.startswith('multipart/form-data'):
-        # Handle image upload if present
+
         if 'image' in request.files:
             file = request.files['image']
             if file and _allowed_file(file.filename):
                 filename = secure_filename(file.filename)
-                save_dir = current_app.config.get('UPLOAD_FOLDER', 'static/uploads')
-                os.makedirs(save_dir, exist_ok=True)
-                path = os.path.join(save_dir, filename)
-                file.save(path)
-                member.image = url_for('static', filename=f'uploads/{filename}', _external=True)
+                s3_key   = f"members/{member.id}/{filename}"
+                upload_file_to_s3(file, s3_key)
+                member.image = build_s3_public_url(s3_key)
+        
+
+        
+        # Handle image upload if present statically
+        #if 'image' in request.files:
+        #    file = request.files['image']
+        #    if file and _allowed_file(file.filename):
+        #        filename = secure_filename(file.filename)
+        #        save_dir = current_app.config.get('UPLOAD_FOLDER', 'static/uploads')
+        #        os.makedirs(save_dir, exist_ok=True)
+        #        path = os.path.join(save_dir, filename)
+        #        file.save(path)
+        #        member.image = url_for('static', filename=f'uploads/{filename}', _external=True)
         
         # Handle other fields from form data
         for field in ['name', 'email', 'role', 'groups']:
@@ -191,7 +229,7 @@ def delete_member(current_user_id,member_id):
 # Bulk create members from CSV or RTF
 @members_bp.route('/upload', methods=['POST'])
 @token_required
-def upload_members(current_user_id):  # ← ADD current_user_id parameter
+def upload_members(current_user_id):  
     # Get the current user to set institution info
     user = db.session.get(User, current_user_id)
     if not user:

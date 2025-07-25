@@ -7,7 +7,7 @@ from backend.application import create_app, socketio
 from backend.application.models import db
 
 # DEVELOPMENTCONFIG now picks up UPLOAD_FOLDER from config
-app = create_app('DevelopmentConfig')
+app = create_app('ProductionConfig')
 
 with app.app_context():
     #db.drop_all()

@@ -1,104 +1,193 @@
-import json
+import io, json, os
 import pytest
+from moto import mock_aws as moto_mock_aws             
+import boto3
 from backend.application import create_app
-from backend.application.models import db, Institution, User
+from backend.application.models import db, Institution, User, Camera
+from werkzeug.security import generate_password_hash
+from types import SimpleNamespace
+import requests
+
+# ─── Constants used across tests ──────────────────────────────
+TEST_BUCKET   = "tech-res-project-hawkeye"
+AWS_TEST_KEY  = "testkey"
+AWS_TEST_SEC  = "testsecret"
+AWS_TEST_REG  = "us-east-2"
+
+# ─── PyTest fixtures ─────────────────────────────────────────
+@pytest.fixture(scope="session", autouse=True)
+def aws_env_vars():
+    """Set env vars so utils.load_dotenv picks them up."""
+    os.environ["AWS_ACCESS_KEY_ID"]     = AWS_TEST_KEY
+    os.environ["AWS_SECRET_ACCESS_KEY"] = AWS_TEST_SEC
+    os.environ["AWS_REGION"]            = AWS_TEST_REG
+    os.environ["AWS_BUCKET_NAME"]       = TEST_BUCKET
+    yield
+
+@pytest.fixture(scope="session")
+def s3_stub():
+    """Start/stop moto’s AWS stub and create the test bucket."""
+    with moto_mock_aws():
+        s3 = boto3.client(
+            "s3",
+            aws_access_key_id=AWS_TEST_KEY,
+            aws_secret_access_key=AWS_TEST_SEC,
+            region_name=AWS_TEST_REG,
+        )
+
+        # us‑east‑1 needs no LocationConstraint; every other region does
+        if AWS_TEST_REG == "us-east-1":
+            s3.create_bucket(Bucket=TEST_BUCKET)
+        else:
+            s3.create_bucket(
+                Bucket=TEST_BUCKET,
+                CreateBucketConfiguration={"LocationConstraint": AWS_TEST_REG},
+            )
+
+        yield s3
 
 
-#If you get an error while running start with this command to set the PYTHONPATH set PYTHONPATH=%cd%
 @pytest.fixture
-def client():
-    app = create_app('TestingConfig')
-    app.config['TESTING'] = True
+def client(s3_stub):          # depend on the stub to ensure bucket exists
+    app = create_app("TestingConfig")
+    app.config["TESTING"] = True
     with app.app_context():
         db.create_all()
         yield app.test_client()
         db.session.remove()
         db.drop_all()
 
+
+# ─── Helper to create & login a user quickly ─────────────────
+def _create_and_login(client, email="u@example.com", role="Admin"):
+    user_payload = {
+        "email": email,
+        "name": "Tester",
+        "password": "TestPass123!",
+        "phone": "555-111-2222",
+        "role": role,
+    }
+    client.post("/users/", data=json.dumps(user_payload), content_type="application/json")
+    login_payload = {"email": email, "password": "TestPass123!"}
+    resp = client.post("/users/login", data=json.dumps(login_payload), content_type="application/json")
+    return resp.get_json()["token"]
+
+# ─── Existing tests (unchanged) ───────────────────────────────
 def test_create_user(client):
     payload = {
         "email": "pytestuser1@example.com",
         "name": "Pytest User",
         "password": "TestPass123!",
         "phone": "555-555-0000",
-        "role": "Admin"
+        "role": "Admin",
     }
-    response = client.post('/users/', data=json.dumps(payload), content_type='application/json')
-    print(response.get_json())  # Add this line for debugging
-    assert response.status_code == 201
-    data = response.get_json()
-    assert data["email"] == "pytestuser1@example.com"
+    resp = client.post("/users/", data=json.dumps(payload), content_type="application/json")
+    assert resp.status_code == 201
+    assert resp.get_json()["email"] == payload["email"]
 
 def test_login_user(client):
-    # First, create the user
-    payload = {
-        "email": "pytestlogin@example.com",
-        "name": "Login User",
-        "password": "TestPass123!",
-        "phone": "555-555-0008",  # Unique phone
-        "role": "Admin"
-    }
-    client.post('/users/', data=json.dumps(payload), content_type='application/json')
-
-    # Now, try to log in
-    login_payload = {
-        "email": "pytestlogin@example.com",
-        "password": "TestPass123!"
-    }
-    response = client.post('/users/login', data=json.dumps(login_payload), content_type='application/json')
-    assert response.status_code in (200, 201)
-    data = response.get_json()
-    assert "token" in data
+    token = _create_and_login(client, "pytestlogin@example.com")
+    assert token
 
 def test_get_members_unauthorized(client):
-    response = client.get('/members/')
-    assert response.status_code in (400, 404)
+    resp = client.get("/members/")
+    assert resp.status_code in (400, 404)
 
+# ─── New: upload image for user (tests S3 logic) ─────────────
+def test_upload_user_image_s3(client):
+    token = _create_and_login(client, "imguser@example.com")
+    # dummy PNG bytes
+    img = io.BytesIO(b"\x89PNG\r\n\x1a\n" + b"\x00"*50)
+    img.name = "dummy.png"
+    resp = client.post("/users/1/upload-image",
+                       data={"file": img},
+                       headers={"Authorization": f"Bearer {token}"},
+                       content_type="multipart/form-data")
+    assert resp.status_code == 200
+    s3_url = resp.get_json()["image"]
+    assert s3_url.startswith(f"https://{TEST_BUCKET}.s3.amazonaws.com/users/1/")
+
+# ─── Existing member creation test kept as‑is ────────────────
 def test_create_member_with_auth(client):
-    # Create an institution
+    # create institution
     with client.application.app_context():
-        institution = Institution(name="Test Institution", is_school=True)
-        db.session.add(institution)
-        db.session.commit()
-        institution_id = institution.id
-
-    # Create user
-    user_payload = {
-        "email": "pytestmember@example.com",
-        "name": "Member User",
-        "password": "TestPass123!",
-        "phone": "555-555-0009",
-        "role": "Admin"
-    }
-    client.post('/users/', data=json.dumps(user_payload), content_type='application/json')
-
-    # Manually assign institution_id to user
+        inst = Institution(name="Test Inst", is_school=True)
+        db.session.add(inst); db.session.commit()
+        inst_id = inst.id
+    token = _create_and_login(client, "memberadmin@example.com")
+    # give the user an institution
     with client.application.app_context():
-        user = db.session.query(User).filter_by(email="pytestmember@example.com").first()
-        user.institution_id = institution_id
+        user = db.session.get(User, 1)
+        user.institution_id = inst_id
         db.session.commit()
-
-    # Now login and create member as before
-    login_payload = {
-        "email": "pytestmember@example.com",
-        "password": "TestPass123!"
-    }
-    login_resp = client.post('/users/login', data=json.dumps(login_payload), content_type='application/json')
-    token = login_resp.get_json()["token"]
-
+    # create member
     member_payload = {
         "name": "Test Member",
         "email": "member@example.com",
         "role": "Student",
-        "groups": "A"
+        "groups": "A",
     }
-    response = client.post('/members/', data=json.dumps(member_payload), content_type='application/json',
-                           headers={"Authorization": f"Bearer {token}"})
-    assert response.status_code in (200, 201)
-    data = response.get_json()
-    assert data["name"] == "Test Member"
+    resp = client.post("/members/", data=json.dumps(member_payload),
+                       headers={"Authorization": f"Bearer {token}"},
+                       content_type="application/json")
+    assert resp.status_code in (200, 201)
+    assert resp.get_json()["name"] == "Test Member"
 
 def test_get_nonexistent_member(client):
-    # Assuming 99999 is not a valid member_id
-    response = client.get('/members/99999')
-    assert response.status_code in (400, 404)
+    resp = client.get("/members/99999")
+    assert resp.status_code in (400, 404)
+
+def test_camera_snapshot_archives_to_s3(client, monkeypatch):
+    """
+    1. Create a user + camera with dummy snapshot_url.
+    2. Mock requests.get to return fake JPEG bytes.
+    3. Call /cameras/<id>/snapshot and:
+       • Assert 200
+       • Body matches dummy bytes
+       • Header X‑S3‑URL present and in our moto bucket
+    """
+    # 1️⃣  Create user and log in
+    token = _create_and_login(client, "camuser@example.com")
+
+        # 2️⃣  Add an institution and camera with the required fields
+    with client.application.app_context():
+        inst = Institution(name="Snap Inst", is_school=True)
+        db.session.add(inst); db.session.commit()
+
+        # give the user an institution so auth passes
+        user = db.session.get(User, 1)
+        user.institution_id = inst.id
+        db.session.commit()
+
+        cam = Camera(
+            user_id=user.id,
+            institution_id=inst.id,
+            name="TestCam",
+            location="Lab 1",                       # required non‑null
+            snapshot_url="http://dummy.cam/img.jpg",
+            stream_url=None,
+        )
+        db.session.add(cam)
+        db.session.commit()
+        cam_id = cam.id
+
+
+    # 3️⃣  Monkey‑patch requests.get to avoid real HTTP
+    dummy_bytes = b"\xff\xd8\xff\xee" + b"\x00" * 100    # minimal JPEG header
+    def _fake_get(url, timeout=5):
+        assert url == "http://dummy.cam/img.jpg"
+        return SimpleNamespace(status_code=200, content=dummy_bytes)
+    monkeypatch.setattr(requests, "get", _fake_get)
+
+    # 4️⃣  Hit the snapshot route
+    resp = client.get(
+        f"/cameras/{cam_id}/snapshot",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+
+    # 5️⃣  Assertions
+    assert resp.status_code == 200
+    assert resp.data == dummy_bytes
+    s3_url = resp.headers.get("X-S3-URL")
+    assert s3_url and s3_url.startswith(f"https://{TEST_BUCKET}.s3.amazonaws.com/snapshots/{cam_id}/")
+

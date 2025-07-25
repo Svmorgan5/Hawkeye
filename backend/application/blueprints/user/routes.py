@@ -7,7 +7,7 @@ from backend.application.models import db, User
 from marshmallow import ValidationError
 from sqlalchemy import select, delete
 from backend.application.extensions import limiter, cache
-from backend.application.utils.utils import encode_token, token_required
+from backend.application.utils.utils import encode_token, token_required, upload_file_to_s3, build_s3_public_url
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -33,12 +33,14 @@ def login():
     if user and check_password_hash(user.password, password):
         token = encode_token(user.id)
         
-        # Handle user image URL 
+        # Handle user image URL (supports S3 keys, full URLs, or legacy local files)
         user_image = user.image
         if user_image:
-            if user_image.startswith('http://') or user_image.startswith('https://'):
-                user_image_url = user_image  # Already full URL
-            else:
+            if user_image.startswith(('http://', 'https://')):
+                user_image_url = user_image                     # already full URL
+            elif '/' in user_image:                             # looks like an S3 object key
+                user_image_url = build_s3_public_url(user_image)
+            else:                                               # legacy local filename
                 user_image_url = url_for(
                     'static',
                     filename=f"uploads/{user_image}",
@@ -106,40 +108,49 @@ def add_user():
 @users_bp.route('/<int:user_id>/upload-image', methods=['POST'])
 @token_required
 def upload_user_image(current_user_id, user_id):
-    """Upload image for a user - must be self or admin"""
+    """Upload an image for a user → save locally AND on S3."""
     current_user = db.session.get(User, current_user_id)
     if not current_user:
         return jsonify({"error": "User not found"}), 404
-    
-    # Authorization: user can upload their own image, or admin can upload any
+
     target_user = db.session.get(User, user_id)
     if not target_user:
         return jsonify({"error": "Target user not found"}), 404
-    
-    # Check if user is uploading their own image OR is admin
+
     if current_user.id != user_id and current_user.role != 'Admin':
         return jsonify({"error": "Not authorized"}), 403
 
-    # Handle file upload (matching institution logic)
     if 'file' not in request.files:
         return jsonify({"error": "No file part"}), 400
-    
+
     file = request.files['file']
     if file.filename == '' or not _allowed_file(file.filename):
         return jsonify({"error": "Invalid or missing file"}), 400
 
+    # 1️⃣  Save locally (legacy behaviour)
     filename = secure_filename(file.filename)
     save_dir = current_app.config.get('UPLOAD_FOLDER', 'static/uploads')
     os.makedirs(save_dir, exist_ok=True)
-    path = os.path.join(save_dir, filename)
-    file.save(path)
-    
-    # Store full URL (matching institution logic)
-    public_path = url_for('static', filename=f'uploads/{filename}', _external=True)
-    target_user.image = public_path
+    local_path = os.path.join(save_dir, filename)
+    file.seek(0)                    # rewind in case it was read
+    file.save(local_path)
+    local_url = url_for('static', filename=f'uploads/{filename}', _external=True)
+
+    # 2️⃣  Upload the same file to S3
+    file.seek(0)                    # rewind again for S3 upload
+    s3_key = f"users/{user_id}/{filename}"
+    upload_file_to_s3(file, s3_key)
+    s3_url = build_s3_public_url(s3_key)
+
+    # Store the S3 URL (keep local_url if you prefer; choose one)
+    target_user.image = s3_url
     db.session.commit()
 
-    return jsonify({"image": public_path}), 200
+    return jsonify({
+        "image": s3_url,
+        "local_backup": local_url     # optional, exposed for debugging
+    }), 200
+
 
 #token required to get all users for instituion by instituion
 @users_bp.route('/', methods=['GET'])
@@ -191,9 +202,9 @@ def update_user(current_user_id):
 #Token Required to delete user
 @users_bp.route("/", methods=['DELETE'])
 @token_required
-def delete_user(user_id):
-   # Fetch the user using the user_id
-   query = select(User).where(User.id == user_id)
+def delete_user(current_user_id):
+   # Fetch the user using the current_user_id
+   query = select(User).where(User.id == current_user_id)
    user = db.session.execute(query).scalars().first()
 
    if not user:
