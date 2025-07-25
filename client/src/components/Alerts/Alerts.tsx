@@ -1,4 +1,4 @@
-import '../../components/Dashboard/Dashboard.css'
+import '../Dashboard/Dashboard.css'
 import './Alerts.css'
 import Alert from '../../assets/Alert.png'
 import axios from 'axios'

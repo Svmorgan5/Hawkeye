@@ -1,9 +1,9 @@
 import '../../UnderConstruction.css'
-import LiveStreamPlayer from '../Cameras/LiveStreamPlayer';
+import LiveStreamPlayer from './LiveStreamPlayer';
 import unlock from '../../assets/Unlock.png'
 import lock from '../../assets/lock.png'
 import './CameraCard.css'
-import LiveStreamBlocked from '../Cameras/LiveStreamBlocked';
+import LiveStreamBlocked from './LiveStreamBlocked';
 
 type CameraCardProps ={
   URL: string,

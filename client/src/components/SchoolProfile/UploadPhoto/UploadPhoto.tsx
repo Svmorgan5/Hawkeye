@@ -1,5 +1,5 @@
 
-import '../../../components/Members/Edit Members/EditMembers.css'
+import '../../Members/Edit Members/EditMembers.css'
 import addImage from '../../../assets/addimage.png'
 import {useState, type ReactEventHandler} from 'react'
 import { useInstitutionContext } from '../../../Context/InstitutionContext'
