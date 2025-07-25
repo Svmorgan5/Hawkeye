@@ -1,3 +1,5 @@
+<<<<<<< HEAD:hawkEye-frontend/requirements.txt
+=======
 aiohappyeyeballs==2.6.1
 aiohttp==3.12.13
 aiosignal==1.3.2
@@ -5,11 +7,14 @@ annotated-types==0.7.0
 antlr4-python3-runtime==4.13.2
 APScheduler==3.11.0
 attrs==25.3.0
+<<<<<<< HEAD:requirements.txt
 aws-sam-translator==1.99.0
 aws-xray-sdk==2.14.0
 awscli==1.41.12
+=======
+>>>>>>> d7445a29bf3133b6e547c158e89c42f2f9d0929d:requirements.txt
+>>>>>>> feature/frontend:hawkEye-frontend/requirements.txt
 beautifulsoup4==4.13.4
-bidict==0.23.1
 blinker==1.9.0
 boto3==1.39.3
 botocore==1.39.12
@@ -30,9 +35,9 @@ Flask-Caching==2.3.1
 flask-cors==6.0.0
 Flask-Limiter==3.12
 flask-marshmallow==1.3.0
-Flask-SocketIO==5.5.1
 Flask-SQLAlchemy==3.1.1
 flask-swagger-ui==5.21.0
+<<<<<<< HEAD:requirements.txt
 frozenlist==1.7.0
 graphql-core==3.2.6
 greenlet==3.2.2
@@ -42,6 +47,10 @@ http_ece==1.2.1
 idna==3.10
 iniconfig==2.1.0
 isodate==0.7.2
+=======
+greenlet==3.2.2
+idna==3.10
+>>>>>>> feature/frontend:hawkEye-frontend/requirements.txt
 itsdangerous==2.2.0
 Jinja2==3.1.6
 jmespath==1.0.1
@@ -55,13 +64,12 @@ jsonschema-specifications==2025.4.1
 lazy-object-proxy==1.11.0
 limiter==0.5.0
 limits==5.2.0
-lxml==5.4.0
 markdown-it-py==3.0.0
 MarkupSafe==3.0.2
 marshmallow==4.0.0
-marshmallow-enum==1.5.1
 marshmallow-sqlalchemy==1.4.2
 mdurl==0.1.2
+<<<<<<< HEAD:requirements.txt
 moto==5.1.8
 mpmath==1.3.0
 multidict==6.5.1
@@ -81,11 +89,17 @@ propcache==0.3.2
 psycopg2==2.9.10
 py-partiql-parser==0.6.1
 py-vapid==1.9.2
+=======
+mysql-connector-python==9.3.0
+ordered-set==4.1.0
+packaging==25.0
+>>>>>>> feature/frontend:hawkEye-frontend/requirements.txt
 pyasn1==0.6.1
 pycparser==2.22
 pydantic==2.11.7
 pydantic_core==2.33.2
 Pygments==2.19.1
+<<<<<<< HEAD:requirements.txt
 pyparsing==3.2.3
 pytest==8.4.1
 python-dateutil==2.9.0.post0
@@ -110,6 +124,12 @@ rsa==4.7.2
 s3transfer==0.13.0
 setuptools==80.9.0
 simple-websocket==1.1.0
+=======
+python-jose==3.5.0
+requests==2.32.3
+rich==13.9.4
+rsa==4.9.1
+>>>>>>> feature/frontend:hawkEye-frontend/requirements.txt
 six==1.17.0
 soupsieve==2.7
 SQLAlchemy==2.0.41
@@ -123,7 +143,10 @@ tzlocal==5.3.1
 urllib3==2.4.0
 Werkzeug==3.1.3
 wrapt==1.17.2
+<<<<<<< HEAD:requirements.txt
 wsproto==1.2.0
 xmltodict==0.14.2
 yarl==1.20.1
 zeep==4.3.1
+=======
+>>>>>>> feature/frontend:hawkEye-frontend/requirements.txt

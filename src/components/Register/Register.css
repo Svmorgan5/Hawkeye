@@ -1,0 +1,258 @@
+.Welcome{
+width: 215px;
+height: 5vh;
+padding-bottom:30px;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 46px;
+line-height: 54px;
+display: flex;
+align-items: center;
+text-align: center;
+color: #032B3A;
+flex: none;
+order: 0;
+flex-grow: 0;
+margin-left:130px;
+}
+
+.label{
+width: 300px;
+height: 20px;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 12px;
+color: #262626;
+flex: none;
+order: 0;
+flex-grow: 0;
+}
+
+.text{
+box-sizing: border-box;
+
+display: flex;
+flex-direction: row;
+justify-content: flex-end;
+align-items: center;
+padding: 12px 12px 12px 16px;
+gap: 10px;
+
+width: 540px;
+height: 46px;
+
+/* Neutrals/White */
+background: #FFFFFF;
+/* Neutrals/400 ⦿ */
+border: 2px solid #CBD2E0;
+border-radius: 6px;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+}
+
+.form{
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 15px 0px 0px 0px;
+/* margin-left:30px; 
+margin-right:10px; */
+gap: 20px;
+width: 700px;
+height: 100%;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+}
+
+
+.form-div{
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: flex-start;
+padding: 0px;
+gap: 8px;
+width: 398px;
+
+height: 10%;
+min-height: 60px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+}
+
+
+
+.main-page{
+
+/* Extra / background-1 */
+background: #F0F2F5;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 56px 10px 10px;
+width: 100%;
+height: 100%;
+min-height:300px;
+right: 0px;
+top: calc(50% - 900px/2);
+
+}
+
+
+
+.password-div{
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 0px;
+gap: 10px;
+width: 398px;
+height: 80px;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+}
+.password-warning{
+width: 189px;
+height: 80px;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 12px;
+line-height: 20px;
+
+color: #262626;
+flex: none;
+order: 0;
+flex-grow: 0;
+}
+
+
+.submit{
+
+
+background: #13C2C2;
+left: 177px;
+top: 19px;
+width: 540px;
+height: 46px;
+margin-top: 10px;
+margin-left:130px;
+/* Regular/20px | 28px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 28px;
+margin-top:-30px;
+color: #FFFFFF;
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+z-index: 1;
+border:none;
+}
+
+
+.password-rules{
+/* Password Should Contain At least : One Number One Capital Letter One Special Character */
+width: 189px;
+height: 80px;
+/* Semibold/16px | 24px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 20px;
+/* or 167% */
+/* Gray / gray-9 */
+color: #262626;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+margin-top:-60px;
+}
+.password-intro{
+
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 12px;
+line-height: 20px;
+/* or 167% */
+
+/* Gray / gray-9 */
+color: #262626;
+
+
+}
+
+.already-signed{
+/* Already a User Log-in */
+width: 132px;
+height: 22px;
+/* Regular/14px | 22px */
+justify-content: center;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 22px;
+/* identical to box height, or 157% */
+/* Gray / gray-9 */
+color: #262626;
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+margin-left: -70px;
+   
+}
+
+@media (max-width: 1600px) {
+  .form,
+  .already-signed {
+    margin-left: -70px;
+    padding-left: 0px;
+    margin-right:70px;
+  
+  }
+}
+
+
+
+
+
+
+
+
+
