@@ -35,6 +35,11 @@ def create_app(config_name):
     )
     app.config.from_object(f'config.{config_name}')
 
+    if not getattr(app, "scheduler_started", False):
+        from backend.application.scheduler import start_scheduler
+        start_scheduler(app)
+        app.scheduler_started = True
+
     CORS(app)
     socketio.init_app(app, cors_allowed_origins="*")
     db.init_app(app)
