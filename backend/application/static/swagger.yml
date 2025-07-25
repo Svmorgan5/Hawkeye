@@ -3,7 +3,7 @@ info:
   title: "Hawkeye API"
   description: "This is a API to manage project Hawkeye"
   version: "1.0.0"
-host: "hawkeye.onrender.com"
+host: "hawkeye-6uxy.onrender.com"
 schemes:
   - "https"
 consumes:
