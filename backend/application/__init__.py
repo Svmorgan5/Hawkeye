@@ -1,7 +1,7 @@
 # backend/application/__init__.py
 
 import os
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask_cors import CORS
 from flask_socketio import SocketIO
 from backend.application.models import db
@@ -24,21 +24,25 @@ swaggerui_blueprint = get_swaggerui_blueprint(
 )
 
 def create_app(config_name):
-    # point static_folder at your top-level /static dir
-    project_root  = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-    static_folder = os.path.join(project_root, 'static')
+    # root of your repo
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+    # point at your Vite build output
+    static_folder = os.path.join(project_root, 'Hawkeye', 'dist')
 
     app = Flask(
         __name__,
         static_folder=static_folder,
-        static_url_path='/static'
+        static_url_path=''   # so that “/” is served from dist/index.html
     )
-    app.config.from_object(f'config.{config_name}')
 
-    if not getattr(app, "scheduler_started", False):
-        from backend.application.scheduler import start_scheduler
-        start_scheduler(app)
-        app.scheduler_started = True
+    # catch‑all so React Router works
+    @app.route('/', defaults={'path': ''})
+    @app.route('/<path:path>')
+    def serve(path):
+        full_path = os.path.join(app.static_folder, path)
+        if path and os.path.exists(full_path):
+            return send_from_directory(app.static_folder, path)
+        return send_from_directory(app.static_folder, 'index.html')
 
     CORS(app)
     socketio.init_app(app, cors_allowed_origins="*")
