@@ -31,7 +31,7 @@ const {my_url} = useTokenContext();
     e.preventDefault();  
        
     try {
-      await axios.post(`${my_url}/cameras/`, {
+      await axios.post(`${my_url}/cameras`, {
           stream_url:`${URL}`,
           location:`${location}`,
           name:`${name}`

@@ -67,7 +67,7 @@ type User = {
         if(submitData===true)
         {
                 try {
-                await axios.post(`${my_url}/users/`, {
+                await axios.post(`${my_url}/users`, {
 
                 email: `${email}`,
                 name: `${firstName} ${lastName}`,

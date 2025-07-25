@@ -35,7 +35,7 @@ const Profile = () => {
     e.preventDefault();
  
     try {
-      await axios.post(`${my_url}/institutions/`, {
+      await axios.post(`${my_url}/institutions`, {
         // id:instId,
         name: busName,
         is_school: isSchool,

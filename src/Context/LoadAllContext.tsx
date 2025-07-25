@@ -18,7 +18,7 @@ const LoadAllContext = () => {
           if(instId || !token)
             return;
             try {
-              const response = await axios.get(`${my_url}/institutions/`, {
+              const response = await axios.get(`${my_url}/institutions`, {
               headers: {
               'Authorization': `Bearer ${token}`
                       }

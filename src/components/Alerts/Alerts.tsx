@@ -34,7 +34,7 @@ const Alerts = () => {
 
   const getAlerts =  async() =>{
     try {
-      const response = await axios.get(`${my_url}/alerts/`, {
+      const response = await axios.get(`${my_url}/alerts`, {
         headers:{
           'Authorization': `Bearer ${token}`
         }

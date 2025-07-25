@@ -43,7 +43,7 @@ const EditMembers: React.FC<Props> = ({id}) => {
   useEffect(()=> {
     const getMembers = async() =>{
     try {
-      const response = await axios.get(`${my_url}/members/`, {
+      const response = await axios.get(`${my_url}/members`, {
         headers:{
           'Authorization':  `Bearer ${token}`,
         }

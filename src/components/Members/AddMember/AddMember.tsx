@@ -36,7 +36,7 @@ const token = sessionStorage.getItem('jwtToken_key')
     e.preventDefault();  
        
     try {
-      await axios.post(`${my_url}/members/`, {
+      await axios.post(`${my_url}/members`, {
 
         email: `${email}`,
         name: `${name} ${last}`,

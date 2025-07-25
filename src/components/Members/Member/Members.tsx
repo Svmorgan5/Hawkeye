@@ -37,7 +37,7 @@ const Members = () => {
 function normalizeImageUrl(imagePath: string): string {
   if (!imagePath) return ''
   if (/^https?:\/\//.test(imagePath)) return imagePath
-  const prefix = imagePath.startsWith('/') ? '' : '/static/'
+  const prefix = imagePath.startsWith('/') ? '' : '/static' /*removed trailing /
   return `${baseURL}${prefix}${imagePath}`
 }
   const toggleActiveState = () => {
