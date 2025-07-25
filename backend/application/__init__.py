@@ -17,7 +17,8 @@ socketio = SocketIO()
 
 # Swagger setup
 SWAGGER_URL = '/api/docs'
-API_URL     = '/static/swagger.yml'
+API_URL     = '/static/swagger.yml'  # Make sure swagger.yml is in dist/static or dist
+
 swaggerui_bp = get_swaggerui_blueprint(
     SWAGGER_URL,
     API_URL,
@@ -27,7 +28,7 @@ swaggerui_bp = get_swaggerui_blueprint(
 def create_app(config_name="ProductionConfig"):
     # 1) project root → static_folder (your Vite output)
     project_root  = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-    static_folder = os.path.join(project_root, 'Hawkeye', 'dist')
+    static_folder = os.path.join(project_root, 'dist')  # <-- update this line
 
     app = Flask(
         __name__,
