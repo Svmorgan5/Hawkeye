@@ -23,20 +23,7 @@ swaggerui_blueprint = get_swaggerui_blueprint(
     config={'app_name': "Hawkeye API"}
 )
 
-import os
-from flask import Flask, send_from_directory, abort
-from flask_cors import CORS
-from flask_socketio import SocketIO
-from backend.application.models import db
-from backend.application.extensions import ma, limiter, cache
-from flask_swagger_ui import get_swaggerui_blueprint
 
-# your blueprints
-from backend.application.blueprints.user        import users_bp
-from backend.application.blueprints.camera      import cameras_bp
-from backend.application.blueprints.member      import members_bp
-from backend.application.blueprints.alert       import alerts_bp
-from backend.application.blueprints.institutions import institutions_bp
 
 # your config file
 from config import ProductionConfig, DevelopmentConfig, TestingConfig
