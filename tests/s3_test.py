@@ -9,6 +9,7 @@ import os
 import time
 import boto3
 import pytest
+pytestmark = pytest.mark.live_s3
 import requests
 from dotenv import load_dotenv
 
