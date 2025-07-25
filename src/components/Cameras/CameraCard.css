@@ -1,0 +1,168 @@
+.camera-card-holder{
+    display: flex;
+    flex-direction: column;
+
+    gap:10px;
+    border-color:rgb(174, 174, 174);
+    border:solid;
+    border-width: 1px;
+    color: #a7a6a6;
+    margin-bottom: 30px;;
+    border-radius: 4px;
+}
+
+.video-location{
+   /* Cameras */
+/* Main St Camera 1 */
+
+width: 200px;
+height: 24px;
+
+/* Semibold/16px | 24px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 18px;
+line-height: 24px;
+/* identical to box height, or 150% */
+padding:0px;
+    margin:0px;
+
+/* Gray / gray-9 */
+color: #262626;
+
+ padding:4px;
+    margin:0px;
+    padding-bottom:5px;
+    padding-left: px;
+    justify-content: left;
+    text-align: left;
+
+}
+.td-lock{
+    width:1%;
+    padding:8px;
+    margin:0px;
+    
+    
+    
+}
+.video-info{
+    text-align:left;
+    justify-content: left;
+    
+    padding:0px;
+    margin:0px;
+    padding-bottom:5px;
+
+padding-left: 5px;
+
+width: 200px;
+height: 22px;
+
+/* Regular/14px | 22px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 22px;
+/* identical to box height, or 157% */
+
+/* Gray / gray-7 */
+color: #8C8C8C;
+
+
+
+
+}
+.lock-image{
+    width:20px;
+    height:auto;
+  
+}
+.camera-card-video{
+    height:196px;
+    /* border-bottom:solid; */
+    border-width: 1px;
+    justify-content: center;
+    align-content: center;
+    background-color: black;
+}
+.camera-search{
+    width:220px;
+    border-radius: 2px 0px 0px 2px;
+    border-width: 1px;
+    border-color: rgb(165, 165, 165);
+    padding:5px;
+}
+.camera-search-cancel{
+    height:26px;
+    background-color: rgb(182, 111, 111);
+    color: #ffffff;
+    border-left:none;
+    padding:6px;
+   
+    padding-top:5px;
+ 
+    margin-left:4px;
+    border-radius: 0px 2px 2px 0px;
+
+    border-width: 1px;
+    border-color: rgb(165, 165, 165);
+    cursor:pointer;
+    font-family: roboto;
+
+}
+.camera-search-cancel:hover{
+    
+
+    
+     background-color: rgb(142, 67, 67);
+   
+    
+}
+.camera-add{
+    
+    height:26px;
+    background-color: rgb(73, 184, 209);
+    color: #ffffff;
+    border-left:none;
+    padding:6px;
+   
+    padding-top:5px;
+   
+    margin-left:4px;
+    border-radius: 0px 2px 2px 0px;
+
+    border-width: 1px;
+    border-color: rgb(165, 165, 165);
+    cursor:pointer;
+    font-family: roboto;
+
+
+}
+.camera-header-top{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+@media screen and (max-width:1200px){
+.camera-header-top{
+    max-width: 835px;
+}
+}
+@media screen and (max-width:1100px){
+.camera-header-top{
+    max-width: 735px;
+}
+}
+@media screen and (max-width:1000px){
+.camera-header-top{
+    max-width: 635px;
+}
+}
+@media screen and (max-width:900px){
+.camera-header-top{
+    max-width: 535px;
+}
+}

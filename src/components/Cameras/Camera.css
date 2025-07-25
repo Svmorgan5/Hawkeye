@@ -1,0 +1,91 @@
+.camera-cards-page{
+    max-height: 600px;
+    overflow-y: scroll;
+
+}
+.body-add-camara{
+    padding-left:300px;
+    padding-top:100px;
+    height:800px;
+    width:1400px;
+}
+.video-blocked{
+    background-color: rgb(170, 162, 162);
+    height:196px;
+    color: rgb(66, 62, 62);
+    text-align: center;
+    padding-top:80px;
+    font-size:30px;
+    font-weight: 700;
+    font-family: 'DIN Condensed', 'Arial Narrow', Arial, sans-serif;
+}
+.camera-search-table-cell{
+   
+    padding-top:20px;
+    padding-bottom:20px;
+    text-align: right;
+}
+.main-camera-page{
+   margin-left:40px;
+   margin-right:40px;
+   margin-top: 10px;
+}
+
+
+.camera-cards-holder{
+
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap:10px;
+  
+  
+    
+
+    
+  
+}
+
+
+.camera-cards-element{
+
+    display: flex;
+    flex-direction: column;
+    width:32% ;
+    flex-shrink: 1;
+    /* max-width: 370px; */
+}
+
+@media screen and (max-width:1090px) {
+  
+.camera-cards-element{
+
+  
+    flex: 1 1 calc(50% - 10px);
+    width:calc(50% - 10px);
+    max-width: 370px;
+    
+}
+
+    
+}
+
+
+@media screen and (max-width:700px) {
+  
+.camera-cards-element{
+
+  
+    flex: 1 1 calc(100% - 10px);
+    width:calc(100% - 10px);
+
+ 
+    
+}
+
+    
+}
+
+
+    
+

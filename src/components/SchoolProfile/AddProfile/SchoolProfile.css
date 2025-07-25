@@ -1,0 +1,84 @@
+.add-image{
+    width:100px;
+    height:auto;
+}
+ .body-add-inst{
+    padding-left:300px;
+    padding-top:100px;
+    height:800px;
+    width:1400px;
+    background-color: rgb(232, 229, 229);
+
+    
+} 
+.add-profile-form-footer{
+    box-sizing: border-box;
+display: flex;
+flex-direction: row;
+justify-content: right;
+padding: 10px 22px;
+padding-bottom: -15px;
+gap: 10px;
+width: 440px;
+height: 5px;
+border-top: 1px solid #D9D9D9;
+
+}
+.add-inst-form{
+ 
+
+    /* Modal / Basic */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+
+height:260px;
+width:450px;
+
+
+/* Gray / gray-1 */
+background: #FFFFFF;
+/* Elevation */
+box-shadow: 0px 16px 13.3px 4px rgba(0, 0, 0, 0.25), 0px 6px 16px rgba(0, 0, 0, 0.08), 0px 3px 6px -4px rgba(0, 0, 0, 0.12);
+border-radius: 2px;
+
+}
+.inst-label-wrapper{
+    width:425px;
+    display:flex;
+    justify-content: space-between;
+    padding-top:3px;
+}
+.text-wrapper{
+    /* text-align: right;
+    justify-content: right; */
+}
+
+.add-profile-form-header{
+    
+    /* Head */
+
+box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 16px 24px;
+gap: 10px;
+
+width: 520px;
+height: 56px;
+
+/* Gray / gray-5
+
+Border
+*/
+border-bottom: 1px solid #D9D9D9;
+
+
+
+}

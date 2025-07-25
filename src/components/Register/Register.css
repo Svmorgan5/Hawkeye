@@ -1,0 +1,363 @@
+.Welcome{
+width: 500px;
+height: 5vh;
+padding-bottom:60px;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 40px;
+line-height: 45px;
+display: flex;
+align-items: center;
+text-align: center;
+color: #032B3A;
+
+margin-left:330px;
+margin-top:-50px;
+
+}
+.Welcome-signup{
+width: 400px;
+height: 5vh;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 40px;
+line-height: 45px;
+display: flex;
+align-items: center;
+text-align: center;
+color: #032B3A;
+margin-left:330px;
+
+
+}
+.label{
+width: 300px;
+height: 20px;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 12px;
+color: #262626;
+
+
+}
+.label-signin{
+width: 300px;
+height: 20px;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 12px;
+color: #262626;
+padding-top:15px;
+margin-bottom:10px;
+
+
+}
+
+
+.text{
+box-sizing: border-box;
+
+display: flex;
+flex-direction: row;
+justify-content: flex-end;
+align-items: center;
+padding: 12px 12px 12px 16px;
+gap: 10px;
+
+width: 540px;
+height: 46px;
+
+/* Neutrals/White */
+background: #FFFFFF;
+/* Neutrals/400 ⦿ */
+border: 2px solid #CBD2E0;
+border-radius: 6px;
+
+/* Inside auto layout */
+flex: none;
+
+flex-grow: 0;
+}
+
+.form{
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 15px 0px 0px 0px;
+/* margin-left:30px; 
+margin-right:10px; */
+gap: 20px;
+width: 700px;
+height: 100%;
+
+/* Inside auto layout */
+flex: none;
+
+flex-grow: 0;
+}
+
+
+.form-div{
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: flex-start;
+padding: 0px;
+gap: 8px;
+width: 398px;
+
+height: 10%;
+min-height: 60px;
+
+/* Inside auto layout */
+
+}
+
+.form-div-top{
+  display: flex;
+flex-direction: row;
+
+gap:10px;
+}
+
+
+.main-page{
+
+/* Extra / background-1 */
+background: #F0F2F5;
+
+/* Inside auto layout */
+
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 56px 10px 10px;
+width: 100%;
+height: 100%;
+min-height:300px;
+right: 0px;
+top: calc(50% - 900px/2);
+
+}
+
+
+
+.password-div{
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 0px;
+gap: 10px;
+width: 398px;
+height: 150px;
+margin-top:10px;
+
+
+
+}
+.password-warning{
+width: 189px;
+height: 80px;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 12px;
+line-height: 20px;
+
+color: #262626;
+
+}
+
+
+.submit{
+
+
+background: #13C2C2;
+left: 177px;
+top: 19px;
+width: 540px;
+height: 46px;
+
+margin-left:130px;
+/* Regular/20px | 28px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 28px;
+
+color: #FFFFFF;
+/* Inside auto layout */
+flex: none;
+
+border:none;
+margin-top:-5px;
+}
+.submit-register{
+
+
+background: #13C2C2;
+left: 177px;
+top: 19px;
+width: 540px;
+height: 46px;
+
+margin-left:130px;
+/* Regular/20px | 28px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 28px;
+
+color: #FFFFFF;
+/* Inside auto layout */
+flex: none;
+
+border:none;
+margin-top:-30px;
+}
+
+
+.password-rules{
+/* Password Should Contain At least : One Number One Capital Letter One Special Character */
+width: 189px;
+height: 55px;
+/* Semibold/16px | 24px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 20px;
+/* or 167% */
+/* Gray / gray-9 */
+color: #262626;
+padding-top:15px;
+margin-bottom:27px;
+
+
+
+margin-top:-60px;
+}
+.password-intro{
+
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 12px;
+line-height: 20px;
+/* or 167% */
+
+/* Gray / gray-9 */
+color: #262626;
+
+
+}
+
+.already-signed{
+/* Already a User Log-in */
+
+height: 22px;
+/* Regular/14px | 22px */
+
+
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 22px;
+/* identical to box height, or 157% */
+/* Gray / gray-9 */
+color: #262626;
+/* Inside auto layout */
+text-align: center;
+margin-left: 135px ;
+margin-top:-9px;
+   
+}
+
+.container-signin{
+  display:flex;
+  flex-direction: row;
+  height:100%;
+  min-height: 900px;
+}
+
+.full-page{
+  height:100%;
+  min-height: 900px;
+}
+
+.div-left-signin{
+  flex: 1 1 calc(50% - 0px);
+
+}
+.div-right-signin{
+  flex: 1 1 calc(50% - 0px);
+  
+  padding-top: 200px;;
+
+}
+
+.add-business{
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 42px 156px;
+gap: 8px;
+width: 550px;
+height: 100px;
+background: #FFFFFF;
+border-radius: 16px;
+font-size: 23px;
+font-family: 'Roboto';
+font-weight: 600;
+margin-bottom:15px;
+
+
+}
+.already-signed-container{
+  text-align: right;
+  justify-content: right;
+ 
+}
+.a-login{
+  color: rgb(21, 21, 126);
+  text-decoration: underline;
+}
+.bus-type{
+  width:20px;
+  height:auto;
+  margin-right:5px;
+}
+
+@media (max-width: 1600px) {
+  .form {
+    margin-left: -70px;
+    padding-left: 0px;
+    margin-right:70px;
+  
+  }
+}
+
+
+
+
+
+
+
+
+

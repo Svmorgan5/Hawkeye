@@ -1,0 +1,218 @@
+.card-container{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom:20px;
+    margin-left:20px;
+    margin-right:20px;
+}
+
+.dash-board-dash-card{
+    padding-top:15px;
+    flex: 1 1 calc(33.33% - 10px);
+}
+
+
+
+
+.card{
+box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+padding: 0px;
+/* min-width: 250px; */
+height: 205px;
+/* Gray / gray-1 */
+background: #FFFFFF;
+/* Gray / gray-5
+Border
+*/
+border: 1px solid #D9D9D9;
+border-radius: 2px;
+margin-left:27px;
+
+}
+
+
+.card-head{
+    display: flex;
+    flex-direction: row;
+    gap:30%;
+    padding: 16px 24px;
+   
+    /* min-width: 324px; */
+    height: 56px;
+    /* Inside auto layout */
+    border-bottom: 1px solid #D9D9D9;
+
+
+/* Semibold/16px | 24px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height, or 150% */
+/* Gray / gray-9 */
+color: #262626;
+
+}
+.card-button{
+    /* Button */
+text-align: right;
+    justify-content: right;
+width: 30%;
+height: 22px;
+
+/* Regular/14px | 22px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 22px;
+/* identical to box height, or 157% */
+
+/* Cyan / cyan-7 */
+color: #08979C;
+
+}
+.card-body{
+    display: flex;
+    flex-direction: row;
+    padding: 0px;
+    padding-top:30px;
+    padding-bottom: 30px;
+    color: #262626;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+}
+
+
+
+
+.card-image{
+    width:120px;
+    height:auto;
+    object-fit: cover;
+    padding:6px;
+    padding-left:20px;
+    
+}
+.card-text{
+    font-family: 'Roboto';
+    font-weight: 500;
+    padding:10px;
+    font-size: 14px;
+    
+}
+
+
+
+.dashboard-head{
+padding-left: 47px;
+padding-bottom: 5px;
+/* Semibold/24px | 32px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 24px;
+line-height: 32px;
+/* or 133% */
+display: flex;
+align-items: center;
+
+/* Gray / gray-9 */
+color: #262626;
+
+
+}
+.breadcrumb{
+
+/* Breadcrumb Link */
+padding-left: 47px;
+padding-bottom:30px;
+padding-top:20px;
+width: 68px;
+height: 22px;
+
+/* Regular/14px | 22px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 22px;
+/* identical to box height, or 157% */
+
+/* Gray / gray-7 */
+color: #8C8C8C;
+
+
+
+
+}
+.split-div{
+    width:70%;
+    
+}
+.a{
+    text-decoration: none;
+    
+    
+}
+.cameras{
+    display:flex;
+    flex-direction: row;
+    margin-left:22px;
+    justify-content: space-between;
+    min-width:90%;
+    margin-right:20px;
+}
+.camera-frame{
+    padding-left:25px;
+    width:15%;
+    
+}
+.camera-button{
+/* Button */
+margin-top:7px;
+width: 134px;
+height: 32px;
+text-align: center;
+justify-content: center;
+
+/* Cyan / cyan-7 */
+border: 1px solid #08979C;
+border-radius: 2px;
+
+
+/* Regular/14px | 22px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 22px;
+/* identical to box height, or 157% */
+background-color: #FFFFFF;
+/* Cyan / cyan-7 */
+color: #08979C;
+margin-right:-3px;
+margin-top:10px;
+
+}
+.camera-button:hover{
+    background-color: #08979C;
+    color: #FFFFFF;
+    cursor:pointer;
+}
+.double{
+    width:550px;
+}
+.camera-button-holder{
+    text-align: right;
+    width:98.2%;
+}

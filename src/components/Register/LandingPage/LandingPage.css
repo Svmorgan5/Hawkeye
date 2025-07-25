@@ -1,0 +1,139 @@
+
+
+.desktop-header{
+display:flex;
+flex-direction: row;
+width: 100%;  
+height:64px;
+background: #032B3A;
+ justify-content: right;
+ padding-right:30px;
+
+}
+.desktop-footer{
+display:flex;
+flex-direction: row;
+width: 100%;  
+height:150px;
+background: #032B3A;
+ justify-content: right;
+ padding-right:30px;
+ margin-top:-10px;
+ justify-content: left;
+ overflow: hidden;
+}
+.header-container-right{
+    /* Header buttons */
+    /* Auto layout */
+   
+   
+    align-items: center;
+    padding: 0px;
+
+    width: 100%;
+ 
+    top: 3px;
+    
+}
+
+
+.a-landing{
+    color:white;
+}
+
+.landing-sign-up{
+    /* Header Button */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 4px 29px;
+border:none;
+width: 120px;
+height: 40px;
+
+background: #26A2CF;
+
+
+/* Button */
+
+
+
+/* Regular/14px | 22px */
+font-family: 'Roboto';
+font-style: normal;
+
+font-size: 16px;
+line-height: 22px;
+/* identical to box height, or 157% */
+/* Button */
+
+
+
+
+color: #000000;
+
+}
+.landing-page-container{
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+   
+    overflow-y: hidden;
+     overflow-x: hidden;
+}
+.desktop-middle{
+    flex:1;
+  
+   
+ 
+}
+
+.desktop-image{
+    max-height:625px;
+}
+
+@media screen and (max-width:1800px) {
+.desktop-image{
+    min-width:100%;
+}} 
+
+.desktop-footer-left{
+    text-align:left;
+   
+  
+}
+
+.desktop-logo-image{
+   height:100px;
+   width:auto;
+   
+}
+.HAWKEYEEDS-desktop{
+
+height: 1px;
+margin:40px;
+width:800px;
+font-family: 'Audiowide';
+font-style: normal;
+font-weight: 400;
+font-size: 30px;
+line-height: 10px;
+color: #13C2C2;
+
+margin-top:30px;
+
+padding-bottom:15px;
+
+
+}
+@media screen and (max-width:600px){
+.HAWKEYEEDS-desktop{
+width:400px;
+font-size: 24px;
+margin-top:28px;
+}
+}

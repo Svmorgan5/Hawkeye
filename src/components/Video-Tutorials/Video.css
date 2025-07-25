@@ -1,0 +1,270 @@
+
+.video{
+    margin-bottom:15px;
+    padding-left:10px;
+    text-align:left;
+    align-content: center;
+    
+}
+.video-search{
+    width:220px;
+    height:27px;
+    border-radius: 2px 0px 0px 2px;
+    border-width: 1px;
+    border-color: rgb(165, 165, 165);
+    padding:5px;
+}
+
+
+
+.video-header{
+    display: flex;
+    flex-direction: column;
+    width:89%;
+    
+    
+}
+
+.video-header-right{
+    display:flex;
+    gap:2px;
+    
+    margin-top: 20px;;
+    
+    
+}
+.video-header-top{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.video-search-cancel{
+    height:27px;
+    width:15px;
+    background-color: white;
+    border-left:none;
+    padding:3px;
+    padding-top:5px;
+    padding-bottom:6px;
+    margin-left:0px;
+    border-radius: 0px 2px 2px 0px;
+    color: #727171;
+    border-width: 1px;
+    border-color: rgb(165, 165, 165);
+    cursor:pointer;
+}
+.video-search-cancel:hover{
+    
+    color: #2b2a2a;
+    font-weight: 500;
+    background-color: #adacac;
+    
+}
+.video-search-wrapper{
+    display:flex;
+    flex-direction: row;
+    width:300px;
+}
+
+.video-heading{
+    /* Title Wrapper */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 0px;
+gap: 12px;
+
+width: 169px;
+height: 28px;
+
+/* Title */
+
+width: 133px;
+height: 28px;
+
+/* Regular/20px | 28px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 28px;
+/* identical to box height, or 140% */
+display: flex;
+align-items: center;
+
+/* Gray / gray-9 */
+color: #262626;
+
+
+
+}
+.video-tutorials-body{
+    margin-left:45px;
+}
+.video-intro-par{
+    /* Conveniently foster sticky technology and covalent platforms. Synergistically seize client-centered methods of empowerment whereas cross functional interfaces. Interactively conceptualize corporate technologies via future-proof growth strategies. Synergistically seize client-centered methods of empowerment whereas cross functional interfaces. Interactively conceptualize corporate technologies via future-proof growth strategies. */
+margin-top:20px;
+width: 1019px;
+height: 44px;
+
+/* Regular/14px | 22px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 22px;
+/* or 157% */
+
+/* Gray / gray-7 */
+color: #8C8C8C;
+
+
+
+
+}
+.video-choice-container{
+    margin-top:20px;
+    display:flex;
+    width:100%;
+    flex-wrap:wrap;
+    background-color:rgb(246, 246, 246);
+   
+    border-radius:3px;
+    
+}
+.video-choice-item{
+    flex: 1 1 calc(18% - 10px);
+    padding: 20px;
+ 
+    text-align:center;
+    /* Tag */
+
+        width: 130px;
+        height: 60px;
+
+        /* Regular/12px | 20px */
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 15px;
+        /* identical to box height, or 167% */
+
+        /* Gray / gray-9 */
+        color: #262626;
+
+
+}
+.video-card-holder{
+    margin-left:10px;
+    margin-top:20px;
+    padding-top:0px;
+    display:flex;
+    flex-direction:row;
+    width:90%;
+    justify-content: space-between;
+   text-align: center;
+}
+.video-card-button-holder{
+    margin-top:10px;
+    display:flex;
+    flex-direction:row;
+    width:87.5%;
+    justify-content: right;
+   text-align: right;
+}
+.video-card-button{
+    /* Button */
+    display:flex;
+text-align: center;
+    justify-content: center;
+max-width:70px;
+height: 22px;
+
+/* Regular/14px | 22px */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 22px;
+/* identical to box height, or 157% */
+border-width: 1px;
+/* Cyan / cyan-7 */
+color: #08979C;
+background-color: rgb(255, 255, 255);
+border-color:#08979C;
+padding-right:15px;
+
+}
+/* a{
+    text-decoration: none;
+    text-transform: none;
+    
+}
+.member-add{
+    display: flex;
+flex-direction: column;
+align-items: center;
+padding: 5px 16px;
+height:40px;
+gap: 8px;
+cursor:pointer;
+
+
+align-items: right;
+background: #13C2C2;
+color:white;
+border-radius: 0px 2px 2px 0px;
+border:none;
+
+}
+.member-add:hover{
+
+background: #0c9c9c;
+font-weight:600;
+font-size: 13px;
+
+
+} */
+
+
+
+
+
+/* .delete{
+    color:rgb(250, 250, 250);
+    background-color: rgb(177, 72, 72);
+    border-radius:2px;
+    border:none;
+    padding:6px;
+    font-weight: 500;
+    margin:2px;
+    font-size: 14px;
+    opacity:70%;
+    
+}
+.active{
+    
+    color:rgb(250, 250, 250);
+    background-color:#5c6fae;
+    border-radius:2px;
+    border:none;
+    padding:6px;
+    font-weight: 500;
+    margin:2px;
+    font-size: 14px;
+    opacity:70%;
+}
+.active:hover,.delete:hover,.edit:hover{
+    opacity:100%;
+}
+
+.profile-image{
+    width:45px;
+    height:auto;
+    cursor: pointer;
+}
+ */ 
