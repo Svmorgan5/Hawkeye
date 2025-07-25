@@ -98,8 +98,8 @@ const Members = () => {
   }
 
   const deleteMember = async (id: any) => {
-    const confirmed = window.confirm('Are you sure you want to delete this member? This action cannot be undone!')
-    if (confirmed) {
+    // const confirmed = window.confirm('Are you sure you want to delete this member? This action cannot be undone!')
+    // if (confirmed) {
       try {
         await axios.delete(`http://127.0.0.1:5000/members/${id}`, {
           headers: {
@@ -112,7 +112,7 @@ const Members = () => {
         console.error('Error message:', error.message)
       }
     }
-  }
+  // }
 
   const editMember = (id: number) => {
     navigate(`/editmember/${id}`)
