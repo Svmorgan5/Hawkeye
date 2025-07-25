@@ -13,6 +13,7 @@ from backend.application.blueprints.member import members_bp
 from backend.application.blueprints.alert import alerts_bp
 from backend.application.blueprints.institutions import institutions_bp
 
+
 socketio = SocketIO()
 
 # Swagger setup
