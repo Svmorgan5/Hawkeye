@@ -2,6 +2,7 @@
 import  {createContext, useContext, useReducer} from 'react';
 import type { ReactNode } from 'react'
 
+
 //Define action types
 type TokenAction =
 | {type:"SET_TOKEN"; payload: string}
@@ -21,6 +22,8 @@ interface TokenState {
     user_name:string|null;
     user_institution_id:number|null;
     user_image:string|null;
+    my_url: string;
+
 
 
 
@@ -35,6 +38,7 @@ const initialState: TokenState = {
     user_name:'',
     user_institution_id:0,
     user_image:null,
+    my_url: 'https://hawkeye-6uxy.onrender.com',
 }
 
 //Reducer function

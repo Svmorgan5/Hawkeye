@@ -22,9 +22,14 @@ import { useInstitutionContext } from '../../Context/InstitutionContext';
 
 
 
+
+
 const Dashboard = () => {
+
+  
+
   const navigate = useNavigate();
-  const {token, user_id, user_name, user_institution_id, user_image, dispatch:tokenDispatch} = useTokenContext();
+  const {token, my_url, user_id, user_name, user_institution_id, user_image, dispatch:tokenDispatch} = useTokenContext();
   const {instId,instName,instType,instAddress,instPhone,instLogo,instImage1,instImage2,dispatch:institutionDispatch} = useInstitutionContext();
   useEffect(()=>{
     {!token &&(navigate('/'))}
@@ -36,11 +41,12 @@ const Dashboard = () => {
           if(instId)
             return;
             try {
-              const response = await axios.get("http://127.0.0.1:5000/institutions/", {
+              const response = await axios.get(`${my_url}/institutions/`, {
               headers: {
               'Authorization': `Bearer ${token}`
                       }
                 })
+              
         
         institutionDispatch({type:"SET_INST_ID",payload:response.data.id});
         institutionDispatch({type:"SET_INST_NAME",payload:response.data.name})

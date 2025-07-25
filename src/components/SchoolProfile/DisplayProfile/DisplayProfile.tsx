@@ -6,6 +6,9 @@ import { useInstitutionContext } from "../../../Context/InstitutionContext"
 import './DisplayProfiles.css'
 import UploadPhoto from '../UploadPhoto/UploadPhoto'
 import { useNavigate } from 'react-router-dom'
+import { useTokenContext } from '../../../Context/Context'
+
+
 type Institution = {
     id: number;
     name: string;
@@ -19,15 +22,16 @@ type Institution = {
 const DisplayProfile:React.FC = () =>{
 
 
+    const {my_url} = useTokenContext();
     
-   const {instId,instName,instType,instAddress,instPhone,instLogo,instImage1,instImage2,dispatch:institutionDispatch} = useInstitutionContext();
+    const {instId,instName,instType,instAddress,instPhone,instLogo,instImage1,instImage2,dispatch:institutionDispatch} = useInstitutionContext();
     const token = sessionStorage.getItem('jwtToken_key')
     const navigate= useNavigate();
     const [users,setUsers] = useState<any>([])
         useEffect(()=>{
             const getUsers = async () => {
             try {
-            const response = await axios.get("http://127.0.0.1:5000/institutions/users", {
+            const response = await axios.get(`${my_url}/institutions/users`, {
                 headers: {
                 'Authorization': `Bearer ${token}`
                 }

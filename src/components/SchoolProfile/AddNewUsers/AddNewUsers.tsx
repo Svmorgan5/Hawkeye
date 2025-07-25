@@ -7,16 +7,21 @@ import './AddNewUsers.css'
 import axios from 'axios'
 import { useTokenContext } from '../../../Context/Context';
 import { useNavigate } from 'react-router-dom'
+
+
+
 const AddNewUsers = () => {
   
   //temp - should be deleted
+
+
 const [name,setName] =useState<string>('')
 const [phone,setPhone] = useState<string>('')
 const [email,setEmail] = useState<string>('')
 const [role,setRole] = useState<string>('')
 const navigate = useNavigate()
   
-  const {token, user_institution_id, user_id} = useTokenContext()
+  const {token, my_url, user_institution_id, user_id} = useTokenContext()
   const {instId,instName,instType,instAddress,instPhone,instLogo,instImage1,instImage2,dispatch:institutionDispatch} = useInstitutionContext();
   
 
@@ -71,7 +76,7 @@ const navigate = useNavigate()
     e.preventDefault();
  
     try {
-      await axios.post(`http://127.0.0.1:5000/institutions/${instId}/invite_user`, {
+      await axios.post(`${my_url}/institutions/${instId}/invite_user`, {
         // id:instId,
         name: `${name}` ,
         phone: `${phone}`,

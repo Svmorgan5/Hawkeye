@@ -9,6 +9,7 @@ import {toast} from 'react-toastify'
 
 import { useEffect, useState } from 'react'
 // import EditMembers from './Edit Members/EditMembers'
+import { useTokenContext } from '../../../Context/Context'
 
 type Member = {
   id: any,
@@ -21,7 +22,17 @@ type Member = {
   isVisible: boolean
 }
 
-const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000/'
+
+
+const Members = () => {
+  const {my_url} = useTokenContext();
+  
+  const [members, setMembers] = useState<Member[]>([])
+  const [activeState, setActiveState] = useState<boolean>(true)
+  const [search, setSearch] = useState<string>('')
+  const navigate = useNavigate()
+  const token = sessionStorage.getItem('jwtToken_key')
+  const baseURL = import.meta.env.VITE_API_URL || `${my_url}`;
 
 function normalizeImageUrl(imagePath: string): string {
   if (!imagePath) return ''
@@ -29,14 +40,6 @@ function normalizeImageUrl(imagePath: string): string {
   const prefix = imagePath.startsWith('/') ? '' : '/static/'
   return `${baseURL}${prefix}${imagePath}`
 }
-
-const Members = () => {
-  const [members, setMembers] = useState<Member[]>([])
-  const [activeState, setActiveState] = useState<boolean>(true)
-  const [search, setSearch] = useState<string>('')
-  const navigate = useNavigate()
-  const token = sessionStorage.getItem('jwtToken_key')
-
   const toggleActiveState = () => {
     setActiveState(prev => !prev)
   }
@@ -65,7 +68,7 @@ const Members = () => {
 
   const getMembers = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:5000/institutions/members`, {
+      const response = await axios.get(`${my_url}/institutions/members`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -101,7 +104,7 @@ const Members = () => {
     const confirmed = window.confirm('Are you sure you want to delete this member? This action cannot be undone!')
     if (confirmed) {
       try {
-        await axios.delete(`http://127.0.0.1:5000/members/${id}`, {
+        await axios.delete(`${my_url}/members/${id}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -120,7 +123,7 @@ const Members = () => {
 
   const makeInactive = async (member: Member) => {
     try {
-      await axios.put(`http://127.0.0.1:5000/members/${member.id}`, {
+      await axios.put(`${my_url}/members/${member.id}`, {
         id: `${member.id}`,
         email: `${member.email}`,
         name: `${member.name}`,

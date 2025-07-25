@@ -6,10 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import {ToastContainer, toast} from 'react-toastify'
 import {io } from 'socket.io-client';
+improt useTokenContext
 
 const Header = () => {
 
-const {token, user_id, user_name, user_institution_id, user_image, dispatch:tokenDispatch} = useTokenContext();
+const {token, user_id, my_url, user_name, user_institution_id, user_image, dispatch:tokenDispatch} = useTokenContext();
   const {instId,instName,instType,instAddress,instPhone,instLogo,instImage1,instImage2,dispatch:institutionDispatch} = useInstitutionContext(); 
   const navigate=useNavigate(); 
   
@@ -20,7 +21,7 @@ const {token, user_id, user_name, user_institution_id, user_image, dispatch:toke
     e.preventDefault();  
        
     try {
-      await axios.post("http://127.0.0.1:5000/users/logout",{}, {
+      await axios.post(`${my_url}/users/logout`,{}, {
         headers:{
           'Authorization': `Bearer ${token}`,
         }

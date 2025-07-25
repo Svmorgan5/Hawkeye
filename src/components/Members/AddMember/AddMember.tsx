@@ -5,6 +5,8 @@ import './AddMembers.css'
 import {toast} from 'react-toastify'
 
 import { useEffect, useState} from 'react'
+import { useTokenContext } from '../../../Context/Context'
+
 
 
 type Member = {
@@ -20,6 +22,8 @@ type Member = {
 
 const AddMembers = () => {
 
+const {my_url} = useTokenContext();
+
 const [email,setEmail] = useState<string>('')
 const [name,setName] = useState<string>('')
 const [last,setLast] = useState<string>('')
@@ -32,7 +36,7 @@ const token = sessionStorage.getItem('jwtToken_key')
     e.preventDefault();  
        
     try {
-      await axios.post("http://127.0.0.1:5000/members/", {
+      await axios.post(`${my_url}/members/`, {
 
         email: `${email}`,
         name: `${name} ${last}`,

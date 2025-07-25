@@ -8,6 +8,9 @@ import {toast} from 'react-toastify';
 import axios from 'axios';
 import { useTokenContext } from '../../../Context/Context';
 import { useNavigate } from 'react-router-dom'
+
+
+
 const Profile = () => {
   const [busName,setBusName] = useState<string>('')
   const [address,setAddress] = useState<string>('')
@@ -18,7 +21,7 @@ const Profile = () => {
   const [mapOneFile, setMapOneFile] = useState<File|null>(null)
   const [mapTwoFile, setMapTwoFile] = useState<File|null>(null)
   const [isSchool,setIsSchool] = useState<boolean>(true)
-  const {token, user_institution_id, user_id} = useTokenContext()
+  const {token, user_institution_id, user_id, my_url} = useTokenContext()
   const {instId,instName,instType,instAddress,instPhone,instLogo,instImage1,instImage2,dispatch:institutionDispatch} = useInstitutionContext();
   const navigate = useNavigate();
 
@@ -32,7 +35,7 @@ const Profile = () => {
     e.preventDefault();
  
     try {
-      await axios.post("http://127.0.0.1:5000/institutions/", {
+      await axios.post(`${my_url}/institutions/`, {
         // id:instId,
         name: busName,
         is_school: isSchool,

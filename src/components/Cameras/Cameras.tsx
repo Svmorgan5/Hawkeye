@@ -4,6 +4,8 @@ import './Camera.css'
 import {useEffect, useState } from 'react'
 import axios from 'axios'
 import NewCameraBlank from './AddCamera/NewCameraBlank.tsx/NewCameraBlank'
+import { useTokenContext } from '../../Context/Context'
+
 
 
 type Camera = {
@@ -20,10 +22,12 @@ const Cameras = () => {
   const token=sessionStorage.getItem('jwtToken_key')
   const [search,setSearch] = useState<string>('')
   const [cameraTrue,setCameraTrue] = useState<boolean>(false)
+  const {my_url} = useTokenContext();
+
   useEffect(()=> {
     const getCameras = async() =>{
     try {
-      const response = await axios.get("http://127.0.0.1:5000/institutions/cameras", {
+      const response = await axios.get(`${my_url}/institutions/cameras`, {
         headers:{
           'Authorization': `Bearer ${token}`
         }

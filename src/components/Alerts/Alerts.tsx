@@ -7,6 +7,8 @@ import { useTokenContext } from '../../Context/Context';
 import { useInstitutionContext } from '../../Context/InstitutionContext';
 
 
+
+
 type Alert = {
     id:any,
     code:string,
@@ -24,14 +26,15 @@ const Alerts = () => {
   const [search,setSearch] = useState<string>('')
   const [alertState, setAlertState] = useState<string>('all')
 
- const {token, user_id, user_name, user_institution_id, user_image, dispatch:tokenDispatch} = useTokenContext();
+ const {token, user_id, user_name, user_institution_id, user_image,my_url, dispatch:tokenDispatch} = useTokenContext();
+
    const {instId,instName,instType,instAddress,instPhone,instLogo,instImage1,instImage2,dispatch:institutionDispatch} = useInstitutionContext(); 
  
  
 
   const getAlerts =  async() =>{
     try {
-      const response = await axios.get("http://127.0.0.1:5000/alerts/", {
+      const response = await axios.get(`${my_url}/alerts/`, {
         headers:{
           'Authorization': `Bearer ${token}`
         }

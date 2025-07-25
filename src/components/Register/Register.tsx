@@ -4,9 +4,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TheSignUp from '../../pages/TheSignUp/TheSignUp';
 import {toast} from 'react-toastify'
+import { useTokenContext } from '../../Context/Context';
 
    
 const Register:React.FC = () =>{
+     const { my_url } = useTokenContext();
      const [firstName,setFirstName] = useState<string>('')
     const [lastName,setLastName] = useState<string>('')
     const [email,setEmail] = useState<string>('')
@@ -65,7 +67,7 @@ type User = {
         if(submitData===true)
         {
                 try {
-                await axios.post("http://127.0.0.1:5000/users/", {
+                await axios.post(`${my_url}/users/`, {
 
                 email: `${email}`,
                 name: `${firstName} ${lastName}`,

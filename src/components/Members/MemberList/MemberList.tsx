@@ -5,10 +5,13 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import {toast} from 'react-toastify'
+import { useTokenContext } from '../../../Context/Context'
+
 
 
 
 const MemberList = () => {
+const {my_url} = useTokenContext();
 const token = sessionStorage.getItem('jwtToken_key')
 const navigate = useNavigate();
 const [file,setFile] = useState<File|null>(null)
@@ -27,7 +30,7 @@ const handleUpload = async () => {
         formData.append('file',file);
 
         try{
-            const response = await fetch('http://localhost:5000/members/upload',{
+            const response = await fetch(`${my_url}/members/upload`,{
                 method:'POST',
                  headers:{
                     'Authorization':  `Bearer ${token}`,

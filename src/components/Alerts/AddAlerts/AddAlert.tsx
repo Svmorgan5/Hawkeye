@@ -41,7 +41,7 @@ const [camera,setCamera] = useState<string|null>(null)
        
     try {
       const utcTime = time? new Date(time).toISOString():null;
-      await axios.post("http://127.0.0.1:5000/alerts/", {
+      await axios.post(`${API}/alerts/`, {
           code:`${code}`,
           location:`${location}`,
           timestamp: utcTime,

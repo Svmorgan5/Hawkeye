@@ -6,14 +6,17 @@ import {toast} from 'react-toastify'
 
 
 
+
+
 const JoinSocket = () => {
+  const { my_url } = useTokenContext();
   const { instId } = useInstitutionContext();
   const socketRef = useRef<any>(null);
 
   useEffect(() => {
     if (!instId || instId === 0) return;
 
-    socketRef.current = io('http://localhost:5000', {
+    socketRef.current = io(`${my_url}`, {
       transports: ['websocket'],
       reconnection: true,
     });

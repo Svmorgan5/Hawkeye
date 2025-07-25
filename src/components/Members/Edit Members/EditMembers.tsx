@@ -5,6 +5,8 @@ import {toast} from 'react-toastify'
 
 import { useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTokenContext } from '../../../Context/Context'
+
 
 type Member = {
     id:any,
@@ -24,6 +26,8 @@ type Props = {
 }
 const EditMembers: React.FC<Props> = ({id}) => {
     console.log(id)
+
+    const {my_url} = useTokenContext();
     
     const [member, setMember] = useState<Member>()
     const [email,setEmail] = useState<string>('')
@@ -39,7 +43,7 @@ const EditMembers: React.FC<Props> = ({id}) => {
   useEffect(()=> {
     const getMembers = async() =>{
     try {
-      const response = await axios.get("http://127.0.0.1:5000/members/", {
+      const response = await axios.get(`${my_url}/members/`, {
         headers:{
           'Authorization':  `Bearer ${token}`,
         }
@@ -80,7 +84,7 @@ const EditMembers: React.FC<Props> = ({id}) => {
     e.preventDefault();  
        
     try {
-      await axios.put(`http://127.0.0.1:5000/members/${id}`, {
+      await axios.put(`${my_url}/members/${id}`, {
         id:`${id}`,
         email: `${email}`,
         name: `${name}`,

@@ -5,7 +5,7 @@ import './AddCamera.css'
 
 import {toast} from 'react-toastify'
 import { useEffect, useState} from 'react'
-
+import { useTokenContext } from '../../../Context/Context';
 
 type Camera = {
     id:any,
@@ -23,6 +23,7 @@ const [URL,setURL] = useState<string>('')
 const token= sessionStorage.getItem('jwtToken_key')
 const [location,setLocation] = useState<string>('')
 const [name,setName] = useState<string>('')
+const {my_url} = useTokenContext();
 
 
   
@@ -30,7 +31,7 @@ const [name,setName] = useState<string>('')
     e.preventDefault();  
        
     try {
-      await axios.post("http://127.0.0.1:5000/cameras/", {
+      await axios.post(`${my_url}/cameras/`, {
           stream_url:`${URL}`,
           location:`${location}`,
           name:`${name}`

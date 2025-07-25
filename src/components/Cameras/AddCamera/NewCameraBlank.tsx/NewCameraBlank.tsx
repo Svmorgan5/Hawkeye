@@ -1,6 +1,7 @@
 
 import camera from '../../../../assets/camera.png'
 
+
        
 
 const NewCameraBlank = () => {

@@ -2,9 +2,11 @@ import axios from "axios"
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {toast} from 'react-toastify'
+import { useTokenContext } from "../../../Context/Context";
+
 
 const AcceptInvite: React.FC = () => {
-
+    const { my_url } = useTokenContext();
     const { token } = useParams();
     const [inviteResults, setInviteResults] = useState<any>(null)
     const [name,setName] = useState<string>('')
@@ -27,7 +29,7 @@ const AcceptInvite: React.FC = () => {
     const handleSubmit = async(e:React.FormEvent) => {
         e.preventDefault();
         try {
-            const results = await axios.post(`http://localhost:5000/institutions/invite/accept/${token}`,
+            const results = await axios.post(`${my_url}/institutions/invite/accept/${token}`,
                 {
                     name:`${name}`,
                     password:`${password}`,
