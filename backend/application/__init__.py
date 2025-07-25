@@ -25,7 +25,7 @@ def create_app(config_name="ProductionConfig"):
     app = Flask(
         __name__,
         static_folder=static_folder,
-        static_url_path=''    # serve everything at root (“/”)
+        static_url_path='/static'  # serve everything at /static
     )
 
     # ─── load your config object ────────────────────────────────────────────────
