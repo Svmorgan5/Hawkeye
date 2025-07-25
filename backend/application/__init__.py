@@ -23,7 +23,7 @@ swaggerui_blueprint = get_swaggerui_blueprint(
     config={'app_name': "Hawkeye API"}
 )
 
-def create_app(config_name):
+def create_app(config_name="ProductionConfig"):
     # root of your repo
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
     # point at your Vite build output
@@ -35,6 +35,14 @@ def create_app(config_name):
         static_url_path=''   # so that “/” is served from dist/index.html
     )
 
+    from config import ProductionConfig, DevelopmentConfig, TestingConfig
+    config_map = {
+        "ProductionConfig": ProductionConfig,
+        "DevelopmentConfig": DevelopmentConfig,
+        "TestingConfig": TestingConfig,
+    }
+    app.config.from_object(config_map[config_name])
+    
     # catch‑all so React Router works
     @app.route('/', defaults={'path': ''})
     @app.route('/<path:path>')
