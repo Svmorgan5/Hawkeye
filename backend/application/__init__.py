@@ -1,7 +1,7 @@
 # backend/application/__init__.py
 
 import os
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, abort
 from flask_cors import CORS
 from flask_socketio import SocketIO
 from backend.application.models import db
