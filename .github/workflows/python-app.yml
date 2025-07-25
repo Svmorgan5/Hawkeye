@@ -1,19 +1,18 @@
-name: Hawkeye CI/CD
+name: Hawkeye CI      # ← project name
 
 on:
   push:
-    branches: [ main, dev ]
-  pull_request:
-    branches: [ main, dev ]
+    branches: [ main, dev ]   # run pipeline for either branch
 
 env:
+  PYTHON_VERSION: "3.12"
   AWS_REGION: us-east-2
-  S3_BUCKET: tech-res-project-hawkeye
+  S3_BUCKET: tech-res-project-hawkeye   # dummy bucket for Moto
 
+# ────────────────────────── BUILD ──────────────────────────
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -21,7 +20,30 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build application (placeholder)
+        run: echo "🔨 Building application …"
+
+# ────────────────────────── TEST ───────────────────────────
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Create virtual environment
+        run: |
+          python -m venv venv
+          source venv/bin/activate
 
       - name: Install dependencies
         run: |
@@ -39,34 +61,30 @@ jobs:
         run: |
           pytest -m "not live_s3" --cov=backend --cov-report=term-missing
 
-
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Build artifacts (placeholder)
-        run: echo "No Docker build—add wheels/migrations/etc. if needed"
-
+# ───────────────────────── DEPLOY ──────────────────────────
   deploy:
-    needs: build
-    if: github.ref == 'refs/heads/main'
+    needs: test
+    if: github.ref == 'refs/heads/dev'      # deploy **only** when dev passes
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+      - uses: actions/setup-python@v5
         with:
-          aws-access-key-id:     dummy
-          aws-secret-access-key: dummy
-          aws-region:            ${{ env.AWS_REGION }}
+          python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: Upload front‑end to S3
+      - name: Create virtual environment
         run: |
-          if [ -d frontend/build ]; then
-            aws s3 sync frontend/build s3://${{ env.S3_BUCKET }}/front-end/ --delete
-          fi
+          python -m venv venv
+          source venv/bin/activate
 
-      - name: Deploy application
-        run: echo "Add your deployment commands here (e.g., EB CLI, SSH, Render CLI)"
+      - name: Install dependencies (for any build‑time tasks)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Deploy to Render
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.SERVICE_ID }}
+          api-key:    ${{ secrets.RENDER_API_KEY }}

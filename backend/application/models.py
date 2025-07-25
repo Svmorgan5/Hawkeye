@@ -11,7 +11,13 @@ class Base(DeclarativeBase):
 
 # Initialize SQLAlchemy with custom base
 
-db = SQLAlchemy(model_class=Base)
+db = SQLAlchemy(model_class=Base,
+                engine_options={
+        "pool_pre_ping": True,  # ping before each checkout
+        "pool_recycle": 280,    # recycle idle conns < Render 5‑min timeout
+        # "pool_size": 10,      # optional tuning
+        # "max_overflow": 20,
+    },)
 
 # Many-to-many tables linking users/members to institutions
 user_institution = Table(
