@@ -20,7 +20,7 @@ socketio = SocketIO()
 def create_app(config_name="ProductionConfig"):
     # ─── point at your project root and Vite build ─────────────────────────────
     project_root  = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-    static_folder = os.path.join(project_root, 'Hawkeye', 'dist')
+    static_folder = os.path.join(project_root, 'static')
 
     app = Flask(
         __name__,
