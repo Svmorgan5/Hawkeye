@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
-  title: "Hawkeye API"
-  description: "This is a API to manage project Hawkeye"
+  title: "Hawkeye Security Management API"
+  description: "Comprehensive API for managing institutional security through real-time camera monitoring, member tracking, and automated alert systems"
   version: "1.0.0"
 host: "hawkeye-6uxy.onrender.com"
 schemes:
@@ -15,4 +15,518 @@ securityDefinitions:
     type: apiKey
     name: Authorization
     in: header
+    description: "JWT token for authentication. Format: Bearer {token}"
+
 paths:
+  # User Management
+  /users/:
+    post:
+      summary: "Register a new user"
+      description: "Create a new user account with email, password, and role assignment"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: body
+          name: user
+          required: true
+          schema:
+            type: object
+            required:
+              - name
+              - email
+              - password
+              - role
+            properties:
+              name:
+                type: string
+                example: "John Doe"
+              email:
+                type: string
+                format: email
+                example: "john.doe@example.com"
+              password:
+                type: string
+                minLength: 8
+                example: "SecurePass123!"
+              phone:
+                type: string
+                example: "555-0123"
+              role:
+                type: string
+                enum: ["Admin", "Manager", "User"]
+                example: "Admin"
+      responses:
+        201:
+          description: "User created successfully"
+        400:
+          description: "Invalid input data"
+    get:
+      summary: "Get all users"
+      description: "Retrieve a list of all registered users (Admin only)"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "List of users retrieved successfully"
+        401:
+          description: "Unauthorized access"
+
+  /users/login:
+    post:
+      summary: "User login"
+      description: "Authenticate user credentials and return JWT token"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: body
+          name: credentials
+          required: true
+          schema:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+                format: email
+                example: "john.doe@example.com"
+              password:
+                type: string
+                example: "SecurePass123!"
+      responses:
+        200:
+          description: "Login successful, JWT token returned"
+        401:
+          description: "Invalid credentials"
+
+  /users/{user_id}/upload-image:
+    post:
+      summary: "Upload user profile image"
+      description: "Upload and store user profile image to AWS S3"
+      consumes:
+        - "multipart/form-data"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: integer
+          description: "User ID"
+        - name: file
+          in: formData
+          required: true
+          type: file
+          description: "Image file to upload"
+      responses:
+        200:
+          description: "Image uploaded successfully"
+        400:
+          description: "Invalid file format"
+        401:
+          description: "Unauthorized access"
+
+  # Institution Management
+  /institutions/:
+    post:
+      summary: "Create institution"
+      description: "Register a new educational institution or organization"
+      consumes:
+        - "application/json"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: body
+          name: institution
+          required: true
+          schema:
+            type: object
+            required:
+              - name
+              - is_school
+            properties:
+              name:
+                type: string
+                example: "Springfield University"
+              is_school:
+                type: boolean
+                example: true
+              address:
+                type: string
+                example: "123 Education St, Springfield"
+      responses:
+        201:
+          description: "Institution created successfully"
+        401:
+          description: "Unauthorized access"
+    get:
+      summary: "Get institution information"
+      description: "Retrieve details about the user's associated institution"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Institution information retrieved"
+        404:
+          description: "Institution not found"
+
+  /institutions/{institution_id}/upload-image:
+    post:
+      summary: "Upload institution logo"
+      description: "Upload institution logo or banner image to AWS S3"
+      consumes:
+        - "multipart/form-data"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: institution_id
+          in: path
+          required: true
+          type: integer
+        - name: file
+          in: formData
+          required: true
+          type: file
+      responses:
+        200:
+          description: "Logo uploaded successfully"
+        401:
+          description: "Unauthorized access"
+
+  # Member Management
+  /members/:
+    post:
+      summary: "Add new member"
+      description: "Register a new member (student, staff, visitor) to the institution"
+      consumes:
+        - "application/json"
+        - "multipart/form-data"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: body
+          name: member
+          schema:
+            type: object
+            required:
+              - name
+              - email
+              - role
+            properties:
+              name:
+                type: string
+                example: "Jane Smith"
+              email:
+                type: string
+                example: "jane.smith@student.edu"
+              role:
+                type: string
+                enum: ["Student", "Staff", "Visitor"]
+                example: "Student"
+              groups:
+                type: string
+                example: "Computer Science Class A"
+      responses:
+        201:
+          description: "Member added successfully"
+        401:
+          description: "Unauthorized access"
+    get:
+      summary: "Get all members"
+      description: "Retrieve list of all members in the institution"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Members list retrieved"
+        401:
+          description: "Unauthorized access"
+
+  /members/{member_id}:
+    get:
+      summary: "Get member details"
+      description: "Retrieve detailed information about a specific member"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: member_id
+          in: path
+          required: true
+          type: integer
+          description: "Member ID"
+      responses:
+        200:
+          description: "Member details retrieved"
+        404:
+          description: "Member not found"
+
+  # Camera Management
+  /cameras/:
+    post:
+      summary: "Add security camera"
+      description: "Register a new security camera for monitoring"
+      consumes:
+        - "application/json"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: body
+          name: camera
+          required: true
+          schema:
+            type: object
+            required:
+              - name
+              - location
+              - snapshot_url
+            properties:
+              name:
+                type: string
+                example: "Main Entrance Camera"
+              location:
+                type: string
+                example: "Building A - Front Door"
+              snapshot_url:
+                type: string
+                format: uri
+                example: "http://192.168.1.100/snapshot.jpg"
+              stream_url:
+                type: string
+                format: uri
+                example: "rtsp://192.168.1.100/stream"
+      responses:
+        201:
+          description: "Camera added successfully"
+        401:
+          description: "Unauthorized access"
+    get:
+      summary: "Get all cameras"
+      description: "Retrieve list of all registered security cameras"
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Camera list retrieved"
+        401:
+          description: "Unauthorized access"
+
+  /cameras/{camera_id}/snapshot:
+    get:
+      summary: "Get camera snapshot"
+      description: "Capture and retrieve current snapshot from security camera, automatically archived to AWS S3"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: camera_id
+          in: path
+          required: true
+          type: integer
+          description: "Camera ID"
+      produces:
+        - "image/jpeg"
+        - "image/png"
+      responses:
+        200:
+          description: "Snapshot captured and returned"
+          headers:
+            X-S3-URL:
+              type: string
+              description: "AWS S3 URL where snapshot is archived"
+        404:
+          description: "Camera not found"
+        500:
+          description: "Failed to capture snapshot"
+
+  # Alert Management
+  /alerts/:
+    post:
+      summary: "Create security alert"
+      description: "Create a new security alert with scheduling and notification options"
+      consumes:
+        - "application/json"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: body
+          name: alert
+          required: true
+          schema:
+            type: object
+            required:
+              - title
+              - message
+              - alert_type
+            properties:
+              title:
+                type: string
+                example: "Security Breach Alert"
+              message:
+                type: string
+                example: "Unauthorized access detected in Building A"
+              alert_type:
+                type: string
+                enum: ["Emergency", "Warning", "Info"]
+                example: "Warning"
+              scheduled_time:
+                type: string
+                format: date-time
+                example: "2024-12-01T09:00:00Z"
+              recurring:
+                type: boolean
+                example: false
+      responses:
+        201:
+          description: "Alert created successfully"
+        401:
+          description: "Unauthorized access"
+    get:
+      summary: "Get all alerts"
+      description: "Retrieve list of all security alerts for the institution"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: status
+          in: query
+          type: string
+          enum: ["pending", "sent", "all"]
+          description: "Filter alerts by status"
+        - name: alert_type
+          in: query
+          type: string
+          enum: ["Emergency", "Warning", "Info"]
+          description: "Filter alerts by type"
+      responses:
+        200:
+          description: "Alerts list retrieved"
+        401:
+          description: "Unauthorized access"
+
+  /alerts/{alert_id}:
+    get:
+      summary: "Get alert details"
+      description: "Retrieve detailed information about a specific alert"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: alert_id
+          in: path
+          required: true
+          type: integer
+          description: "Alert ID"
+      responses:
+        200:
+          description: "Alert details retrieved"
+        404:
+          description: "Alert not found"
+    put:
+      summary: "Update alert"
+      description: "Modify an existing alert (before it's sent)"
+      consumes:
+        - "application/json"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: alert_id
+          in: path
+          required: true
+          type: integer
+        - in: body
+          name: alert_update
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              message:
+                type: string
+              alert_type:
+                type: string
+                enum: ["Emergency", "Warning", "Info"]
+              scheduled_time:
+                type: string
+                format: date-time
+      responses:
+        200:
+          description: "Alert updated successfully"
+        404:
+          description: "Alert not found"
+    delete:
+      summary: "Delete alert"
+      description: "Cancel and delete a pending alert"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: alert_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        204:
+          description: "Alert deleted successfully"
+        404:
+          description: "Alert not found"
+
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      email:
+        type: string
+      role:
+        type: string
+      created_at:
+        type: string
+        format: date-time
+  
+  Institution:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      is_school:
+        type: boolean
+      address:
+        type: string
+  
+  Camera:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      location:
+        type: string
+      snapshot_url:
+        type: string
+      stream_url:
+        type: string
+      status:
+        type: string
+  
+  Alert:
+    type: object
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+      message:
+        type: string
+      alert_type:
+        type: string
+      status:
+        type: string
+      scheduled_time:
+        type: string
+        format: date-time
+      created_at:
+        type: string
+        format: date-time
